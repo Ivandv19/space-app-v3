@@ -1,0 +1,124 @@
+{
+  "noticias": [
+    {
+      "id": 1,
+      "title": "Exploración en Marte: Nuevos Descubrimientos",
+      "explanation": "La NASA ha encontrado señales de agua subterránea en Marte, lo que podría cambiar la forma en que entendemos el planeta rojo.",
+      "content": "En un hallazgo revolucionario, los científicos de la NASA han detectado posibles señales de agua bajo la superficie de Marte. Esto podría implicar que hay reservas subterráneas de agua que podrían ser clave para futuras misiones tripuladas y la colonización del planeta rojo. El hallazgo fue realizado gracias al radar de penetración de la nave Mars Reconnaissance Orbiter, que ha estado orbitando Marte desde 2006.",
+      "author": "Juan Pérez",
+      "date": "2024-09-23",
+      "url": "/img/exploración-en-marte.png",
+      "categoria": "Exploración Espacial",
+      "keywords": ["Marte", "agua", "NASA", "exploración"],
+      "views": 7345
+    },
+    {
+      "id": 2,
+      "title": "La Misión Artemis I: Un Paso Más Cerca de la Luna",
+      "explanation": "La NASA ha completado con éxito el primer vuelo de prueba del cohete SLS y la cápsula Orion en la misión Artemis I.",
+      "content": "El cohete Space Launch System (SLS) y la cápsula Orion han realizado un exitoso vuelo de prueba alrededor de la Luna, marcando un hito importante en la misión Artemis I. Esta misión tiene como objetivo regresar a los humanos a la Luna y establecer una presencia sostenible en el satélite natural de la Tierra. Los datos recogidos durante este vuelo ayudarán a preparar futuras misiones tripuladas.",
+      "author": "Juan Pérez",
+      "date": "2024-09-19",
+      "url": "/img/La-misión-artemis-I.png",
+      "categoria": "Exploración Espacial",
+      "keywords": ["Artemis I", "Luna", "NASA", "SLS"],
+      "views": 4821
+    },
+    {
+      "id": 3,
+      "title": "Astrónomos Detectan un Pulsar en una Supernova",
+      "explanation": "Un equipo de astrónomos ha descubierto un pulsar en el remanente de una explosión de supernova, ofreciendo nueva información sobre estos fenómenos.",
+      "content": "Este descubrimiento se realizó en el remanente de la supernova SN 1987A, donde se ha encontrado un pulsar que emite radiación en forma de destellos. Los pulsars son estrellas de neutrones extremadamente densas y su estudio ayuda a comprender mejor la evolución de las estrellas y los eventos cataclísmicos en el universo.",
+      "author": "Claudia Reyes",
+      "date": "2024-09-14",
+      "url": "/img/pulsar.png",
+      "categoria": "Astronomía",
+      "keywords": ["pulsar", "supernova", "astronomía", "SN 1987A"],
+      "views": 9172
+    },
+    {
+      "id": 4,
+      "title": "La Primera Imagen de un Agujero Negro Supermasivo",
+      "explanation": "Un equipo internacional de científicos ha logrado capturar la primera imagen de un agujero negro supermasivo en el centro de la galaxia M87.",
+      "content": "La colaboración Event Horizon Telescope ha conseguido un hito histórico al obtener la primera imagen de un agujero negro supermasivo en la galaxia M87. Esta imagen, que muestra la sombra del agujero negro rodeada por un anillo de luz, proporciona evidencia visual de la existencia de estos objetos misteriosos y ayuda a validar teorías sobre la gravedad y la relatividad.",
+      "author": "Claudia Reyes",
+      "date": "2024-09-17",
+      "url": "/img/agujero-negro.png",
+      "categoria": "Astrofísica",
+      "keywords": ["agujero negro", "M87", "Event Horizon Telescope", "astrofísica"],
+      "views": 2891
+    },
+    {
+      "id": 5,
+      "title": "Detectan Olas Gravitacionales de una Colisión de Estrellas de Neutrones",
+      "explanation": "Científicos han observado ondas gravitacionales producidas por la fusión de dos estrellas de neutrones, proporcionando nuevas pistas sobre el universo.",
+      "content": "Investigadores han detectado ondas gravitacionales generadas por la fusión de dos estrellas de neutrones en una galaxia lejana. Este evento ha sido catalogado como uno de los más energéticos jamás observados, ofreciendo información valiosa sobre la naturaleza de las estrellas de neutrones y los procesos que ocurren en sus colisiones. Estos hallazgos podrían ayudar a comprender mejor fenómenos astronómicos extremos.",
+      "author": "Fernando Torres",
+      "date": "2024-08-29",
+      "url": "/img/olas-gravitacionales.png",
+      "categoria": "Astrofísica",
+      "keywords": ["ondas gravitacionales", "estrellas de neutrones", "astronomía", "colisión"],
+      "views": 3615
+    },
+    {
+      "id": 6,
+      "title": "Innovaciones en Satélites para la Observación de la Tierra",
+      "explanation": "Nuevos satélites están siendo lanzados para mejorar la vigilancia y el estudio de la Tierra desde el espacio.",
+      "content": "La Agencia Espacial Europea ha lanzado varios satélites que utilizarán tecnología avanzada para monitorear cambios climáticos y desastres naturales desde el espacio. Estos satélites están diseñados para proporcionar datos precisos que ayudarán a los científicos a estudiar fenómenos ambientales y gestionar recursos de manera más eficiente.",
+      "author": "Fernando Torres",
+      "date": "2024-09-12",
+      "url": "/img/innovaciones-en-satélites.png",
+      "categoria": "Satélites y Naves Espaciales",
+      "keywords": ["satélites", "observación terrestre", "cambio climático", "tecnología"],
+      "views": 7543
+    },
+    {
+      "id": 7,
+      "title": "Lanzamiento Exitoso del Telescopio Espacial James Webb",
+      "explanation": "El telescopio James Webb ha sido lanzado con éxito y comienza su misión de explorar el universo.",
+      "content": "El telescopio espacial James Webb ha sido lanzado con éxito y se encuentra en su camino hacia su posición en el espacio. Este telescopio es considerado el más poderoso jamás construido y permitirá a los científicos observar el universo en longitudes de onda infrarrojas, brindando información sobre la formación de estrellas y galaxias.",
+      "author": "Isabel Torres",
+      "date": "2024-07-28",
+      "url": "/img/telescopio-espacial.png",
+      "categoria": "Tecnología Espacial",
+      "keywords": ["James Webb", "telescopio", "exploración", "universo"],
+      "views": 6150
+    },
+    {
+      "id": 8,
+      "title": "La Conferencia Internacional sobre Astrobiología",
+      "explanation": "Científicos de todo el mundo se reúnen para discutir los últimos avances en la búsqueda de vida en otros planetas.",
+      "content": "La Conferencia Internacional sobre Astrobiología reúne a investigadores y expertos en el campo de la astrobiología para compartir sus últimos hallazgos y teorías sobre la vida en el universo. Los participantes discuten sobre exoplanetas, condiciones necesarias para la vida y los métodos de detección de biosignaturas.",
+      "author": "Isabel Torres",
+      "date": "2024-09-10",
+      "url": "/img/astrobiología.png",
+      "categoria": "Eventos Especiales",
+      "keywords": ["astrobiología", "vida extraterrestre", "exoplanetas", "conferencia"],
+      "views": 8471
+    },
+    {
+      "id": 9,
+      "title": "Eventos de Lluvias de Meteoros en 2024",
+      "explanation": "Calendario de las lluvias de meteoros más importantes que ocurrirán este año.",
+      "content": "Este año, los astrónomos han pronosticado varias lluvias de meteoros que se podrán observar en todo el mundo. Algunas de las lluvias más destacadas incluyen las Gemínidas y las Perséidas, que prometen ofrecer espectáculos visuales impresionantes para los entusiastas de la astronomía.",
+      "author": "Luis Martínez",
+      "date": "2024-08-15",
+      "url": "/img/lluvias-de-meteoros.png",
+      "categoria": "Eventos Astronómicos",
+      "keywords": ["lluvias de meteoros", "astronomía", "espectáculo visual", "2024"],
+      "views": 4326
+    },
+    {
+      "id": 10,
+      "title": "La Exploración de Europa: Lunas de Júpiter",
+      "explanation": "Los planes para explorar Europa, una de las lunas de Júpiter que podría albergar vida.",
+      "content": "La NASA ha planeado una misión para investigar Europa, una de las lunas de Júpiter que muestra signos de un océano de agua bajo su superficie. Los científicos creen que Europa puede tener las condiciones necesarias para albergar vida. La misión busca estudiar la composición y geología de la luna para determinar su potencial habitabilidad.",
+      "author": "Luis Martínez",
+      "date": "2024-08-22",
+      "url": "/img/europa.png",
+      "categoria": "Exploración Espacial",
+      "keywords": ["Europa", "Júpiter", "misión", "vida"],
+      "views": 5607
+    }
+  ]
+}
