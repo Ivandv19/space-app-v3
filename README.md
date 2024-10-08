@@ -12,4 +12,3 @@ Tareas por hacer:
 
 -Mejorar visualización del sistema solar
 
--Agregar modo obscuro a la aplicación
