@@ -1,6 +1,7 @@
-Apis a usar:
-https://api.spaceflightnewsapi.net/v4/docs/
+Tareas por hacer:
 
-https://api.nasa.gov/planetary/apod?api_key=je5e0Ea2hTgbHjumbfYV7PxzWeGUXdVHntdsJY7G&count=15
-
-https://docs.astronomyapi.com/
+Hacer modal para ver imagen completa del banner
+Corregir visualización de páginas cuando se redirigen desde la página principal
+Agregar funciones de IG a galería
+Mejorar visualización de las noticias
+Mejorar visualización del sistema solar
