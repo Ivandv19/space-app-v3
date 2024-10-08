@@ -11,3 +11,5 @@ Tareas por hacer:
 -Mejorar visualización de las noticias
 
 -Mejorar visualización del sistema solar
+
+-Agregar modo obscuro a la aplicación
