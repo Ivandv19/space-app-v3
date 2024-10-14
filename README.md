@@ -27,6 +27,8 @@
 - CSS
 - JavaScript
 - React
+- Git
+- pnpm
 - Styled Components
 - My JSON Server
 - Node.js
@@ -43,13 +45,13 @@
 **Instalar Dependencias**: Navega al directorio del proyecto y ejecuta:
 
 ```bash
-npm install
+pnpm install
 ```
 
 **Iniciar el Proyecto**: Ejecuta el proyecto localmente con:
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 ## Créditos
 
