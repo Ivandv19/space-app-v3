@@ -46,7 +46,7 @@ export const GlobalProvider = ({ children }) => {
     //Llamada a API de Noticias
     const [noticias, setNoticias] = useState([]);
     useEffect(() => {
-        fetch('http://localhost:3001/noticias') // Cambia esto a la URL correcta
+        fetch('https://my-json-server.typicode.com/ivandevI9/api_info_noticias_spaceappv3/noticias') // Cambia esto a la URL correcta
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error al cargar las noticias');
@@ -65,7 +65,7 @@ export const GlobalProvider = ({ children }) => {
     //Llamada a api de Sistema Solar
     const [sistemaSolar, setSistemaSolar] = useState({});
     useEffect(() => {
-        fetch('http://localhost:3002/sistema-solar')
+        fetch('https://my-json-server.typicode.com/ivandevI9/api_info_sistemasolar_spaceappv3/sistema-solar')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error al cargar el archivo');
