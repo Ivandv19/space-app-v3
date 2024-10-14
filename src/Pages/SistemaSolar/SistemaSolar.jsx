@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import { useGlobalContext } from '../../context/GlobalContext';
 import Navbar from './Navbar';
 import Carousel from './Carousel';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   text-align: center;
   font-family: Arial, sans-serif;
-  padding: 50px; /* Espacio alrededor del contenedor */
+  padding: 150px 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -35,9 +36,29 @@ const PageDescription = styled.p`
     max-width: 800px;
 `;
 
-const SistemaSolar = () => {
-  const { sistemaSolar } = useGlobalContext();
+const RegresarBoton = styled.button`
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 
+    &:hover {
+        background-color: #0056b3;
+    }
+`;
+
+const SistemaSolar = () => {
+
+  const navigate = useNavigate();
+  const handleRegresarClick = () => {
+    navigate('/'); // Cambia '/noticias' a la ruta correcta para regresar a la lista de noticias
+  };
+
+  const { sistemaSolar } = useGlobalContext();
   // Estado para la categoría seleccionada, inicializado con el primer valor
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(Object.keys(sistemaSolar)[0]);
 
@@ -47,11 +68,10 @@ const SistemaSolar = () => {
 
   return (
     <Container>
+
       <PageTitle>Sistema solar</PageTitle>
       <PageDescription> Explora el <strong>Sistema Solar</strong> a través de diversas categorías, donde puedes ver información sobre planetas, lunas y más. Navega fácilmente entre los elementos utilizando la barra de navegación y el carrusel interactivo.</PageDescription>
-
       <Description>
-
       </Description>
       <Navbar
         categorias={Object.keys(sistemaSolar)} // Pasa las claves del sistemaSolar como categorías
@@ -62,6 +82,7 @@ const SistemaSolar = () => {
         categoriaSeleccionada={categoriaSeleccionada} // Pasa la categoría seleccionada al Carousel
         datos={sistemaSolar[categoriaSeleccionada]} // Accede a los datos de la categoría seleccionada
       />
+      <RegresarBoton onClick={handleRegresarClick}>Regresar a inicio</RegresarBoton>
     </Container>
   );
 };

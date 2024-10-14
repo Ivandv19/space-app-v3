@@ -7,7 +7,11 @@ import { useGlobalContext } from '../../context/GlobalContext';
 const Section = styled.section`
 width: 100%;
 height: 100%;
-  padding: 20px 0;
+  padding: 150px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const SectionTitle = styled.h2`
@@ -20,10 +24,11 @@ const SectionTitle = styled.h2`
 const FeaturesContainer = styled.div`
 width: 100%;
 height: 100%;
-  display: flex;
-  justify-content: center; // Centrar la tarjeta
-  flex-direction: column;
-  gap: 20px;
+display: flex;
+justify-content: center; // Centrar la tarjeta
+flex-direction: column; 
+align-items: center;
+gap: 50px;
 `;
 
 
@@ -48,7 +53,7 @@ function FeaturesSection() {
   console.log('Estrellas:', estrellas);
 
   return (
-    <Section>
+    <Section id="caracteristicas">
       <SectionTitle>Nuestras Características</SectionTitle>
       <FeaturesContainer>
         <FeatureCard
@@ -56,13 +61,11 @@ function FeaturesSection() {
           descripcion={'Descubre la belleza del universo a través de una colección curada de imágenes impresionantes, desde nebulosas brillantes hasta galaxias lejanas.'}
           images={imagesGaleria}
         />
-
         <FeatureCard
           titulo={'Noticias'}
           descripcion={'Mantente al día con los últimos descubrimientos espaciales, avances científicos y misiones de exploración que están ampliando nuestros horizontes cósmicos.'}
           images={noticias}
         />
-
         <FeatureCard
           titulo={'Sistema Solar'}
           descripcion={'Explora los últimos descubrimientos y avances en nuestro vecindario cósmico. Aprende sobre los planetas, lunas, y otros cuerpos celestes que conforman el sistema solar, junto con las misiones espaciales que los estudian.'}

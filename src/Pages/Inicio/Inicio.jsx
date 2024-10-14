@@ -10,7 +10,7 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
-  padding: 50px 50px;
+
   flex: 1; /* Esto asegura que el contenedor principal ocupe todo el espacio disponible */
 `;
 

@@ -6,6 +6,10 @@ html {
     -webkit-text-size-adjust: 100%;
     font-family: Arial, sans-serif; /* Fuente genérica */
 }
+
+html {
+  scroll-behavior: smooth;
+}
 * {
     margin: 0;
     padding: 0;

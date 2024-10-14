@@ -1,53 +1,56 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const CarouselContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden; /* Oculta el desbordamiento */
-  position: relative; /* Permite la posición absoluta de los botones */
+  display: grid;
+  grid-template-columns: auto 1fr auto; /* Tres columnas */
+  align-items: center; /* Centra verticalmente los elementos */
+  overflow: hidden;
+  position: relative;
   padding: 1rem;
- width: 100%;
+  width: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para el contenedor */
+  border-radius: 8px; /* Bordes redondeados */
 `;
 
 const CarouselItem = styled.div`
-  min-width: 800px;
   background-color: #f4f4f4;
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 10px;
   text-align: center;
+  transition: transform 0.5s ease; /* Transición suave */
+  width: 100%;
 
-  img{
-    max-width: 800px;
+  img {
+    max-width: 600px; /* Asegura que la imagen se ajuste al contenedor */
     height: auto;
-    background-color: yellow;
+    border-radius: 8px; /* Bordes redondeados para la imagen */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para la imagen */
   }
 `;
 
 const Button = styled.button`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%); /* Centra verticalmente */
-  background: none;
-  border: none;
-  font-size: 24px; /* Tamaño de la flecha */
+  background: #ffffff; /* Fondo blanco para los botones */
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  padding: 10px;
   cursor: pointer;
-  color: #333; /* Color de la flecha */
-  z-index: 10; /* Asegura que los botones estén por encima */
+  color: #333;
+  transition: background 0.3s, transform 0.3s; /* Transiciones suaves */
   
   &:hover {
-    color: #000; /* Color al pasar el ratón */
+    background: #f0f0f0; /* Color de fondo al pasar el ratón */
+    transform: scale(1.1); /* Aumentar el tamaño al pasar el ratón */
   }
 `;
 
 const PrevButton = styled(Button)`
-  left: 10px; /* Posiciona a la izquierda */
+  justify-self: start; /* Justifica el botón a la izquierda */
 `;
 
 const NextButton = styled(Button)`
-  right: 10px; /* Posiciona a la derecha */
+  justify-self: end; /* Justifica el botón a la derecha */
 `;
 
 const DotsContainer = styled.div`
@@ -63,21 +66,32 @@ const Dot = styled.div`
   border-radius: 50%;
   background-color: ${({ active }) => (active ? 'black' : 'lightgray')};
   cursor: pointer;
+  transition: background 0.3s; /* Transición para el punto */
+  
+  &:hover {
+    background-color: darkgray; /* Color al pasar el ratón */
+  }
 `;
 
 const MainContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    padding: 20px 0;
-    width: 100%;
-`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 0;
+  max-width: 800px;
+  height: auto;
+`;
 
 const Carousel = ({ categoriaSeleccionada, datos }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  if (!datos || datos.length === 0) return null; // Verifica si hay datos para mostrar
+  // Restablecer el índice actual al cambiar de categoría
+  useEffect(() => {
+    setCurrentIndex(0); // Resetea el índice al cambiar de categoría
+  }, [categoriaSeleccionada]); // Este efecto se ejecutará cada vez que categoriaSeleccionada cambie
+
+  if (!datos || datos.length === 0) return null;
 
   const handlePrev = () => {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? datos.length - 1 : prevIndex - 1));
@@ -91,21 +105,25 @@ const Carousel = ({ categoriaSeleccionada, datos }) => {
     <MainContainer>
       <h2>{categoriaSeleccionada}</h2>
       <CarouselContainer>
+        <PrevButton onClick={handlePrev}>◀</PrevButton>
         <CarouselItem>
-          <h3>{datos[currentIndex].title}</h3>
-          <img src={datos[currentIndex].url} alt={datos[currentIndex].title} />
-          <p>{datos[currentIndex].explanation}</p>
+          {datos[currentIndex] ? (
+            <>
+              <h3>{datos[currentIndex].title}</h3>
+              <img src={datos[currentIndex].url} alt={datos[currentIndex].title} />
+              <p>{datos[currentIndex].explanation}</p>
+            </>
+          ) : (
+            <p>No hay datos disponibles.</p> // Mensaje alternativo en caso de que no haya datos
+          )}
         </CarouselItem>
-        {/* Botones de navegación */}
-        <PrevButton onClick={handlePrev}>◀</PrevButton> {/* Flecha izquierda */}
-        <NextButton onClick={handleNext}>▶</NextButton> {/* Flecha derecha */}
+        <NextButton onClick={handleNext}>▶</NextButton>
       </CarouselContainer>
       <DotsContainer>
         {datos.map((_, index) => (
           <Dot key={index} active={index === currentIndex} onClick={() => setCurrentIndex(index)} />
         ))}
       </DotsContainer>
-
     </MainContainer>
   );
 };

@@ -4,17 +4,17 @@ import { Link } from "react-router-dom";
 
 const Card = styled.div`
   background-color: white;
-  width: 100%; // Ocupa todo el ancho
-  height: 100%; // Altura estándar
-  justify-content: center;
+  width: 90%; // Ocupa todo el ancho
+  height: 700px; // Altura estándar
+  justify-content: space-evenly;
   align-items: center;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
   display: flex;
   flex-direction: column; // Para que el contenido se organice verticalmente
-  padding:  20px;
-  gap: 10px;
+  padding: 20px 20px;
+ 
 `;
 
 const FeatureTitle = styled.h3`

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useGlobalContext } from '../../context/GlobalContext';
 
 
 const NoticiasContainer = styled.div`
-    padding: 50px 20px;
+    padding: 150px 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -16,9 +16,9 @@ const SearchInput = styled.input`
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 80vw;
-    max-width: 400px;
-`;
+    width: 100%;
+  
+    `;
 
 const FilterSelect = styled.select`
     padding: 10px;
@@ -41,22 +41,28 @@ const NoticiaItem = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
-    width: 80vw;
+    gap: 20px;
+    width: 100%;
     max-width: 800px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s; // Añade transición para el crecimiento
+
+    &:hover {
+        transform: scale(1.05); // Escala la tarjeta al pasar el mouse
+    }
 `;
 
 const NoticiaTitle = styled.h2`
     font-size: 1.8rem;
     margin: 0;
     display: flex;
-   
+    text-align: center;
 `;
 
 const NoticiaDescription = styled.p`
     font-size: 1rem;
     color: #555;
+    text-align: center;
 `;
 
 const NoticiaAuthor = styled.p`
@@ -118,10 +124,53 @@ const VerMasButton = styled.a`
 
 
 const NoticiaImage = styled.img`
-    width: 100%;
+    width: 70%;
+    height: auto;
+    border-radius: 10px;
+
+`
+const BusquedaContainer = styled.section`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
 `
 
+const FilstrosContainer = styled.section`
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+`
+
+const NoticiasSection = styled.section`
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); // Establece exactamente 3 columnas
+    gap: 20px; // Espacio entre los elementos del grid
+    width: 100%; // Asegura que el grid ocupe todo el ancho disponible
+`;
+
+const RegresarBoton = styled.button`
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #0056b3;
+    }
+`;
+
 const Noticias = () => {
+
+    const navigate = useNavigate();
+    const handleRegresarClick = () => {
+        navigate('/'); // Cambia '/noticias' a la ruta correcta para regresar a la lista de noticias
+    };
 
     const [orderDirection, setOrderDirection] = useState('reciente');
     const [orderBy, setOrderBy] = useState('');
@@ -160,6 +209,7 @@ const Noticias = () => {
     });
 
     const handleOrderByChange = (e) => {
+
         const value = e.target.value;
         setOrderBy(value);
         setShowViewsSlider(value === 'relevancia'); // Mostrar el slider solo si se selecciona "relevancia"
@@ -170,69 +220,69 @@ const Noticias = () => {
 
     return (
         <NoticiasContainer>
+
             <PageTitle>Últimas Noticias del Mundo Espacial</PageTitle>
             <PageDescription>Aquí encontrarás las noticias más recientes sobre exploración espacial, astronomía, astrofísica y tecnología espacial. Mantente al día con los descubrimientos más emocionantes y eventos importantes en el ámbito de la ciencia.</PageDescription>
-
-            <SearchInput
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Buscar por título"
-            />
-            <FilterSelect onChange={(e) => setSelectedCategory(e.target.value)}>
-                <option value="">Todas las categorías</option>
-                {categories.map((category) => (
-                    <option key={category} value={category}>{category}</option>
+            <BusquedaContainer>
+                <SearchInput
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Buscar por título"
+                />
+                <FilstrosContainer>
+                    <FilterSelect onChange={(e) => setSelectedCategory(e.target.value)}>
+                        <option value="">Todas las categorías</option>
+                        {categories.map((category) => (
+                            <option key={category} value={category}>{category}</option>
+                        ))}
+                    </FilterSelect>
+                    <FilterSelect onChange={(e) => setSelectedAuthor(e.target.value)}>
+                        <option value="">Todos los autores</option>
+                        {authors.map((author) => (
+                            <option key={author} value={author}>{author}</option>
+                        ))}
+                    </FilterSelect>
+                    <OrderSelect onChange={handleOrderByChange}>
+                        <option value="">Ordenar por</option>
+                        <option value="fecha">Fecha</option>
+                        <option value="relevancia">Relevancia</option>
+                    </OrderSelect>
+                    {showViewsSlider && (
+                        <SliderContainer>
+                            <label htmlFor="viewsRange">Filtrar por vistas: {viewsLimit}</label>
+                            <Slider
+                                type="range"
+                                id="viewsRange"
+                                min="1000"
+                                max="10000"
+                                step="1000"  // Paso de 1000 para cada movimiento del slider
+                                value={viewsLimit}
+                                onChange={(e) => setViewsLimit(e.target.value)}
+                            />
+                        </SliderContainer>
+                    )}
+                    {orderBy === 'fecha' && (
+                        <FilterSelect onChange={(e) => setOrderDirection(e.target.value)}>
+                            <option value="reciente">Más Reciente</option>
+                            <option value="antigua">Más Antigua</option>
+                        </FilterSelect>
+                    )}
+                </FilstrosContainer>
+            </BusquedaContainer>
+            <NoticiasSection>
+                {sortedNoticias.map((noticia) => (
+                    <NoticiaItem key={noticia.id}>
+                        <NoticiaImage src={noticia.url} />
+                        <NoticiaTitle>{noticia.title}</NoticiaTitle>
+                        <NoticiaDescription>{noticia.explanation}</NoticiaDescription>
+                        <NoticiaAuthor>Por: {noticia.author}</NoticiaAuthor>
+                        <NoticiaDate>{new Date(noticia.date).toLocaleDateString()}</NoticiaDate>
+                        <Link to={`/noticias/${generarSlug(noticia.title)}`} state={{ id: noticia.id }}>
+                            <VerMasButton>Ver Más</VerMasButton>
+                        </Link>
+                    </NoticiaItem>
                 ))}
-            </FilterSelect>
-
-            <FilterSelect onChange={(e) => setSelectedAuthor(e.target.value)}>
-                <option value="">Todos los autores</option>
-                {authors.map((author) => (
-                    <option key={author} value={author}>{author}</option>
-                ))}
-            </FilterSelect>
-
-            <OrderSelect onChange={handleOrderByChange}>
-                <option value="">Ordenar por</option>
-                <option value="fecha">Fecha</option>
-                <option value="relevancia">Relevancia</option>
-            </OrderSelect>
-
-            {showViewsSlider && (
-                <SliderContainer>
-                    <label htmlFor="viewsRange">Filtrar por vistas: {viewsLimit}</label>
-                    <Slider
-                        type="range"
-                        id="viewsRange"
-                        min="1000"
-                        max="10000"
-                        step="1000"  // Paso de 1000 para cada movimiento del slider
-                        value={viewsLimit}
-                        onChange={(e) => setViewsLimit(e.target.value)}
-                    />
-                </SliderContainer>
-            )}
-
-            {orderBy === 'fecha' && (
-                <FilterSelect onChange={(e) => setOrderDirection(e.target.value)}>
-                    <option value="reciente">Más Reciente</option>
-                    <option value="antigua">Más Antigua</option>
-                </FilterSelect>
-            )}
-
-
-
-            {sortedNoticias.map((noticia) => (
-                <NoticiaItem key={noticia.id}>
-                    <NoticiaTitle>{noticia.title}</NoticiaTitle>
-                    <NoticiaDescription>{noticia.explanation}</NoticiaDescription>
-                    <NoticiaAuthor>Por: {noticia.author}</NoticiaAuthor>
-                    <NoticiaDate>{new Date(noticia.date).toLocaleDateString()}</NoticiaDate>
-                    <NoticiaImage src={noticia.url} />
-                    <Link to={`/noticias/${generarSlug(noticia.title)}`} state={{ id: noticia.id }}>
-                        <VerMasButton>Ver Más</VerMasButton>
-                    </Link>
-                </NoticiaItem>
-            ))}
+            </NoticiasSection>
+            <RegresarBoton onClick={handleRegresarClick}>Regresar a inicio</RegresarBoton>
         </NoticiasContainer>
     );
 };
