@@ -15,20 +15,33 @@ const HeroSectionStyled = styled.section`
   background-color: #282c34;
   color: white;
   text-align: center;
-  background-image: ${({ Image }) => Image && Image ? `url(${Image})` : 'none'};
+  background-image: ${({ Image }) => Image ? `url(${Image})` : 'none'};
   background-size: cover;
   background-position: center;
+  position: relative; /* Cambia aquí para permitir posicionamiento absoluto del overlay */
+`;
+
+const OverlayStyled = styled.div`
+  position: absolute; /* Posiciona el overlay absolutamente */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.589); /* Ajusta la opacidad según sea necesario */
+  z-index: 1; /* Asegúrate de que esté detrás del contenido pero delante de la imagen de fondo */
 `;
 
 const HeroTitle = styled.h1`
   font-size: 3rem;
   margin-bottom: 20px;
+  z-index: 2; /* Asegúrate de que el título esté por encima del overlay */
 `;
 
 const HeroSubtitle = styled.p`
   font-size: 1.2rem;
   margin-bottom: 30px;
   padding: 0 50px;
+  z-index: 2; /* Asegúrate de que el subtítulo esté por encima del overlay */
 `;
 
 const CTAButton = styled.a`
@@ -41,6 +54,7 @@ const CTAButton = styled.a`
     cursor: pointer;
     transition: background-color 0.3s;
     text-decoration: none;
+    z-index: 2; /* Asegúrate de que el botón esté por encima del overlay */
 
     &:hover {
         background-color: #0056b3;
@@ -55,6 +69,7 @@ const InfoSection = styled.section`
   position: absolute;
   top: 125px;
   left: 25px;
+  z-index: 1; /* Asegúrate de que la sección de información esté por encima del overlay */
 `;
 
 const TitleImage = styled.p`
@@ -67,35 +82,35 @@ const Tooltip = styled.div`
   color: white;
   padding: 10px;
   border-radius: 5px;
-  top: 30px;  // Ajusta según sea necesario
-  left: 10px; // Ajusta según sea necesario
+  top: 30px;
+  left: 10px;
   opacity: ${({ visible }) => (visible ? 1 : 0)};
   transition: opacity 0.2s ease;
-  pointer-events: none; // Evita eventos de mouse en el tooltip
+  pointer-events: none;
   width: 500px;
   height: auto;
   font-size: 13px;
 `;
 
-// Agrega un nuevo componente para el ícono
 const InfoIcon = styled(IoIosInformationCircle)`
-  color: ${({ isActive }) => (isActive ? 'black' : 'white')}; // Cambia el color del ícono
-  transition: color 0.2s ease; // Transición suave para el cambio de color
+  color: ${({ isActive }) => (isActive ? 'black' : 'white')};
+  transition: color 0.2s ease;
   width: 20px;
   height: auto;
 `;
 
 function HeroSection() {
-  const { dailyImage } = useGlobalContext(); // Asegúrate de usar el nombre correcto aquí
+  const { dailyImage } = useGlobalContext();
   const [tooltipVisible, setTooltipVisible] = useState(false);
 
   return (
     <HeroSectionStyled Image={dailyImage.url}>
+      <OverlayStyled /> {/* Agrega el overlay aquí */}
       <InfoSection
         onMouseEnter={() => setTooltipVisible(true)}
         onMouseLeave={() => setTooltipVisible(false)}
       >
-        <InfoIcon isActive={tooltipVisible} size={24} /> {/* Usa el nuevo componente aquí */}
+        <InfoIcon isActive={tooltipVisible} size={24} />
         <TitleImage>
           {dailyImage.title}
         </TitleImage>

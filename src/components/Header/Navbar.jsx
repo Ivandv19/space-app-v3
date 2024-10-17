@@ -6,6 +6,7 @@ import { GiSolarSystem } from "react-icons/gi";
 const NavbarStyled = styled.nav`
   display: flex;
   gap: 20px;
+  z-index: 1;
 `;
 
 const NavLink = styled(Link)`
