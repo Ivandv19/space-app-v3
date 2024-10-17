@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useGlobalContext } from '../../context/GlobalContext';
+import { useEffect } from 'react';
 
 
 const NoticiasContainer = styled.div`
@@ -165,6 +166,21 @@ const RegresarBoton = styled.button`
     }
 `;
 
+// Estilos del spinner
+const Spinner = styled.div`
+    border: 8px solid #f3f3f3; /* Color claro */
+    border-top: 8px solid #3498db; /* Color del spinner */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite; /* Animación del spinner */
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+`;
+
 const Noticias = () => {
 
     const navigate = useNavigate();
@@ -181,6 +197,7 @@ const Noticias = () => {
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedAuthor, setSelectedAuthor] = useState('');
     const [selectedTag, setSelectedTag] = useState('');
+    const [loading, setLoading] = useState(true); // Estado de carga
 
     // Obtener categorías y autores únicos directamente en el componente
     const categories = [...new Set(noticias.map(noticia => noticia.categoria))];
@@ -218,71 +235,91 @@ const Noticias = () => {
         }
     };
 
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true); // Inicia el estado de carga
+            // Simula una llamada a la API con un retraso de 2 segundos
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            setLoading(false); // Cambia el estado de carga a false cuando la información esté disponible
+        };
+
+        fetchData();
+    }, [noticias]);
+
     return (
         <NoticiasContainer>
+            {loading ? (
+                <Spinner />
+            ) : (
 
-            <PageTitle>Últimas Noticias del Mundo Espacial</PageTitle>
-            <PageDescription>Aquí encontrarás las noticias más recientes sobre exploración espacial, astronomía, astrofísica y tecnología espacial. Mantente al día con los descubrimientos más emocionantes y eventos importantes en el ámbito de la ciencia.</PageDescription>
-            <BusquedaContainer>
-                <SearchInput
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Buscar por título"
-                />
-                <FilstrosContainer>
-                    <FilterSelect onChange={(e) => setSelectedCategory(e.target.value)}>
-                        <option value="">Todas las categorías</option>
-                        {categories.map((category) => (
-                            <option key={category} value={category}>{category}</option>
+                <>
+                    <PageTitle>Últimas Noticias del Mundo Espacial</PageTitle>
+                    <PageDescription>Aquí encontrarás las noticias más recientes sobre exploración espacial, astronomía, astrofísica y tecnología espacial. Mantente al día con los descubrimientos más emocionantes y eventos importantes en el ámbito de la ciencia.</PageDescription>
+                    <BusquedaContainer>
+                        <SearchInput
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            placeholder="Buscar por título"
+                        />
+                        <FilstrosContainer>
+                            <FilterSelect onChange={(e) => setSelectedCategory(e.target.value)}>
+                                <option value="">Todas las categorías</option>
+                                {categories.map((category) => (
+                                    <option key={category} value={category}>{category}</option>
+                                ))}
+                            </FilterSelect>
+                            <FilterSelect onChange={(e) => setSelectedAuthor(e.target.value)}>
+                                <option value="">Todos los autores</option>
+                                {authors.map((author) => (
+                                    <option key={author} value={author}>{author}</option>
+                                ))}
+                            </FilterSelect>
+                            <OrderSelect onChange={handleOrderByChange}>
+                                <option value="">Ordenar por</option>
+                                <option value="fecha">Fecha</option>
+                                <option value="relevancia">Relevancia</option>
+                            </OrderSelect>
+                            {showViewsSlider && (
+                                <SliderContainer>
+                                    <label htmlFor="viewsRange">Filtrar por vistas: {viewsLimit}</label>
+                                    <Slider
+                                        type="range"
+                                        id="viewsRange"
+                                        min="1000"
+                                        max="10000"
+                                        step="1000"  // Paso de 1000 para cada movimiento del slider
+                                        value={viewsLimit}
+                                        onChange={(e) => setViewsLimit(e.target.value)}
+                                    />
+                                </SliderContainer>
+                            )}
+                            {orderBy === 'fecha' && (
+                                <FilterSelect onChange={(e) => setOrderDirection(e.target.value)}>
+                                    <option value="reciente">Más Reciente</option>
+                                    <option value="antigua">Más Antigua</option>
+                                </FilterSelect>
+                            )}
+                        </FilstrosContainer>
+                    </BusquedaContainer>
+                    <NoticiasSection>
+                        {sortedNoticias.map((noticia) => (
+                            <NoticiaItem key={noticia.id}>
+                                <NoticiaImage src={noticia.url} />
+                                <NoticiaTitle>{noticia.title}</NoticiaTitle>
+                                <NoticiaDescription>{noticia.explanation}</NoticiaDescription>
+                                <NoticiaAuthor>Por: {noticia.author}</NoticiaAuthor>
+                                <NoticiaDate>{new Date(noticia.date).toLocaleDateString()}</NoticiaDate>
+                                <Link to={`/noticias/${generarSlug(noticia.title)}`} state={{ id: noticia.id }}>
+                                    <VerMasButton>Ver Más</VerMasButton>
+                                </Link>
+                            </NoticiaItem>
                         ))}
-                    </FilterSelect>
-                    <FilterSelect onChange={(e) => setSelectedAuthor(e.target.value)}>
-                        <option value="">Todos los autores</option>
-                        {authors.map((author) => (
-                            <option key={author} value={author}>{author}</option>
-                        ))}
-                    </FilterSelect>
-                    <OrderSelect onChange={handleOrderByChange}>
-                        <option value="">Ordenar por</option>
-                        <option value="fecha">Fecha</option>
-                        <option value="relevancia">Relevancia</option>
-                    </OrderSelect>
-                    {showViewsSlider && (
-                        <SliderContainer>
-                            <label htmlFor="viewsRange">Filtrar por vistas: {viewsLimit}</label>
-                            <Slider
-                                type="range"
-                                id="viewsRange"
-                                min="1000"
-                                max="10000"
-                                step="1000"  // Paso de 1000 para cada movimiento del slider
-                                value={viewsLimit}
-                                onChange={(e) => setViewsLimit(e.target.value)}
-                            />
-                        </SliderContainer>
-                    )}
-                    {orderBy === 'fecha' && (
-                        <FilterSelect onChange={(e) => setOrderDirection(e.target.value)}>
-                            <option value="reciente">Más Reciente</option>
-                            <option value="antigua">Más Antigua</option>
-                        </FilterSelect>
-                    )}
-                </FilstrosContainer>
-            </BusquedaContainer>
-            <NoticiasSection>
-                {sortedNoticias.map((noticia) => (
-                    <NoticiaItem key={noticia.id}>
-                        <NoticiaImage src={noticia.url} />
-                        <NoticiaTitle>{noticia.title}</NoticiaTitle>
-                        <NoticiaDescription>{noticia.explanation}</NoticiaDescription>
-                        <NoticiaAuthor>Por: {noticia.author}</NoticiaAuthor>
-                        <NoticiaDate>{new Date(noticia.date).toLocaleDateString()}</NoticiaDate>
-                        <Link to={`/noticias/${generarSlug(noticia.title)}`} state={{ id: noticia.id }}>
-                            <VerMasButton>Ver Más</VerMasButton>
-                        </Link>
-                    </NoticiaItem>
-                ))}
-            </NoticiasSection>
-            <RegresarBoton onClick={handleRegresarClick}>Regresar a inicio</RegresarBoton>
+                    </NoticiasSection>
+                    <RegresarBoton onClick={handleRegresarClick}>Regresar a inicio</RegresarBoton>
+                </>
+
+            )};
+
+
         </NoticiasContainer>
     );
 };

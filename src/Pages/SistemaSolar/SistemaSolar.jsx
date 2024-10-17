@@ -19,14 +19,13 @@ const Container = styled.div`
 const Description = styled.p`
   font-size: 1.1rem;
   color: #333;
-  margin-bottom: 20px; /* Espacio debajo de la descripción */
+  margin-bottom: 20px;
 `;
 
 const PageTitle = styled.h2`
     font-size: 2.5rem;
     color: #333;
     text-align: center;
-    
 `;
 
 const PageDescription = styled.p`
@@ -51,36 +50,78 @@ const RegresarBoton = styled.button`
     }
 `;
 
-const SistemaSolar = () => {
+const Spinner = styled.div`
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+`;
 
+const SistemaSolar = () => {
   const navigate = useNavigate();
   const handleRegresarClick = () => {
-    navigate('/'); // Cambia '/noticias' a la ruta correcta para regresar a la lista de noticias
+    navigate('/'); 
   };
 
   const { sistemaSolar } = useGlobalContext();
-  // Estado para la categoría seleccionada, inicializado con el primer valor
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(Object.keys(sistemaSolar)[0]);
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null); // Inicializa con null
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log(`Categoría seleccionada: ${categoriaSeleccionada}`);
-  }, [categoriaSeleccionada]);
+    if (sistemaSolar && Object.keys(sistemaSolar).length > 0) {
+      // Verifica si el sistemaSolar tiene datos antes de establecer la categoría
+      setCategoriaSeleccionada(Object.keys(sistemaSolar)[0]);
+    }
+  }, [sistemaSolar]); // Este useEffect se ejecuta cuando sistemaSolar cambia
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <Container>
+        <Spinner />
+      </Container>
+    );
+  }
+
+  if (!categoriaSeleccionada) {
+    return (
+      <Container>
+        <p>No hay categorías disponibles.</p>
+      </Container>
+    );
+  }
 
   return (
     <Container>
-
       <PageTitle>Sistema solar</PageTitle>
-      <PageDescription> Explora el <strong>Sistema Solar</strong> a través de diversas categorías, donde puedes ver información sobre planetas, lunas y más. Navega fácilmente entre los elementos utilizando la barra de navegación y el carrusel interactivo.</PageDescription>
-      <Description>
-      </Description>
+      <PageDescription>
+        Explora el <strong>Sistema Solar</strong> a través de diversas categorías, donde puedes ver información sobre planetas, lunas y más. Navega fácilmente entre los elementos utilizando la barra de navegación y el carrusel interactivo.
+      </PageDescription>
+      <Description></Description>
       <Navbar
-        categorias={Object.keys(sistemaSolar)} // Pasa las claves del sistemaSolar como categorías
-        categoriaSeleccionada={categoriaSeleccionada} // Pasa la categoría seleccionada para el estilo
-        setCategoriaSeleccionada={setCategoriaSeleccionada} // Pasa la función para actualizar la categoría seleccionada
+        categorias={Object.keys(sistemaSolar)}
+        categoriaSeleccionada={categoriaSeleccionada}
+        setCategoriaSeleccionada={setCategoriaSeleccionada}
       />
       <Carousel
-        categoriaSeleccionada={categoriaSeleccionada} // Pasa la categoría seleccionada al Carousel
-        datos={sistemaSolar[categoriaSeleccionada]} // Accede a los datos de la categoría seleccionada
+        categoriaSeleccionada={categoriaSeleccionada}
+        datos={sistemaSolar[categoriaSeleccionada]}
       />
       <RegresarBoton onClick={handleRegresarClick}>Regresar a inicio</RegresarBoton>
     </Container>
