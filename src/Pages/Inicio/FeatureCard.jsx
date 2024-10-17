@@ -28,6 +28,7 @@ const FeatureDescription = styled.p`
 margin: 20px 20px;
   font-size: 1.2rem;
   color: #555;
+
 `;
 
 const ShowMoreLink = styled(Link)`

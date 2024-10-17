@@ -10,10 +10,12 @@ const CarouselWrapper = styled.div`
 `;
 
 const CarouselContainer = styled.div`
-width: 80%;
+width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+ padding: 20px 100px;
+ gap: 50px;
+
 `;
 
 const ImageContainer = styled.div`
@@ -30,8 +32,13 @@ const Image = styled.img`
 `;
 
 const TextContainer = styled.div`
-    width: 40%;
-    padding: 20px;
+    width: 50%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+ 
 `;
 
 const DotsContainer = styled.div`
