@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-
 import { BsRocket } from 'react-icons/bs';
 import { FaBars } from 'react-icons/fa';
-import Sidebar from './sidebar';
 import Navbar from './Navbar';
+import Sidebar from "./Sidebar"
+
+
 
 
 const HeaderStyled = styled.header`
