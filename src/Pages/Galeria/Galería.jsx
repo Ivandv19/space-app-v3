@@ -12,6 +12,16 @@ padding: 150px 20px 50px 20px;
     grid-template-rows: auto auto 200px; 
     grid-template-columns: 1fr 2fr 1fr; // Tres columnas para la galería principal y secciones
     gap: 20px;
+
+    @media (max-width: 1024px) {
+        display: flex;
+        flex-direction: column;
+
+    }   
+
+    @media (max-width: 768px) {
+        padding: 150px 0px 50px 0px;
+    }
 `;
 
 // Sección para el título y descripción
@@ -23,11 +33,19 @@ const HeaderSection = styled.div`
     text-align: center;
     gap: 20px;
     margin-bottom: 100px;
+
+    @media (max-width: 768px) {
+        padding: 0 20px;
+    }
 `;
 
 const PageTitle = styled.h2`
     font-size: 2.5rem;
     color: #333;
+
+    @media (max-width: 768px) {
+        font-size: 30px;
+    }
 `;
 
 const PageDescription = styled.p`
@@ -42,6 +60,11 @@ const LikedSavedSection = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 20px;
+
+    @media (max-width: 1024px) {
+       display: none;
+
+    } 
 `;
 
 // Contenedor para la galería principal
@@ -96,12 +119,17 @@ const Overlay = styled.div`
 const ItemTitle = styled.h3`
     font-size: 1.5rem;
     margin: 10px 0;
+    text-align: center;
 `;
 
 const ItemDescription = styled.p`
     font-size: 1rem;
     margin: 10px;
     text-align: center;
+
+    @media (max-width: 768px) {
+        font-size: 14px;
+    }
 `;
 
 const ButtonContainer = styled.div`
