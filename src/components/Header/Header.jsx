@@ -1,25 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Navbar from './Navbar';
+
 import { BsRocket } from 'react-icons/bs';
+import { FaBars } from 'react-icons/fa';
+import Sidebar from './sidebar';
+import Navbar from './Navbar';
+
 
 const HeaderStyled = styled.header`
   width: 100%;
-  height: ${({ shrink }) => (shrink ? '70px' : '100px')}; /* Cambia la altura según el estado */
+  height: ${({ shrink }) => (shrink ? '70px' : '100px')};
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  background-color: #f8f9fa; /* Ajusta según el diseño */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Opcional, para una sombra sutil */
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: fixed;
   top: 0;
   z-index: 10;
-  transition: height 0.3s ease; /* Transición suave para el cambio de altura */
+  transition: height 0.3s ease;
+
+  @media (max-width: 1024px) {
+    height: ${({ shrink }) => (shrink ? '80px' : '100px')}; 
+    padding: 0 15px; 
+  }
+
+  @media (max-width: 768px) {
+    height: ${({ shrink }) => (shrink ? '60px' : '80px')}; 
+    padding: 0 20px; 
+    flex-direction: row-reverse;
+   justify-content: space-between;
+  }
 `;
 
 const Logo = styled.h1`
-  font-size: 24px; /* Tamaño del título */
+  font-size: 24px; 
   margin: 0;
 `;
 
@@ -34,36 +50,57 @@ const LogoContainer = styled.div`
 
 const ImgContainer = styled.div`
   svg {
-    width: ${({ shrink }) => (shrink ? '40px' : '50px')}; /* Cambia el tamaño según el estado */
+    width: ${({ shrink }) => (shrink ? '40px' : '50px')}; 
     height: ${({ shrink }) => (shrink ? '40px' : '50px')};
-    transition: width 0.3s ease, height 0.3s ease; /* Transición suave para el cambio de tamaño */
+    transition: width 0.3s ease, height 0.3s ease; 
   }
 `;
 
 function Header() {
   const [shrink, setShrink] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // Estado para controlar la barra lateral
+  const [isMobile, setIsMobile] = useState(false); // Estado para controlar si está en móvil
 
   useEffect(() => {
     const handleScroll = () => {
-      setShrink(window.scrollY > 50); // Cambia el valor según la necesidad
+      setShrink(window.scrollY > 50);
+    };
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768); // Cambia la medida según tus necesidades
     };
 
     window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleResize);
+
+    // Llama la función para establecer el estado inicial
+    handleResize();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen); // Cambia el estado de la barra lateral
+  };
+
   return (
-    <HeaderStyled shrink={shrink}> {/* Pasa el estado a HeaderStyled */}
+    <HeaderStyled shrink={shrink}>
       <LogoContainer>
         <ImgContainer shrink={shrink}>
           <BsRocket />
         </ImgContainer>
         <Logo>Space App</Logo>
       </LogoContainer>
-      <Navbar />
+      {isMobile && <FaBars onClick={toggleSidebar} style={{ cursor: 'pointer', fontSize: '24px' }} />} {/* Botón para abrir la barra lateral solo en móvil */}
+
+      {isMobile ? (
+        <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
+      ) : (
+        <Navbar/>
+      )}
     </HeaderStyled>
   );
 }

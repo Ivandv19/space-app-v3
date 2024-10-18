@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FaHome, FaNewspaper, FaPhotoVideo } from "react-icons/fa";
-import { GiSolarSystem } from "react-icons/gi";
+
 
 const NavbarStyled = styled.nav`
   display: flex;
