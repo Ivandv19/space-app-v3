@@ -19,6 +19,17 @@ const HeroSectionStyled = styled.section`
   background-size: cover;
   background-position: center;
   position: relative; /* Cambia aquí para permitir posicionamiento absoluto del overlay */
+
+  @media (max-width: 1024px) {
+ 
+  }
+
+  @media (max-width: 768px) {
+  display: flex;
+  justify-content:flex-start;
+
+  }
+
 `;
 
 const OverlayStyled = styled.div`
@@ -34,7 +45,7 @@ const OverlayStyled = styled.div`
 const HeroTitle = styled.h1`
   font-size: 3rem;
   margin-bottom: 20px;
-  z-index: 2; /* Asegúrate de que el título esté por encima del overlay */
+  z-index: 1; /* Asegúrate de que el título esté por encima del overlay */
 `;
 
 const HeroSubtitle = styled.p`
@@ -42,6 +53,10 @@ const HeroSubtitle = styled.p`
   margin-bottom: 30px;
   padding: 0 50px;
   z-index: 2; /* Asegúrate de que el subtítulo esté por encima del overlay */
+  @media (max-width: 768px) {
+
+padding: 0;
+}
 `;
 
 const CTAButton = styled.a`
@@ -70,6 +85,16 @@ const InfoSection = styled.section`
   top: 125px;
   left: 25px;
   z-index: 1; /* Asegúrate de que la sección de información esté por encima del overlay */
+
+  @media (max-width: 1024px) {
+    
+  }
+
+  @media (max-width: 768px) {
+   top: auto;
+   left: 10px;
+   bottom: 30px;
+  }
 `;
 
 const TitleImage = styled.p`
@@ -90,6 +115,21 @@ const Tooltip = styled.div`
   width: 500px;
   height: auto;
   font-size: 13px;
+
+  @media (max-width: 1024px) {
+ 
+  }
+
+  @media (max-width: 768px) {
+   top: auto;
+   bottom: 20px;
+   width: 100%;
+   height: auto;
+   font-size: 11px;
+   z-index: 1001;
+ 
+
+  }
 `;
 
 const InfoIcon = styled(IoIosInformationCircle)`
@@ -98,6 +138,22 @@ const InfoIcon = styled(IoIosInformationCircle)`
   width: 20px;
   height: auto;
 `;
+
+const InfoMainSection = styled.section`
+z-index: 100;
+width: 100%;
+height: auto;
+ @media (max-width: 1024px) {
+ 
+}
+
+@media (max-width: 768px) {
+padding: 200px 0;
+
+
+}
+  
+`
 
 function HeroSection() {
   const { dailyImage } = useGlobalContext();
@@ -118,11 +174,13 @@ function HeroSection() {
           <p>{dailyImage.explanation}</p>
         </Tooltip>
       </InfoSection>
-      <HeroTitle>Explora el Universo</HeroTitle>
-      <HeroSubtitle>
-        Descubre los misterios del espacio con nosotros. Sumérgete en un viaje cósmico donde cada estrella, planeta y galaxia nos revela secretos fascinantes del universo.
-      </HeroSubtitle>
-      <CTAButton href="#caracteristicas">Comienza Ahora</CTAButton>
+      <InfoMainSection>
+        <HeroTitle>Explora el Universo</HeroTitle>
+        <HeroSubtitle>
+          Descubre los misterios del espacio con nosotros. Sumérgete en un viaje cósmico donde cada estrella, planeta y galaxia nos revela secretos fascinantes del universo.
+        </HeroSubtitle>
+        <CTAButton href="#caracteristicas">Comienza Ahora</CTAButton>
+      </InfoMainSection>
     </HeroSectionStyled>
   );
 }

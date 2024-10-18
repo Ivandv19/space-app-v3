@@ -14,6 +14,19 @@ const Card = styled.div`
   display: flex;
   flex-direction: column; // Para que el contenido se organice verticalmente
   padding: 20px 20px;
+
+  @media (max-width: 1024px) {
+
+display: flex;
+flex-direction: column;
+height: auto;
+
+
+}
+
+@media (max-width: 768px) {
+width: 100%;
+}
  
 `;
 

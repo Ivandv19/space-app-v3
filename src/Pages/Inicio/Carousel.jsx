@@ -7,14 +7,47 @@ const CarouselWrapper = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100%;
+
+
+    @media (max-width: 1024px) {
+display: flex;
+flex-direction: column;
+height: auto;
+gap: 50px;
+
+
+}
+
+@media (max-width: 768px) {
+
+}
+ 
+
+    
 `;
 
 const CarouselContainer = styled.div`
 width: 100%;
-    display: flex;
-    align-items: center;
+display: flex;
+align-items: center;
  padding: 20px 100px;
  gap: 50px;
+
+ 
+
+ @media (max-width: 1024px) {
+
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    padding: 0;
+   
+  }
+
+  @media (max-width: 768px) {
+
+  
+  }
 
 `;
 
@@ -23,6 +56,16 @@ const ImageContainer = styled.div`
     height: 300px;
     overflow: hidden;
     border-radius: 10px;
+
+    @media (max-width: 1024px) {
+width: 100%;
+height: auto;
+
+}
+
+@media (max-width: 768px) {
+
+}
 `;
 
 const Image = styled.img`
@@ -38,6 +81,18 @@ const TextContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    @media (max-width: 1024px) {
+width: 100%;
+height: 300px;
+
+}
+
+@media (max-width: 768px) {
+    width: 100%;
+    height: 300px;
+    font-size: 12px;
+}
  
 `;
 
@@ -55,6 +110,26 @@ const Dot = styled.span`
     display: inline-block;
 `;
 
+const Container = styled.section`
+
+@media (max-width: 1024px) {
+
+display: flex;
+flex-direction: column;
+height: auto;
+justify-content: center;
+align-items: center;
+padding: 0;
+
+
+}
+
+@media (max-width: 768px) {
+
+}
+    
+`
+
 const Carrusel = ({ images }) => {
     const { currentIndex } = useCarrusel(images);
 
@@ -63,7 +138,7 @@ const Carrusel = ({ images }) => {
         <CarouselWrapper>
             <CarouselContainer>
                 {images.length > 0 && (
-                    <>
+                    <Container>
                         <ImageContainer>
                             <Image src={images[currentIndex].url} alt={images[currentIndex].title} />
                         </ImageContainer>
@@ -71,7 +146,7 @@ const Carrusel = ({ images }) => {
                             <h3>{images[currentIndex].title}</h3>
                             <p>{images[currentIndex].explanation}</p>
                         </TextContainer>
-                    </>
+                    </Container>
                 )}
             </CarouselContainer>
             <DotsContainer>

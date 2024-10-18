@@ -8,6 +8,16 @@ const FooterContainer = styled.footer`
   color: #fff;
   padding: 1rem;
   text-align: center;
+
+  @media (max-width: 1024px) {
+
+}
+
+@media (max-width: 768px) {
+  p{
+    font-size: 14px;
+  }
+}
 `;
 
 const FooterLink = styled.a`

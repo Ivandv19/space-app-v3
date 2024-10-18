@@ -11,14 +11,14 @@ const HeaderStyled = styled.header`
   width: 100%;
   height: ${({ shrink }) => (shrink ? '70px' : '100px')};
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   padding: 0 20px;
   background-color: #f8f9fa;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: fixed;
   top: 0;
-  z-index: 10;
+  z-index: 1000;
   transition: height 0.3s ease;
 
   @media (max-width: 1024px) {
