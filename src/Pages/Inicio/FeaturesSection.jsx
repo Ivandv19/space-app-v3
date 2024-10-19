@@ -19,6 +19,11 @@ const SectionTitle = styled.h2`
   text-align: center;
   margin-bottom: 40px;
   color: #333;
+
+  @media (max-width: 768px) { // Cambia a móviles
+    font-size: 10vw;
+    
+    }
 `;
 
 const FeaturesContainer = styled.div`

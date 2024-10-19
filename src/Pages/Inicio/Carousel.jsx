@@ -30,6 +30,7 @@ const CarouselContainer = styled.div`
 width: 100%;
 display: flex;
 align-items: center;
+flex-direction: column;
  padding: 20px 100px;
  gap: 50px;
 
@@ -46,7 +47,7 @@ align-items: center;
 
   @media (max-width: 768px) {
 
-  
+ 
   }
 
 `;
@@ -83,16 +84,28 @@ const TextContainer = styled.div`
     align-items: center;
 
     @media (max-width: 1024px) {
-width: 100%;
-height: 300px;
+    width: 100%;
+    height: 300px;
 
 }
 
 @media (max-width: 768px) {
     width: 100%;
-    height: 300px;
-    font-size: 12px;
+    height: auto;
+    margin: 1.5vh 0;
+  
+  
+
+    h3{
+        font-size: 5vw;
+    }
+
+    p{
+        font-size: 3vw;
+        margin: 1.5vh 0;
+    }
 }
+
  
 `;
 
@@ -111,6 +124,11 @@ const Dot = styled.span`
 `;
 
 const Container = styled.section`
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+gap: 10px;
 
 @media (max-width: 1024px) {
 

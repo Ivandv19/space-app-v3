@@ -24,10 +24,9 @@ const HeroSectionStyled = styled.section`
  
   }
 
-  @media (max-width: 768px) {
-  display: flex;
-  justify-content:flex-start;
-
+  @media (max-width: 768px) { // Cambia a móviles
+    justify-content: flex-start;
+    
   }
 
 `;
@@ -46,6 +45,10 @@ const HeroTitle = styled.h1`
   font-size: 3rem;
   margin-bottom: 20px;
   z-index: 1; /* Asegúrate de que el título esté por encima del overlay */
+
+  @media (max-width: 768px) { // Cambia a móviles
+  font-size: 8vw;
+  }
 `;
 
 const HeroSubtitle = styled.p`
@@ -54,8 +57,9 @@ const HeroSubtitle = styled.p`
   padding: 0 50px;
   z-index: 2; /* Asegúrate de que el subtítulo esté por encima del overlay */
   @media (max-width: 768px) {
-
-padding: 0;
+  padding: 0;
+  font-size: 4vw;
+  
 }
 `;
 
@@ -73,6 +77,10 @@ const CTAButton = styled.a`
 
     &:hover {
         background-color: #0056b3;
+    }
+
+    @media (max-width: 768px) { // Cambia a móviles
+    font-size: 3vw;
     }
 `;
 
@@ -92,13 +100,18 @@ const InfoSection = styled.section`
 
   @media (max-width: 768px) {
    top: auto;
-   left: 10px;
-   bottom: 30px;
+   left: 5px;
+   bottom: 10px;
   }
 `;
 
 const TitleImage = styled.p`
   font-size: 15px;
+
+  @media (max-width: 768px) { // Cambia a móviles
+    font-size: 3vw;
+    
+    }
 `;
 
 const Tooltip = styled.div`
@@ -125,10 +138,8 @@ const Tooltip = styled.div`
    bottom: 20px;
    width: 100%;
    height: auto;
-   font-size: 11px;
    z-index: 1001;
- 
-
+   font-size: 2.5vw;
   }
 `;
 
@@ -148,8 +159,8 @@ height: auto;
 }
 
 @media (max-width: 768px) {
-padding: 200px 0;
-
+  
+  padding: 20vh 1vw 10vh 1vw; /* Padding relativo al tamaño de la pantalla */
 
 }
   

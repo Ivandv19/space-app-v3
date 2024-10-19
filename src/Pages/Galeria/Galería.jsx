@@ -43,8 +43,9 @@ const PageTitle = styled.h2`
     font-size: 2.5rem;
     color: #333;
 
-    @media (max-width: 768px) {
-        font-size: 30px;
+    @media (max-width: 768px) { // Cambia a móviles
+    font-size: 7vw;
+    
     }
 `;
 
@@ -52,6 +53,10 @@ const PageDescription = styled.p`
     font-size: 1.2rem;
     color: #666;
     max-width: 800px;
+
+    @media (max-width: 768px) { // Cambia a móviles
+    font-size: 4vw;
+    }
 `;
 
 // Sección para las imágenes "Me gusta" y "Guardadas"
@@ -73,6 +78,13 @@ const GallerySection = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 20px;
+
+    @media (max-width: 768px) { // Cambia a móviles
+        h3{
+            font-size: 4vw;
+        }
+  
+    }
 `;
 
 // Estilo de cada imagen de la galería
@@ -114,12 +126,23 @@ const Overlay = styled.div`
     ${GalleryItem}:hover & {
         opacity: 1; // Aparece al hacer hover
     }
+
+    @media (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 `;
 
 const ItemTitle = styled.h3`
     font-size: 1.5rem;
     margin: 10px 0;
     text-align: center;
+
+    @media (max-width: 768px) {
+        font-size: 2vw;
+    }
 `;
 
 const ItemDescription = styled.p`
@@ -128,7 +151,7 @@ const ItemDescription = styled.p`
     text-align: center;
 
     @media (max-width: 768px) {
-        font-size: 14px;
+        font-size: 2.5vw;
     }
 `;
 
@@ -151,7 +174,6 @@ const Button = styled.button`
     color: white;
     font-size: 1.5rem;
     transition: transform 0.2s ease;
-    font-size: 20px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -180,6 +202,10 @@ const ItemDescription__saved = styled.p`
 
 const LikesStyled = styled.p`
     font-size: 15px;
+
+    @media (max-width: 768px) { // Cambia a móviles
+    font-size: 3.5vw;
+    }
 `
 
 const RegresarBoton = styled.button`

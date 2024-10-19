@@ -15,6 +15,10 @@ const NoticiaContainer = styled.div`
     background-color: #f9f9f9;  // Fondo sutil para resaltar la noticia
     border-radius: 10px;  // Bordes redondeados
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);  // Sombra para dar profundidad
+
+    @media (max-width: 768px) {
+    padding: 13vh 1vw 10vh 1vw; /* Padding relativo al tamaño de la pantalla */
+  }
 `;
 
 const ContentDiv = styled.section`
@@ -54,6 +58,10 @@ const NoticiaImage = styled.img`
     height: auto;  // Mantener la proporción de la imagen
     border-radius: 10px;  // Bordes redondeados para la imagen
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  // Sombra sutil para la imagen
+
+    @media (max-width: 768px) { // Cambia a móviles
+        max-width: 100%;  // Aumentar el ancho máximo de la imagen
+    }
 `;
 
 const NoticiaCenter = styled.section`
@@ -62,6 +70,10 @@ const NoticiaCenter = styled.section`
     align-items: center;
     gap: 25px;
     max-width: 70%;
+
+    @media (max-width: 768px) {
+    max-width: 100%;
+  }
 `;
 
 const RegresarBoton = styled.button`

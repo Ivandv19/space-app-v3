@@ -28,7 +28,7 @@ const HeaderStyled = styled.header`
   }
 
   @media (max-width: 768px) {
-    height: ${({ shrink }) => (shrink ? '60px' : '80px')}; 
+    height: ${({ shrink }) => (shrink ? '50px' : '60px')}; 
     padding: 0 20px; 
     flex-direction: row-reverse;
    justify-content: space-between;
@@ -38,6 +38,10 @@ const HeaderStyled = styled.header`
 const Logo = styled.h1`
   font-size: 24px; 
   margin: 0;
+
+  @media (max-width: 768px) { // Cambia a móviles
+  font-size: 6vw;
+  }
 `;
 
 const LogoContainer = styled.div`
@@ -54,6 +58,14 @@ const ImgContainer = styled.div`
     width: ${({ shrink }) => (shrink ? '40px' : '50px')}; 
     height: ${({ shrink }) => (shrink ? '40px' : '50px')};
     transition: width 0.3s ease, height 0.3s ease; 
+  }
+
+  @media (max-width: 768px) { // Cambia a móviles
+  svg {
+    width: ${({ shrink }) => (shrink ? '30px' : '40px')}; 
+    height: ${({ shrink }) => (shrink ? 'auto' : 'auto')};
+    transition: width 0.3s ease, height 0.3s ease; 
+  }
   }
 `;
 

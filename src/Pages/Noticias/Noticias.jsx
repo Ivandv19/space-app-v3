@@ -11,6 +11,14 @@ const NoticiasContainer = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 50px;
+
+    @media (max-width: 1024px) {
+        padding: 15vh 1vw 10vh 1vw; /* Padding relativo al tamaño de la pantalla */
+  }
+
+  @media (max-width: 768px) {
+    padding: 13vh 1vw 10vh 1vw; /* Padding relativo al tamaño de la pantalla */
+  }
 `;
 
 const SearchInput = styled.input`
@@ -18,6 +26,10 @@ const SearchInput = styled.input`
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 100%;
+
+    @media (max-width: 768px) { // Cambia a móviles
+    font-size: 4vw;
+    }
   
     `;
 
@@ -26,6 +38,10 @@ const FilterSelect = styled.select`
     border: 1px solid #ccc;
     border-radius: 5px;
     margin: 10px 0;
+
+    @media (max-width: 768px) { // Cambia a móviles
+    font-size: 4vw;
+    }
 `;
 
 const OrderSelect = styled.select`
@@ -33,6 +49,10 @@ const OrderSelect = styled.select`
     border: 1px solid #ccc;
     border-radius: 5px;
     margin: 10px 0;
+
+    @media (max-width: 768px) { // Cambia a móviles
+    font-size: 4vw;
+    }
 `;
 
 const NoticiaItem = styled.div`
@@ -91,6 +111,11 @@ const PageTitle = styled.h2`
     font-size: 2.5rem;
     color: #333;
     text-align: center;
+
+    @media (max-width: 768px) { // Cambia a móviles
+    font-size: 7vw;
+    
+    }
     
 `;
 
@@ -99,6 +124,10 @@ const PageDescription = styled.p`
     color: #666;
     text-align: center;
     max-width: 800px;
+
+    @media (max-width: 768px) { // Cambia a móviles
+    font-size: 4vw;
+    }
 `;
 
 const generarSlug = (title) => {
@@ -136,12 +165,22 @@ const BusquedaContainer = styled.section`
     justify-content: center;
     align-items: center;
     gap: 20px;
+
+    @media (max-width: 768px) { // Cambia a móviles
+    width: 100%;
+    }
 `
 
 const FilstrosContainer = styled.section`
     display: flex;
     flex-direction: row;
     gap: 20px;
+
+    @media (max-width: 768px) { // Cambia a móviles
+    width: 100%;
+    flex-direction: column;
+
+    }
 `
 
 const NoticiasSection = styled.section`
@@ -149,6 +188,15 @@ const NoticiasSection = styled.section`
     grid-template-columns: repeat(3, 1fr); // Establece exactamente 3 columnas
     gap: 20px; // Espacio entre los elementos del grid
     width: 100%; // Asegura que el grid ocupe todo el ancho disponible
+
+    @media (max-width: 1024px) {
+        grid-template-columns: repeat(auto-fit, minmax(30vw, 1fr));
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  
+  }
 `;
 
 const RegresarBoton = styled.button`
@@ -179,6 +227,8 @@ const Spinner = styled.div`
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
+
+    
 `;
 
 const Noticias = () => {
@@ -317,8 +367,7 @@ const Noticias = () => {
                     <RegresarBoton onClick={handleRegresarClick}>Regresar a inicio</RegresarBoton>
                 </>
 
-            )};
-
+            )}
 
         </NoticiasContainer>
     );

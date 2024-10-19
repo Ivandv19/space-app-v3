@@ -11,6 +11,13 @@ const NavList = styled.ul`
   list-style: none;
   display: flex;
   justify-content: center;
+
+  @media (max-width: 768px) { // Cambia a móviles
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    }
 `;
 
 const NavItem = styled.li`
@@ -20,6 +27,12 @@ const NavItem = styled.li`
   &:hover {
     text-decoration: underline;
   }
+
+  @media (max-width: 768px) { // Cambia a móviles
+    margin: 0;
+    font-size: 3vw;
+  
+    }
 `;
 
 const Navbar = ({ categorias, setCategoriaSeleccionada, categoriaSeleccionada }) => {

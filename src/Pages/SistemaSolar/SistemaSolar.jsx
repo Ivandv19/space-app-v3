@@ -14,6 +14,14 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   gap: 25px;
+
+  @media (max-width: 1024px) {
+        padding: 15vh 1vw 10vh 1vw; /* Padding relativo al tamaño de la pantalla */
+  }
+
+  @media (max-width: 768px) {
+    padding: 15vh 1vw 10vh 1vw; /* Padding relativo al tamaño de la pantalla */
+  }
 `;
 
 const Description = styled.p`
@@ -26,6 +34,11 @@ const PageTitle = styled.h2`
     font-size: 2.5rem;
     color: #333;
     text-align: center;
+
+    @media (max-width: 768px) { // Cambia a móviles
+    font-size: 7vw;
+    
+    }
 `;
 
 const PageDescription = styled.p`
@@ -33,6 +46,10 @@ const PageDescription = styled.p`
     color: #666;
     text-align: center;
     max-width: 800px;
+
+    @media (max-width: 768px) { // Cambia a móviles
+    font-size: 4vw;
+    }
 `;
 
 const RegresarBoton = styled.button`
@@ -47,6 +64,10 @@ const RegresarBoton = styled.button`
 
     &:hover {
         background-color: #0056b3;
+    }
+
+    @media (max-width: 768px) { // Cambia a móviles
+    font-size: 4vw;
     }
 `;
 

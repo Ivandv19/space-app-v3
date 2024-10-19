@@ -26,6 +26,7 @@ height: auto;
 
 @media (max-width: 768px) {
 width: 100%;
+padding: 20px 10px;
 }
  
 `;
@@ -35,13 +36,21 @@ const FeatureTitle = styled.h3`
   margin-bottom: 20px;
   margin-top: 20px;
   color: #282c34;
+
+  @media (max-width: 768px) { // Cambia a móviles
+    font-size: 8vw;
+    
+    }
 `;
 
 const FeatureDescription = styled.p`
 margin: 20px 20px;
   font-size: 1.2rem;
   color: #555;
-
+  @media (max-width: 768px) { // Cambia a móviles
+    font-size: 4vw;
+    
+    }
 `;
 
 const ShowMoreLink = styled(Link)`
@@ -57,6 +66,10 @@ const ShowMoreLink = styled(Link)`
 
     &:hover {
         background-color: #21a1f1;
+    }
+
+    @media (max-width: 768px) { // Cambia a móviles
+    font-size: 4vw;
     }
 `;
 

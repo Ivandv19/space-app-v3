@@ -10,8 +10,7 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
-
-  flex: 1; /* Esto asegura que el contenedor principal ocupe todo el espacio disponible */
+flex: 1; /* Esto asegura que el contenedor principal ocupe todo el espacio disponible */
 `;
 
 function Inicio() {

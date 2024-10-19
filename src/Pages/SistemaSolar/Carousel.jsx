@@ -28,6 +28,12 @@ const CarouselItem = styled.div`
     border-radius: 8px; /* Bordes redondeados para la imagen */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para la imagen */
   }
+
+  @media (max-width: 768px) { // Cambia a móviles
+    img {
+      width: 100%;
+    }
+    }
 `;
 
 const Button = styled.button`
@@ -81,6 +87,10 @@ const MainContainer = styled.div`
   padding: 20px 0;
   max-width: 800px;
   height: auto;
+
+  @media (max-width: 768px) { // Cambia a móviles
+    font-size: 3vw;
+    }
 `;
 
 const Carousel = ({ categoriaSeleccionada, datos }) => {
