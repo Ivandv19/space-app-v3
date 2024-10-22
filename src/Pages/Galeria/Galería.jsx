@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { useGlobalContext } from '../../context/GlobalContext';
 import { IoHeart, IoChatbubble, IoShareSocial, IoBookmark } from "react-icons/io5";
 import { Navigate, useNavigate } from 'react-router-dom';
+import Titulo from './Titulo';
+import Descripcion from './Descripcion';
+import Spinner from './Spinner';
 
 // Contenedor principal con grid layout para las secciones
 const GalleryContainer = styled.div`
@@ -39,25 +42,7 @@ const HeaderSection = styled.div`
     }
 `;
 
-const PageTitle = styled.h2`
-    font-size: 2.5rem;
-    color: #333;
 
-    @media (max-width: 768px) { // Cambia a móviles
-    font-size: 7vw;
-    
-    }
-`;
-
-const PageDescription = styled.p`
-    font-size: 1.2rem;
-    color: #666;
-    max-width: 800px;
-
-    @media (max-width: 768px) { // Cambia a móviles
-    font-size: 4vw;
-    }
-`;
 
 // Sección para las imágenes "Me gusta" y "Guardadas"
 const LikedSavedSection = styled.div`
@@ -231,29 +216,7 @@ const RegresarBoton = styled.button`
   }
 `;
 
-// Estilos del spinner
-const Spinner = styled.div`
-    border: 8px solid #f3f3f3; /* Color claro */
-    border-top: 8px solid #3498db; /* Color del spinner */
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite; /* Animación del spinner */
-    
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-`;
 
-const SpinnerContainer = styled.section`
- grid-column: 2; /* Desde la columna 2 hasta antes de la 4 */
- grid-row: 2;    /* Desde la fila 1 hasta antes de la 3 */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-`
 
 const Galeria = () => {
     const navigate = useNavigate();
@@ -332,18 +295,13 @@ const Galeria = () => {
         <GalleryContainer>
             {/* Componente de carga */}
             {loading ? (
-                <SpinnerContainer>
-                    <Spinner />
-                    <p>Cargando imágenes...</p>
-                </SpinnerContainer>
+                <Spinner/>
             ) : (
                 <>
                     {/* Sección del título y la descripción */}
                     <HeaderSection>
-                        <PageTitle>Galería Espacial</PageTitle>
-                        <PageDescription>
-                            Explora una colección impresionante de imágenes del espacio. Desde nebulosas hasta planetas, cada imagen cuenta una historia sobre el universo que nos rodea.
-                        </PageDescription>
+                        <Titulo titulo ="Galería"></Titulo>
+                        <Descripcion descripcion=" Explora una colección impresionante de imágenes del espacio. Desde nebulosas hasta planetas, cada imagen cuenta una historia sobre el universo que nos rodea." />
                     </HeaderSection>
 
                     {/* Sección de imágenes con "Me gusta" */}

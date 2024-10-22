@@ -151,7 +151,6 @@ padding: 0;
 const Carrusel = ({ images }) => {
     const { currentIndex } = useCarrusel(images);
 
-
     return (
         <CarouselWrapper>
             <CarouselContainer>

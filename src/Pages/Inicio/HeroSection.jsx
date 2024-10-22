@@ -90,8 +90,8 @@ const InfoSection = styled.section`
   align-items: center;
   gap: 5px;
   position: absolute;
-  top: 125px;
-  left: 25px;
+  top: 120px;
+  left: 10px;
   z-index: 1; /* Asegúrate de que la sección de información esté por encima del overlay */
 
   @media (max-width: 1024px) {
@@ -125,7 +125,7 @@ const Tooltip = styled.div`
   opacity: ${({ visible }) => (visible ? 1 : 0)};
   transition: opacity 0.2s ease;
   pointer-events: none;
-  width: 500px;
+  width: 50vw;
   height: auto;
   font-size: 13px;
 
@@ -136,7 +136,7 @@ const Tooltip = styled.div`
   @media (max-width: 768px) {
    top: auto;
    bottom: 20px;
-   width: 100%;
+   width: 90vw;
    height: auto;
    z-index: 1001;
    font-size: 2.5vw;

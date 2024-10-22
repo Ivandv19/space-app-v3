@@ -2,6 +2,7 @@
 import styled from 'styled-components';
 import FeatureCard from './FeatureCard';
 import { useGlobalContext } from '../../context/GlobalContext';
+import Titulo from '../Galeria/Titulo';
 
 
 const Section = styled.section`
@@ -12,19 +13,10 @@ height: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 50px;
 `;
 
-const SectionTitle = styled.h2`
-  font-size: 2.5rem;
-  text-align: center;
-  margin-bottom: 40px;
-  color: #333;
 
-  @media (max-width: 768px) { // Cambia a móviles
-    font-size: 10vw;
-    
-    }
-`;
 
 const FeaturesContainer = styled.div`
 width: 100%;
@@ -59,7 +51,7 @@ function FeaturesSection() {
 
   return (
     <Section id="caracteristicas">
-      <SectionTitle>Nuestras Características</SectionTitle>
+      <Titulo titulo="Explora el Universo"/>
       <FeaturesContainer>
         <FeatureCard
           titulo={'Galería Espacial'}

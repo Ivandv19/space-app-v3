@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useGlobalContext } from '../../context/GlobalContext';
 import { useEffect } from 'react';
+import Spinner from '../Galeria/Spinner';
+import Titulo from '../Galeria/Titulo';
+import Descripcion from '../Galeria/Descripcion';
 
 
 const NoticiasContainer = styled.div`
@@ -107,28 +110,6 @@ const Slider = styled.input`
     margin: 10px 0;
 `;
 
-const PageTitle = styled.h2`
-    font-size: 2.5rem;
-    color: #333;
-    text-align: center;
-
-    @media (max-width: 768px) { // Cambia a móviles
-    font-size: 7vw;
-    
-    }
-    
-`;
-
-const PageDescription = styled.p`
-    font-size: 1.2rem;
-    color: #666;
-    text-align: center;
-    max-width: 800px;
-
-    @media (max-width: 768px) { // Cambia a móviles
-    font-size: 4vw;
-    }
-`;
 
 const generarSlug = (title) => {
     return title
@@ -214,22 +195,7 @@ const RegresarBoton = styled.button`
     }
 `;
 
-// Estilos del spinner
-const Spinner = styled.div`
-    border: 8px solid #f3f3f3; /* Color claro */
-    border-top: 8px solid #3498db; /* Color del spinner */
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite; /* Animación del spinner */
-    
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
 
-    
-`;
 
 const Noticias = () => {
 
@@ -301,10 +267,9 @@ const Noticias = () => {
             {loading ? (
                 <Spinner />
             ) : (
-
                 <>
-                    <PageTitle>Últimas Noticias del Mundo Espacial</PageTitle>
-                    <PageDescription>Aquí encontrarás las noticias más recientes sobre exploración espacial, astronomía, astrofísica y tecnología espacial. Mantente al día con los descubrimientos más emocionantes y eventos importantes en el ámbito de la ciencia.</PageDescription>
+                    <Titulo titulo="Últimas Noticias del Mundo Espacial" />
+                    <Descripcion descripcion="Aquí encontrarás las noticias más recientes sobre exploración espacial, astronomía, astrofísica y tecnología espacial. Mantente al día con los descubrimientos más emocionantes y eventos importantes en el ámbito de la ciencia." />
                     <BusquedaContainer>
                         <SearchInput
                             onChange={(e) => setSearchTerm(e.target.value)}

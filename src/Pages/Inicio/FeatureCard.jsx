@@ -38,7 +38,7 @@ const FeatureTitle = styled.h3`
   color: #282c34;
 
   @media (max-width: 768px) { // Cambia a móviles
-    font-size: 8vw;
+    font-size: 5vw;
     
     }
 `;
@@ -48,7 +48,7 @@ margin: 20px 20px;
   font-size: 1.2rem;
   color: #555;
   @media (max-width: 768px) { // Cambia a móviles
-    font-size: 4vw;
+    font-size: 3.5vw;
     
     }
 `;

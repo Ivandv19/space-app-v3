@@ -1,6 +1,8 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useGlobalContext } from '../../context/GlobalContext';
+import Titulo from '../Galeria/Titulo';
+import Descripcion from '../Galeria/Descripcion';
 
 const NoticiaContainer = styled.div`
     display: flex;
@@ -28,18 +30,6 @@ const ContentDiv = styled.section`
     line-height: 1.5;  // Aumentar el espacio entre líneas
 `;
 
-const NoticiaTitle = styled.h2`
-    font-size: 2.2rem;  // Aumentar el tamaño del título
-    font-weight: bold;  // Negrita para destacar el título
-    margin: 0;
-    color: #333;  // Color azul para el título
-`;
-
-const NoticiaDescription = styled.p`
-    font-size: 1.1rem;  // Tamaño de fuente ligeramente más grande
-    color: #555;
-    margin: 10px 0;  // Espacio superior e inferior
-`;
 
 const NoticiaAuthor = styled.p`
     font-size: 0.9rem;
@@ -108,8 +98,8 @@ const Noticia = () => {
     return (
         <NoticiaContainer>
             <NoticiaCenter>
-                <NoticiaTitle>{noticia.title}</NoticiaTitle>
-                <NoticiaDescription>{noticia.explanation}</NoticiaDescription>
+                <Titulo titulo={noticia.title}/>
+                <Descripcion descripcion={noticia.explanation}/>
                 <NoticiaAuthor>Por: {noticia.author}</NoticiaAuthor>
                 <NoticiaDate>{new Date(noticia.date).toLocaleDateString()}</NoticiaDate>
                 <NoticiaImage src={noticia.url} alt={noticia.title} />
