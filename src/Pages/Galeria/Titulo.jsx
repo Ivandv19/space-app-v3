@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const PageTitle = styled.h2`
     font-size: 2.5rem;
     color: #333;
+    text-align: center;
 
     @media (max-width: 768px) { // Cambia a móviles
     font-size: 7vw;

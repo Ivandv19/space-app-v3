@@ -23,8 +23,8 @@ padding: 150px 20px 50px 20px;
     }   
 
     @media (max-width: 768px) {
-        padding: 150px 0px 50px 0px;
-    }
+    padding: 15vh 1vw 10vh 1vw; /* Padding relativo al tamaño de la pantalla */
+  }
 `;
 
 // Sección para el título y descripción
@@ -294,12 +294,12 @@ const Galeria = () => {
         <GalleryContainer>
             {/* Componente de carga */}
             {loading ? (
-                <Spinner/>
+                <Spinner />
             ) : (
                 <>
                     {/* Sección del título y la descripción */}
                     <HeaderSection>
-                        <Titulo titulo ="Galería"></Titulo>
+                        <Titulo titulo="Galería"></Titulo>
                         <Descripcion descripcion=" Explora una colección impresionante de imágenes del espacio. Desde nebulosas hasta planetas, cada imagen cuenta una historia sobre el universo que nos rodea." />
                     </HeaderSection>
 

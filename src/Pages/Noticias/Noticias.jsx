@@ -20,7 +20,7 @@ const NoticiasContainer = styled.div`
   }
 
   @media (max-width: 768px) {
-    padding: 13vh 1vw 10vh 1vw; /* Padding relativo al tamaño de la pantalla */
+    padding: 15vh 1vw 10vh 1vw; /* Padding relativo al tamaño de la pantalla */
   }
 `;
 
@@ -201,7 +201,7 @@ const Noticias = () => {
 
     const navigate = useNavigate();
     const handleRegresarClick = () => {
-        navigate('/'); // Cambia '/noticias' a la ruta correcta para regresar a la lista de noticias
+        navigate('/'); 
     };
 
     const [orderDirection, setOrderDirection] = useState('reciente');

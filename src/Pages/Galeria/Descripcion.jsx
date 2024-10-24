@@ -5,6 +5,7 @@ const PageDescription = styled.p`
     font-size: 1.2rem;
     color: #666;
     max-width: 800px;
+    text-align: center;
 
     @media (max-width: 768px) { // Cambia a móviles
     font-size: 4vw;
