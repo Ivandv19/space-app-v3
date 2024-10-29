@@ -6,6 +6,8 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import Titulo from './Titulo';
 import Descripcion from './Descripcion';
 import Spinner from './Spinner';
+import useRandomLikes from '../../hooks/useRandomLikes';
+import useOrderByLikes from '../../hooks/useOrderByLikes';
 
 // Contenedor principal con grid layout para las secciones
 const GalleryContainer = styled.div`
@@ -218,157 +220,117 @@ const RegresarBoton = styled.button`
 
 
 const Galeria = () => {
+
+    // Hook de navegación para cambiar de ruta
     const navigate = useNavigate();
+
+    // Función para manejar el clic en el botón "Regresar"
     const handleRegresarClick = () => {
-        navigate('/'); // Cambia '/noticias' a la ruta correcta para regresar a la lista de noticias
+        navigate('/'); // Navega a la ruta raíz
     };
 
-    const { imagesGaleria } = useGlobalContext();
-    const [likedImages, setLikedImages] = useState(new Set());
-    const [savedImages, setSavedImages] = useState(new Set());
-    const [imagesWithLikes, setImagesWithLikes] = useState([]);
-    const [loading, setLoading] = useState(true); // Estado de carga
+    // Desestructuración del contexto global para acceder a datos y funciones
+    const { imagesGaleria, state, toggleSave, toggleLike } = useGlobalContext();
+    const { savedImages, likedImages } = state; // Extrae las imágenes guardadas y "liked" del estado global
+    const [loading, setLoading] = useState(true); // Estado para manejar la carga de datos
 
+    // Custom hooks para asignar likes aleatorios y ordenar las imágenes
+    const itemsWithLikes = useRandomLikes(imagesGaleria) || []; // Asigna likes aleatorios a las imágenes
+    const topFiveItems = useOrderByLikes(itemsWithLikes) || []; // Ordena las imágenes por la cantidad de likes
+
+    // Efecto que se ejecuta al montar el componente o cambiar imagesGaleria
     useEffect(() => {
         const fetchData = async () => {
-            setLoading(true); // Inicia el estado de carga
-            // Simula una llamada a la API con un retraso de 2 segundos
-            await new Promise(resolve => setTimeout(resolve, 2000));
-
-            // Asignar un número de likes aleatorio a cada imagen
-            const imagesWithRandomLikes = imagesGaleria.map(image => ({
-                ...image,
-                likes: Math.floor(Math.random() * 1001) // Número aleatorio entre 0 y 100
-            }));
-
-            setImagesWithLikes(imagesWithRandomLikes);
-            setLoading(false); // Cambia el estado de carga a false cuando la información esté disponible
+            setLoading(true); // Activa el estado de carga
+            await new Promise(resolve => setTimeout(resolve, 1000)); // Simula una espera de 1 segundo
+            setLoading(false); // Desactiva el estado de carga
         };
 
-        fetchData();
-    }, [imagesGaleria]);
+        fetchData(); // Llama a la función fetchData
+    }, [imagesGaleria]); // Se ejecuta cada vez que imagesGaleria cambia
 
-    const toggleLike = (image) => {
-        setImagesWithLikes((prevImages) =>
-            prevImages.map((img) => {
-                if (img.date === image.date) {
-                    const newLikes = likedImages.has(image.date)
-                        ? img.likes - 1 // Decrementar si ya estaba "me gusta"
-                        : img.likes + 1; // Incrementar si no estaba "me gusta"
-                    setLikedImages((prev) => {
-                        const updatedLikes = new Set(prev);
-                        if (updatedLikes.has(image.date)) {
-                            updatedLikes.delete(image.date);
-                        } else {
-                            updatedLikes.add(image.date);
-                        }
-                        return updatedLikes;
-                    });
-                    return { ...img, likes: newLikes }; // Actualizar likes
-                }
-                return img;
-            })
-        );
-    };
+    console.log('imagenes con likes: ', likedImages);
+    console.log('imagenes con guardadas: ', savedImages);
 
-    const toggleSave = (image) => {
-        setSavedImages((prev) => {
-            const updatedSaves = new Set(prev);
-            if (updatedSaves.has(image.date)) {
-                updatedSaves.delete(image.date);
-            } else {
-                updatedSaves.add(image.date);
-            }
-            return updatedSaves;
-        });
-    };
-
-    // Ordenar las imágenes por likes y tomar las 5 primeras
-    const topLikedImages = [...imagesWithLikes]
-        .sort((a, b) => b.likes - a.likes) // Ordenar de mayor a menor likes
-        .slice(0, 5); // Tomar las 5 primeras
-
-    console.log("Top 5 imágenes con más likes:", topLikedImages); // Debugging
 
     return (
-        <GalleryContainer>
-            {/* Componente de carga */}
-            {loading ? (
-                <Spinner />
+        (<GalleryContainer>
+            {loading ? ( // Verifica si está cargando
+                (<Spinner />) // Muestra un spinner mientras se cargan los datos
             ) : (
                 <>
-                    {/* Sección del título y la descripción */}
                     <HeaderSection>
-                        <Titulo titulo="Galería"></Titulo>
-                        <Descripcion descripcion=" Explora una colección impresionante de imágenes del espacio. Desde nebulosas hasta planetas, cada imagen cuenta una historia sobre el universo que nos rodea." />
+                        <Titulo titulo="Galería" /> {/* Título de la galería */}
+                        <Descripcion descripcion="Explora una colección impresionante de imágenes del espacio. Desde nebulosas hasta planetas, cada imagen cuenta una historia sobre el universo que nos rodea." /> {/* Descripción de la galería */}
                     </HeaderSection>
 
-                    {/* Sección de imágenes con "Me gusta" */}
                     <LikedSavedSection>
-                        <h3>Imágenes con más likes</h3>
-                        {topLikedImages.length > 0 ? (
-                            topLikedImages.map((image) => (
-                                <GalleryItem key={image.date}>
-                                    <Image src={image.url} alt={image.title} />
-                                    <Overlay>
-                                        <ItemTitle>{image.title}</ItemTitle>
-                                        <ItemDescription__liked>{image.explanation}</ItemDescription__liked>
+                        <h3>Imágenes con más likes</h3> {/* Título de la sección de imágenes más liked */}
+                        {topFiveItems.length > 0 ? ( // Verifica si hay imágenes para mostrar
+                            (topFiveItems.map((image) => ( // Mapea las imágenes más liked
+                                (<GalleryItem key={image.date}>
+                                    <Image src={image.url} alt={image.title} /> {/* Muestra la imagen */}
+                                    <Overlay> {/* Superposición con información adicional */}
+                                        <ItemTitle>{image.title}</ItemTitle> {/* Título de la imagen */}
+                                        <ItemDescription__liked>{image.explanation}</ItemDescription__liked> {/* Descripción de la imagen */}
                                     </Overlay>
-                                </GalleryItem>
-                            ))
+                                </GalleryItem>)
+                            )))
                         ) : (
-                            <p>No hay imágenes para mostrar.</p>
+                            (<p>No hay imágenes para mostrar.</p>) // Mensaje si no hay imágenes
                         )}
                     </LikedSavedSection>
 
-                    {/* Sección de la galería principal */}
                     <GallerySection>
-                        <h3>Galería Principal</h3>
-                        {imagesWithLikes.map((image) => (
-                            <GalleryItem key={image.date}>
+                        <h3>Galería Principal</h3> {/* Título de la galería principal */}
+                        {itemsWithLikes.map((image) => ( // Mapea todas las imágenes con likes
+                            (<GalleryItem key={image.date}>
                                 <ImageContainer>
-                                    <Image src={image.url} alt={image.title} />
-                                    <Overlay>
-                                        <ItemTitle>{image.title}</ItemTitle>
-                                        <ItemDescription>{image.explanation}</ItemDescription>
+                                    <Image src={image.url} alt={image.title} /> {/* Muestra la imagen */}
+                                    <Overlay> {/* Superposición con información adicional */}
+                                        <ItemTitle>{image.title}</ItemTitle> {/* Título de la imagen */}
+                                        <ItemDescription>{image.explanation}</ItemDescription> {/* Descripción de la imagen */}
                                     </Overlay>
                                 </ImageContainer>
-                                <ButtonContainer>
-                                    <Button onClick={() => toggleLike(image)}>
-                                        <IoHeart color={likedImages.has(image.date) ? 'red' : 'white'} />
-                                        <LikesStyled>{image.likes}</LikesStyled> {/* Mostrar la cantidad de likes */}
+                                <ButtonContainer> {/* Contenedor de botones para acciones */}
+                                    <Button onClick={() => toggleLike(image)}> {/* Botón para dar like */}
+                                        <IoHeart color={likedImages.some(likedImage => likedImage.date === image.date) ? 'red' : 'white'} /> {/* Icono de corazón que cambia de color */}
+                                        <LikesStyled> {image.likes} {/* Muestra la cantidad de likes */}</LikesStyled>
                                     </Button>
                                     <Button>
-                                        <IoChatbubble />
+                                        <IoChatbubble /> {/* Botón para comentarios */}
                                     </Button>
                                     <Button>
-                                        <IoShareSocial />
+                                        <IoShareSocial /> {/* Botón para compartir */}
                                     </Button>
-                                    <Button onClick={() => toggleSave(image)}>
-                                        <IoBookmark color={savedImages.has(image.date) ? 'blue' : 'white'} />
+                                    <Button onClick={() => toggleSave(image)}> {/* Botón para guardar imagen */}
+                                        <IoBookmark color={savedImages.some(savedImage => savedImage.date === image.date) ? 'blue' : 'white'} /> {/* Icono de marcador que cambia de color */}
                                     </Button>
                                 </ButtonContainer>
-                            </GalleryItem>
+                            </GalleryItem>)
                         ))}
                     </GallerySection>
 
-                    {/* Sección de imágenes guardadas */}
                     <LikedSavedSection>
-                        <h3>Imágenes guardadas</h3>
-                        {imagesGaleria.filter((image) => savedImages.has(image.date)).map((image) => (
-                            <GalleryItem key={image.date}>
-                                <Image src={image.url} alt={image.title} />
-                                <Overlay>
-                                    <ItemTitle>{image.title}</ItemTitle>
-                                    <ItemDescription__saved>{image.explanation}</ItemDescription__saved>
-                                </Overlay>
-                            </GalleryItem>
-                        ))}
+                        <h3>Imágenes guardadas</h3> {/* Título de la sección de imágenes guardadas */}
+                        {itemsWithLikes
+                            .filter((image) => savedImages.some(savedImage => savedImage.date === image.date))
+                            .map((image) => (
+                                <GalleryItem key={image.date}>
+                                    <Image src={image.url} alt={image.title} /> {/* Muestra la imagen guardada */}
+                                    <Overlay> {/* Superposición con información adicional */}
+                                        <ItemTitle>{image.title}</ItemTitle> {/* Título de la imagen guardada */}
+                                        <ItemDescription__saved>{image.explanation}</ItemDescription__saved> {/* Descripción de la imagen guardada */}
+                                    </Overlay>
+                                </GalleryItem>
+                            ))
+                        }
                     </LikedSavedSection>
-                    <RegresarBoton onClick={handleRegresarClick}>Regresar a inicio</RegresarBoton>
+
+                    <RegresarBoton onClick={handleRegresarClick}>Regresar a inicio</RegresarBoton> {/* Botón para regresar a la página de inicio */}
                 </>
             )}
-        </GalleryContainer>
+        </GalleryContainer>)
     );
 };
 
