@@ -8,6 +8,11 @@ const FooterContainer = styled.footer`
   color: #fff;
   padding: 1rem;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 
   @media (max-width: 1024px) {
 
@@ -47,11 +52,11 @@ const IconLink = styled.a`
 const Footer = () => {
   return (
     <FooterContainer>
-      <p>© 2024 Tu Empresa. Todos los derechos reservados.</p>
+      <p>© 2024 Space App. <br /> Todos los derechos reservados.</p>
       <p>
         <FooterLink href="/">Inicio</FooterLink> |
         <FooterLink href="/noticias">Noticias</FooterLink> |
-        <FooterLink href="/galeria">Galería</FooterLink> |
+        <FooterLink href="/galería-espacial">Galería</FooterLink> |
         <FooterLink href="/sistema-solar">Sistema Solar</FooterLink>
       </p>
       <SocialIcons>
