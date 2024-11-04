@@ -93,49 +93,57 @@ const MainContainer = styled.div`
     }
 `;
 
+// Componente Carousel que recibe como props la categoría seleccionada y los datos
 const Carousel = ({ categoriaSeleccionada, datos }) => {
+  // Estado para el índice del elemento actual mostrado en el carrusel
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Restablecer el índice actual al cambiar de categoría
+  // Efecto que se ejecuta al cambiar la categoría seleccionada
   useEffect(() => {
     setCurrentIndex(0); // Resetea el índice al cambiar de categoría
-  }, [categoriaSeleccionada]); // Este efecto se ejecutará cada vez que categoriaSeleccionada cambie
+  }, [categoriaSeleccionada]); // Dependencia: se ejecuta cuando cambia categoriaSeleccionada
 
+  // Retorna null si no hay datos o si el arreglo de datos está vacío
   if (!datos || datos.length === 0) return null;
 
+  // Función para manejar el clic en el botón "Prev" (anterior)
   const handlePrev = () => {
+    // Actualiza el índice actual, si es 0 regresa al último elemento
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? datos.length - 1 : prevIndex - 1));
   };
 
+  // Función para manejar el clic en el botón "Next" (siguiente)
   const handleNext = () => {
+    // Actualiza el índice actual, si es el último regresa al primer elemento
     setCurrentIndex((prevIndex) => (prevIndex === datos.length - 1 ? 0 : prevIndex + 1));
   };
 
+  // Renderiza el carrusel
   return (
     <MainContainer>
-      <h2>{categoriaSeleccionada}</h2>
+      <h2>{categoriaSeleccionada}</h2> {/* Muestra la categoría seleccionada */}
       <CarouselContainer>
-        <PrevButton onClick={handlePrev}>◀</PrevButton>
+        <PrevButton onClick={handlePrev}>◀</PrevButton> {/* Botón para ir al elemento anterior */}
         <CarouselItem>
-          {datos[currentIndex] ? (
+          {datos[currentIndex] ? ( // Verifica si hay datos para mostrar
             <>
-              <h3>{datos[currentIndex].title}</h3>
-              <img src={datos[currentIndex].url} alt={datos[currentIndex].title} />
-              <p>{datos[currentIndex].explanation}</p>
+              <h3>{datos[currentIndex].title}</h3> {/* Muestra el título del elemento actual */}
+              <img src={datos[currentIndex].url} alt={datos[currentIndex].title} /> {/* Muestra la imagen del elemento actual */}
+              <p>{datos[currentIndex].explanation}</p> {/* Muestra la explicación del elemento actual */}
             </>
           ) : (
             <p>No hay datos disponibles.</p> // Mensaje alternativo en caso de que no haya datos
           )}
         </CarouselItem>
-        <NextButton onClick={handleNext}>▶</NextButton>
+        <NextButton onClick={handleNext}>▶</NextButton> {/* Botón para ir al siguiente elemento */}
       </CarouselContainer>
       <DotsContainer>
-        {datos.map((_, index) => (
-          <Dot key={index} active={index === currentIndex} onClick={() => setCurrentIndex(index)} />
+        {datos.map((_, index) => ( // Mapea los datos para crear los puntos de navegación
+          <Dot key={index} active={index === currentIndex} onClick={() => setCurrentIndex(index)} /> // Cada punto puede ser clickeado para cambiar el elemento mostrado
         ))}
       </DotsContainer>
     </MainContainer>
   );
 };
 
-export default Carousel;
+export default Carousel; // Exporta el componente Carousel

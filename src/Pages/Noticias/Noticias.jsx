@@ -196,29 +196,30 @@ const RegresarBoton = styled.button`
 `;
 
 
-
+// Componente Noticias
 const Noticias = () => {
+    const navigate = useNavigate(); // Inicializa el hook para la navegación
 
-    const navigate = useNavigate();
     const handleRegresarClick = () => {
-        navigate('/'); 
+        navigate('/');
     };
 
-    const [orderDirection, setOrderDirection] = useState('reciente');
-    const [orderBy, setOrderBy] = useState('');
-    const [showViewsSlider, setShowViewsSlider] = useState(false); // Nueva state para mostrar el slider
+    const [orderDirection, setOrderDirection] = useState('reciente'); // Estado para la dirección de orden
+    const [orderBy, setOrderBy] = useState(''); // Estado para el criterio de orden
+    const [showViewsSlider, setShowViewsSlider] = useState(false); // Estado para mostrar el slider de vistas
     const [viewsLimit, setViewsLimit] = useState(0); // Estado para el límite de vistas
-    const { noticias } = useGlobalContext();
-    const [searchTerm, setSearchTerm] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState('');
-    const [selectedAuthor, setSelectedAuthor] = useState('');
-    const [selectedTag, setSelectedTag] = useState('');
+    const { noticias } = useGlobalContext(); // Obtener noticias del contexto global
+    const [searchTerm, setSearchTerm] = useState(''); // Estado para el término de búsqueda
+    const [selectedCategory, setSelectedCategory] = useState(''); // Estado para la categoría seleccionada
+    const [selectedAuthor, setSelectedAuthor] = useState(''); // Estado para el autor seleccionado
+    const [selectedTag, setSelectedTag] = useState(''); // Estado para la etiqueta seleccionada
     const [loading, setLoading] = useState(true); // Estado de carga
 
-    // Obtener categorías y autores únicos directamente en el componente
+    // Obtener categorías y autores únicos
     const categories = [...new Set(noticias.map(noticia => noticia.categoria))];
     const authors = [...new Set(noticias.map(noticia => noticia.author))];
 
+    // Filtrar noticias según el término de búsqueda y otros filtros seleccionados
     const filteredNoticias = noticias.filter((noticia) => {
         const matchesTitle = noticia.title.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesCategory = selectedCategory ? noticia.categoria === selectedCategory : true;
@@ -228,21 +229,22 @@ const Noticias = () => {
         return matchesTitle && matchesCategory && matchesAuthor && matchesTag && noticia.views >= viewsLimit; // Filtrar por vistas
     });
 
+    // Ordenar noticias según el criterio y dirección seleccionados
     const sortedNoticias = [...filteredNoticias].sort((a, b) => {
         if (orderBy === 'fecha') {
             return orderDirection === 'reciente'
-                ? new Date(b.date) - new Date(a.date)  // Más reciente primero
+                ? new Date(b.date) - new Date(a.date) // Más reciente primero
                 : new Date(a.date) - new Date(b.date); // Más antiguo primero
         } else if (orderBy === 'relevancia') {
             return orderDirection === 'masVistas'
-                ? b.views - a.views  // Más vistas primero
+                ? b.views - a.views // Más vistas primero
                 : a.views - b.views; // Menos vistas primero
         }
         return 0; // No se hace nada si no se está ordenando
     });
 
+    // Manejar el cambio en el criterio de orden
     const handleOrderByChange = (e) => {
-
         const value = e.target.value;
         setOrderBy(value);
         setShowViewsSlider(value === 'relevancia'); // Mostrar el slider solo si se selecciona "relevancia"
@@ -251,28 +253,29 @@ const Noticias = () => {
         }
     };
 
+    // Efecto para simular la carga de datos
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true); // Inicia el estado de carga
-            // Simula una llamada a la API con un retraso de 2 segundos
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            setLoading(false); // Cambia el estado de carga a false cuando la información esté disponible
+            await new Promise(resolve => setTimeout(resolve, 2000)); // Simula una llamada a la API
+            setLoading(false); // Cambia el estado de carga a false
         };
 
         fetchData();
     }, [noticias]);
 
+    // Renderizar el componente
     return (
         <NoticiasContainer>
-            {loading ? (
+            {loading ? ( // Mostrar spinner si está cargando
                 <Spinner />
             ) : (
                 <>
-                    <Titulo titulo="Últimas Noticias del Mundo Espacial" />
-                    <Descripcion descripcion="Aquí encontrarás las noticias más recientes sobre exploración espacial, astronomía, astrofísica y tecnología espacial. Mantente al día con los descubrimientos más emocionantes y eventos importantes en el ámbito de la ciencia." />
+                    <Titulo titulo="Últimas Noticias del Mundo Espacial" /> {/* Título de la sección */}
+                    <Descripcion descripcion="Aquí encontrarás las noticias más recientes sobre exploración espacial, astronomía, astrofísica y tecnología espacial. Mantente al día con los descubrimientos más emocionantes y eventos importantes en el ámbito de la ciencia." /> {/* Descripción de la sección */}
                     <BusquedaContainer>
                         <SearchInput
-                            onChange={(e) => setSearchTerm(e.target.value)}
+                            onChange={(e) => setSearchTerm(e.target.value)} // Manejar el cambio en el input de búsqueda
                             placeholder="Buscar por título"
                         />
                         <FilstrosContainer>
@@ -301,9 +304,9 @@ const Noticias = () => {
                                         id="viewsRange"
                                         min="1000"
                                         max="10000"
-                                        step="1000"  // Paso de 1000 para cada movimiento del slider
+                                        step="1000" // Paso de 1000 para cada movimiento del slider
                                         value={viewsLimit}
-                                        onChange={(e) => setViewsLimit(e.target.value)}
+                                        onChange={(e) => setViewsLimit(e.target.value)} // Manejar el cambio en el slider
                                     />
                                 </SliderContainer>
                             )}
@@ -316,26 +319,25 @@ const Noticias = () => {
                         </FilstrosContainer>
                     </BusquedaContainer>
                     <NoticiasSection>
-                        {sortedNoticias.map((noticia) => (
+                        {sortedNoticias.map((noticia) => ( // Mapear las noticias ordenadas y filtradas
                             <NoticiaItem key={noticia.id}>
-                                <NoticiaImage src={noticia.url} />
-                                <NoticiaTitle>{noticia.title}</NoticiaTitle>
-                                <NoticiaDescription>{noticia.explanation}</NoticiaDescription>
-                                <NoticiaAuthor>Por: {noticia.author}</NoticiaAuthor>
-                                <NoticiaDate>{new Date(noticia.date).toLocaleDateString()}</NoticiaDate>
-                                <Link to={`/noticias/${generarSlug(noticia.title)}`} state={{ id: noticia.id }}>
-                                    <VerMasButton>Ver Más</VerMasButton>
+                                <NoticiaImage src={noticia.url} /> {/* Imagen de la noticia */}
+                                <NoticiaTitle>{noticia.title}</NoticiaTitle> {/* Título de la noticia */}
+                                <NoticiaDescription>{noticia.explanation}</NoticiaDescription> {/* Descripción de la noticia */}
+                                <NoticiaAuthor>Por: {noticia.author}</NoticiaAuthor> {/* Autor de la noticia */}
+                                <NoticiaDate>{new Date(noticia.date).toLocaleDateString()}</NoticiaDate> {/* Fecha de la noticia */}
+                                <Link to={`/noticias/${generarSlug(noticia.title)}`} state={{ id: noticia.id }}> {/* Enlace a la página de detalle de la noticia */}
+                                    <VerMasButton>Ver Más</VerMasButton> {/* Botón para ver más detalles */}
                                 </Link>
                             </NoticiaItem>
                         ))}
                     </NoticiasSection>
-                    <RegresarBoton onClick={handleRegresarClick}>Regresar a inicio</RegresarBoton>
+                    <RegresarBoton onClick={handleRegresarClick}>Regresar a inicio</RegresarBoton> {/* Botón para regresar a la página de inicio */}
                 </>
-
             )}
-
         </NoticiasContainer>
     );
 };
 
+// Exportar el componente Noticias
 export default Noticias;

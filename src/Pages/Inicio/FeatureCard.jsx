@@ -74,15 +74,21 @@ const ShowMoreLink = styled(Link)`
 `;
 
 
+// Componente FeatureCard que recibe título, descripción e imágenes como props
 function FeatureCard({ titulo, descripcion, images }) {
   return (
     <Card>
+      {/* Mostrar el título de la característica */}
       <FeatureTitle>{titulo}</FeatureTitle>
+      {/* Mostrar la descripción de la característica */}
       <FeatureDescription>{descripcion}</FeatureDescription>
+      {/* Renderizar el carrusel con un máximo de 3 imágenes */}
       <Carousel images={images.slice(0, 3)} />
+      {/* Enlace para mostrar más contenido relacionado */}
       <ShowMoreLink to={`/${titulo.toLowerCase().replace(/\s+/g, '-')}`}>Mostrar más</ShowMoreLink>
     </Card>
-  )
+  );
 }
 
+// Exportar el componente FeatureCard
 export default FeatureCard;

@@ -70,45 +70,52 @@ const ImgContainer = styled.div`
 `;
 
 function Header() {
-  const [shrink, setShrink] = useState(false);
-  const [isOpen, setIsOpen] = useState(false); // Estado para controlar la barra lateral
-  const [isMobile, setIsMobile] = useState(false); // Estado para controlar si está en móvil
+  const [shrink, setShrink] = useState(false); // Estado para cambiar el tamaño del header al hacer scroll
+  const [isOpen, setIsOpen] = useState(false); // Estado para controlar la visibilidad de la barra lateral
+  const [isMobile, setIsMobile] = useState(false); // Estado para detectar si el dispositivo es móvil
 
   useEffect(() => {
+    // Función para cambiar el estado `shrink` cuando el usuario hace scroll
     const handleScroll = () => {
       setShrink(window.scrollY > 50);
     };
 
+    // Función para actualizar `isMobile` según el tamaño de la ventana
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768); // Cambia la medida según tus necesidades
+      setIsMobile(window.innerWidth < 768); // Se considera móvil si el ancho es menor a 768px
     };
 
+    // Agrega los listeners de scroll y resize
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('resize', handleResize);
 
-    // Llama la función para establecer el estado inicial
-    handleResize();
+    handleResize(); // Inicializa `isMobile` al cargar el componente
 
+    // Limpia los listeners al desmontar el componente
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
     };
   }, []);
 
+  // Alterna el estado de apertura de la barra lateral
   const toggleSidebar = () => {
-    setIsOpen(!isOpen); // Cambia el estado de la barra lateral
+    setIsOpen(!isOpen);
   };
 
   return (
     <HeaderStyled shrink={shrink}>
       <LogoContainer>
         <ImgContainer shrink={shrink}>
-          <BsRocket />
+          <BsRocket /> {/* Ícono de cohete para el logo */}
         </ImgContainer>
-        <Logo>Space App</Logo>
+        <Logo>Space App</Logo> {/* Nombre de la aplicación */}
       </LogoContainer>
-      {isMobile && <FaBars onClick={toggleSidebar} style={{ cursor: 'pointer', fontSize: '24px' }} />} {/* Botón para abrir la barra lateral solo en móvil */}
+      
+      {/* Ícono de menú hamburguesa para abrir la barra lateral en móvil */}
+      {isMobile && <FaBars onClick={toggleSidebar} style={{ cursor: 'pointer', fontSize: '24px' }} />}
 
+      {/* Renderiza la barra lateral en móvil y la barra de navegación normal en escritorio */}
       {isMobile ? (
         <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
       ) : (

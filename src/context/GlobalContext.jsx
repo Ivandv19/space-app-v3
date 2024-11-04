@@ -110,7 +110,7 @@ export const GlobalProvider = ({ children }) => {
             .catch(err => {
                 console.log('Error al obtener datos', err);
             });
-    }, []);
+    }, []); // Solo se ejecuta cuando el componente se monta
 
 
 
@@ -168,7 +168,7 @@ export const GlobalProvider = ({ children }) => {
             .catch(err => {
                 console.log('Error al obtener datos', err);
             });
-    }, []);
+    }, []); // Solo se ejecuta cuando el componente se monta
 
 
 

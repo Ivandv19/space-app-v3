@@ -6,10 +6,11 @@ const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0); // Desplazar hacia arriba
-  }, [pathname]);
+    // Al cambiar de ruta, desplaza automáticamente la ventana hacia arriba
+    window.scrollTo(0, 0);
+  }, [pathname]); // Efecto dependiente del cambio en la ruta
 
-  return null; // No renderiza nada
+  return null; // No renderiza ningún elemento en el DOM
 };
 
 export default ScrollToTop;

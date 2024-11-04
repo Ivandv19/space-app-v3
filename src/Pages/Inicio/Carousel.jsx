@@ -151,31 +151,40 @@ padding: 0;
     
 `
 
+// Componente Carrusel que recibe un array de imágenes como prop
 const Carrusel = ({ images }) => {
+    // Usar el hook useCarrusel para obtener el índice de la imagen actual
     const { currentIndex } = useCarrusel(images);
 
     return (
         <CarouselWrapper>
             <CarouselContainer>
+                {/* Solo renderizar si hay imágenes en el array */}
                 {images.length > 0 && (
                     <Container>
+                        {/* Contenedor para la imagen actual */}
                         <ImageContainer>
+                            {/* Mostrar la imagen actual usando el índice */}
                             <Image src={images[currentIndex].url} alt={images[currentIndex].title} />
                         </ImageContainer>
+                        {/* Contenedor para el texto asociado a la imagen */}
                         <TextContainer>
-                            <h3>{images[currentIndex].title}</h3>
-                            <p>{images[currentIndex].explanation}</p>
+                            <h3>{images[currentIndex].title}</h3> {/* Título de la imagen */}
+                            <p>{images[currentIndex].explanation}</p> {/* Explicación de la imagen */}
                         </TextContainer>
                     </Container>
                 )}
             </CarouselContainer>
+            {/* Contenedor para los puntos de navegación del carrusel */}
             <DotsContainer>
+                {/* Crear un punto por cada imagen, marcando el activo */}
                 {images.map((_, index) => (
-                    <Dot key={index} active={index === currentIndex} />
+                    <Dot key={index} active={index === currentIndex} /> // `active` es true si el índice coincide
                 ))}
             </DotsContainer>
         </CarouselWrapper>
     );
 };
 
+// Exportar el componente Carrusel
 export default Carrusel;

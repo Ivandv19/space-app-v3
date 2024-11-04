@@ -35,17 +35,18 @@ const NavItem = styled.li`
     }
 `;
 
+// Componente Navbar que recibe como props las categorías, la función para establecer la categoría seleccionada y la categoría seleccionada
 const Navbar = ({ categorias, setCategoriaSeleccionada, categoriaSeleccionada }) => {
   return (
-    <Nav>
-      <NavList>
-        {categorias.map((categoria, index) => (
+    <Nav> {/* Contenedor principal de la barra de navegación */}
+      <NavList> {/* Lista de elementos de navegación */}
+        {categorias.map((categoria, index) => ( // Mapea las categorías para crear elementos de navegación
           <NavItem
-            key={index}
-            onClick={() => setCategoriaSeleccionada(categoria)}
-            isSelected={categoria === categoriaSeleccionada} // Comparación para aplicar estilo
+            key={index} // Asigna una clave única para cada elemento
+            onClick={() => setCategoriaSeleccionada(categoria)} // Establece la categoría seleccionada al hacer clic
+            isSelected={categoria === categoriaSeleccionada} // Comparación para aplicar estilo al elemento seleccionado
           >
-            {categoria}
+            {categoria} {/* Muestra el nombre de la categoría */}
           </NavItem>
         ))}
       </NavList>
@@ -53,4 +54,4 @@ const Navbar = ({ categorias, setCategoriaSeleccionada, categoriaSeleccionada })
   );
 };
 
-export default Navbar;
+export default Navbar; // Exporta el componente Navbar

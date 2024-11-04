@@ -166,34 +166,38 @@ height: auto;
   
 `
 
+// Componente HeroSection
 function HeroSection() {
+  // Obtener la imagen diaria del contexto global
   const { dailyImage } = useGlobalContext();
+  // Estado para controlar la visibilidad del tooltip
   const [tooltipVisible, setTooltipVisible] = useState(false);
 
   return (
-    <HeroSectionStyled Image={dailyImage.url}>
-      <OverlayStyled /> {/* Agrega el overlay aquí */}
+    <HeroSectionStyled Image={dailyImage.url}> {/* Estilo del componente Hero usando la imagen diaria */}
+      <OverlayStyled /> {/* Overlay para dar efecto visual */}
       <InfoSection
-        onMouseEnter={() => setTooltipVisible(true)}
-        onMouseLeave={() => setTooltipVisible(false)}
+        onMouseEnter={() => setTooltipVisible(true)} // Muestra el tooltip al pasar el mouse
+        onMouseLeave={() => setTooltipVisible(false)} // Oculta el tooltip al salir el mouse
       >
-        <InfoIcon isActive={tooltipVisible} size={24} />
+        <InfoIcon isActive={tooltipVisible} size={24} /> {/* Icono que cambia de estado según la visibilidad del tooltip */}
         <TitleImage>
-          {dailyImage.title}
+          {dailyImage.title} {/* Muestra el título de la imagen diaria */}
         </TitleImage>
-        <Tooltip visible={tooltipVisible}>
+        <Tooltip visible={tooltipVisible}> {/* Tooltip que muestra la explicación de la imagen */}
           <p>{dailyImage.explanation}</p>
         </Tooltip>
       </InfoSection>
       <InfoMainSection>
-        <HeroTitle>Explora el Universo</HeroTitle>
+        <HeroTitle>Explora el Universo</HeroTitle> {/* Título principal de la sección */}
         <HeroSubtitle>
           Descubre los misterios del espacio con nosotros. Sumérgete en un viaje cósmico donde cada estrella, planeta y galaxia nos revela secretos fascinantes del universo.
-        </HeroSubtitle>
-        <CTAButton href="#caracteristicas">Comienza Ahora</CTAButton>
+        </HeroSubtitle> {/* Subtítulo que invita a la exploración */}
+        <CTAButton href="#caracteristicas">Comienza Ahora</CTAButton> {/* Botón de llamada a la acción */}
       </InfoMainSection>
     </HeroSectionStyled>
   );
 }
 
+// Exportar el componente HeroSection
 export default HeroSection;
