@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Card = styled.div`
   background-color: white;
-  width: 90%; // Ocupa todo el ancho
+  width: 70%; // Ocupa todo el ancho
   height: 700px; // Altura estándar
   justify-content: space-evenly;
   align-items: center;
