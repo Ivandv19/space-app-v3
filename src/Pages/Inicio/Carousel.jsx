@@ -31,8 +31,9 @@ width: 100%;
 display: flex;
 align-items: center;
 flex-direction: column;
+justify-content: space-around;
  padding: 20px 100px;
- gap: 50px;
+
 
  
 
@@ -124,11 +125,13 @@ const Dot = styled.span`
 `;
 
 const Container = styled.section`
+width: 100%;
+height: auto;
 display: flex;
 flex-direction: row;
 justify-content: center;
 align-items: center;
-gap: 10px;
+
 
 @media (max-width: 1024px) {
 
