@@ -9,6 +9,7 @@ import Titulo from '../Galeria/Titulo';
 import Descripcion from '../Galeria/Descripcion';
 
 const Container = styled.div`
+  /* Estilos principales */
   text-align: center;
   font-family: Arial, sans-serif;
   padding: 150px 50px;
@@ -18,32 +19,32 @@ const Container = styled.div`
   align-items: center;
   gap: 25px;
 
+  /* Media query para pantallas medianas (tabletas) */
   @media (max-width: 1024px) {
-        padding: 15vh 1vw 10vh 1vw; /* Padding relativo al tamaño de la pantalla */
+    padding: 15vh 1vw 10vh 1vw;
   }
 
+  /* Media query para pantallas pequeñas (móviles) */
   @media (max-width: 768px) {
-    padding: 15vh 1vw 10vh 1vw; /* Padding relativo al tamaño de la pantalla */
+    padding: 15vh 1vw 10vh 1vw;
   }
 `;
 
 const RegresarBoton = styled.button`
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  /* Estilos principales del botón */
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 
-    &:hover {
-        background-color: #0056b3;
-    }
-
-    @media (max-width: 768px) { // Cambia a móviles
+  /* Media query para pantallas pequeñas (móviles) */
+  @media (max-width: 768px) { 
     font-size: 4vw;
-    }
+  }
 `;
 
 

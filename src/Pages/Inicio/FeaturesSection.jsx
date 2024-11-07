@@ -5,27 +5,27 @@ import { useGlobalContext } from '../../context/GlobalContext';
 import Titulo from '../Galeria/Titulo';
 
 
+// Sección principal con alineación centrada y separación
 const Section = styled.section`
-width: 100%;
-height: 100%;
-  padding: 150px 0;
+  width: 100%;
+  height: 100%;
+  padding: 150px 0; // Espaciado vertical
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 50px;
+  flex-direction: column; // Dirección de los elementos en columna
+  align-items: center; // Centrado horizontal
+  justify-content: center; // Centrado vertical
+  gap: 50px; // Espacio entre elementos
 `;
 
-
-
+// Contenedor de características con alineación y separación central
 const FeaturesContainer = styled.div`
-width: 100%;
-height: 100%;
-display: flex;
-justify-content: center; // Centrar la tarjeta
-flex-direction: column; 
-align-items: center;
-gap: 50px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center; // Centrado horizontal
+  flex-direction: column; // Elementos en columna
+  align-items: center; // Centrado vertical
+  gap: 50px; // Espacio entre elementos
 `;
 
 

@@ -2,37 +2,39 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Nav = styled.nav`
-  background-color: #282c34;
+  background-color: #282c34; /* Estilo principal del contenedor de navegación */
   padding: 1rem;
   width: 100%;
 `;
 
 const NavList = styled.ul`
-  list-style: none;
-  display: flex;
-  justify-content: center;
+  list-style: none; /* Elimina los puntos de la lista */
+  display: flex; /* Usamos flexbox para alinear los elementos */
+  justify-content: center; /* Centra los elementos horizontalmente */
 
-  @media (max-width: 768px) { // Cambia a móviles
+  /* Media query para pantallas pequeñas (móviles) */
+  @media (max-width: 768px) { 
     margin: 0;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    }
+    flex-direction: row; /* Alinea los items en fila en lugar de columna */
+    justify-content: space-around; /* Distribuye los elementos de manera uniforme */
+  }
 `;
 
 const NavItem = styled.li`
-  margin: 0 15px;
-  color: ${({ isSelected }) => (isSelected ? '#61dafb;' : 'white')}; // Cambia de color si es la categoría seleccionada
-  cursor: pointer;
+  margin: 0 15px; /* Espaciado entre los elementos */
+  color: ${({ isSelected }) => (isSelected ? '#61dafb;' : 'white')}; /* Color dinámico dependiendo de la selección */
+  cursor: pointer; /* Cambio de cursor al pasar sobre el item */
+  
   &:hover {
-    text-decoration: underline;
+    text-decoration: underline; /* Subraya el texto cuando el cursor pasa por encima */
   }
 
-  @media (max-width: 768px) { // Cambia a móviles
+  /* Media query para pantallas pequeñas (móviles) */
+  @media (max-width: 768px) { 
     margin: 0;
-    font-size: 3vw;
-  
-    }
+    font-size: 3vw; /* Ajusta el tamaño de fuente para móviles */
+  }
 `;
 
 // Componente Navbar que recibe como props las categorías, la función para establecer la categoría seleccionada y la categoría seleccionada

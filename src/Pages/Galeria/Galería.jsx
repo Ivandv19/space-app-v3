@@ -9,29 +9,28 @@ import Spinner from './Spinner';
 import useRandomLikes from '../../hooks/useRandomLikes';
 import useOrderByLikes from '../../hooks/useOrderByLikes';
 
-// Contenedor principal con grid layout para las secciones
+// Contenedor principal con un diseño de grid para organizar las secciones
 const GalleryContainer = styled.div`
-padding: 150px 20px 50px 20px;
+    padding: 150px 20px 50px 20px;
     width: 100%;
     display: grid;
-    grid-template-rows: auto auto 200px; 
-    grid-template-columns: 1fr 2fr 1fr; // Tres columnas para la galería principal y secciones
+    grid-template-rows: auto auto 200px; // Define las filas de la cuadrícula
+    grid-template-columns: 1fr 2fr 1fr; // Define las columnas de la cuadrícula
     gap: 20px;
 
-    @media (max-width: 1024px) {
+    @media (max-width: 1024px) { // En pantallas medianas o menores, cambia a flex layout
         display: flex;
         flex-direction: column;
-
     }   
 
-    @media (max-width: 768px) {
-    padding: 15vh 1vw 10vh 1vw; /* Padding relativo al tamaño de la pantalla */
-  }
+    @media (max-width: 768px) { // En pantallas pequeñas, ajusta el padding
+        padding: 15vh 1vw 10vh 1vw; 
+    }
 `;
 
-// Sección para el título y descripción
+// Sección para el título y descripción, abarca toda la fila en el grid layout
 const HeaderSection = styled.div`
-    grid-column: 1 / span 3; // El título y descripción ocuparán todas las columnas
+    grid-column: 1 / span 3; // Ocupa las tres columnas en la primera fila
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -44,76 +43,75 @@ const HeaderSection = styled.div`
     }
 `;
 
-
-
-// Sección para las imágenes "Me gusta" y "Guardadas"
+// Sección de imágenes "Me gusta" y "Guardadas"
 const LikedSavedSection = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
 
-    @media (max-width: 1024px) {
+    @media (max-width: 1024px) { // Ocultar esta sección en pantallas medianas o menores
        display: none;
     } 
 `;
 
-// Contenedor para la galería principal
+// Contenedor principal de la galería
 const GallerySection = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
 
-    @media (max-width: 768px) { // Cambia a móviles
-        h3{
+    @media (max-width: 768px) { // Ajustes en pantallas pequeñas
+        h3 {
             font-size: 4vw;
         }
-  
     }
 `;
 
-// Estilo de cada imagen de la galería
+// Estilo para cada elemento individual de la galería
 const GalleryItem = styled.div`
-    position: relative; // Necesario para el efecto de hover
+    position: relative; 
     overflow: hidden;
     border: 1px solid #ccc;
     border-radius: 10px;
     width: 100%;
     cursor: pointer;
 
-    &:hover img {
+    &:hover img { // Efecto hover para hacer zoom en la imagen
         transform: scale(1.05);
     }
 `;
 
+// Imagen dentro de cada elemento de la galería
 const Image = styled.img`
     width: 100%;
     height: auto;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease; // Animación de transición suave para el zoom
 `;
 
+// Capa superpuesta sobre la imagen al hacer hover
 const Overlay = styled.div`
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%; // Cubrir toda la imagen
-    background-color: rgba(0, 0, 0, 0.6); // Fondo negro con transparencia
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.6); // Fondo oscuro semitransparente
     color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    opacity: 0; // Comienza oculto
-    transition: opacity 0.3s ease;
-    
-    ${GalleryItem}:hover & {
-        opacity: 1; // Aparece al hacer hover
+    opacity: 0; // Inicialmente invisible
+    transition: opacity 0.3s ease; // Transición suave al aparecer
+
+    ${GalleryItem}:hover & { // Hace que la capa aparezca al hacer hover sobre GalleryItem
+        opacity: 1; 
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 768px) { // Ajustes en pantallas pequeñas
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -121,29 +119,32 @@ const Overlay = styled.div`
     }
 `;
 
+// Título de cada elemento dentro de la superposición
 const ItemTitle = styled.h3`
     font-size: 1.5rem;
     margin: 10px 0;
     text-align: center;
 
-    @media (max-width: 768px) {
+    @media (max-width: 768px) { // Escala del texto en pantallas pequeñas
         font-size: 2vw;
     }
 `;
 
+// Descripción de cada elemento en la superposición
 const ItemDescription = styled.p`
     font-size: 1rem;
     margin: 10px;
     text-align: center;
 
-    @media (max-width: 768px) {
+    @media (max-width: 768px) { // Escala del texto en pantallas pequeñas
         font-size: 2.5vw;
     }
 `;
 
+// Contenedor de botones en la parte inferior de cada elemento
 const ButtonContainer = styled.div`
-    position: absolute; // Colocar los botones sobre el overlay
-    bottom: 0; // Ajustar según sea necesario
+    position: absolute; 
+    bottom: 0; 
     left: 0;
     right: 0;
     display: flex;
@@ -153,6 +154,7 @@ const ButtonContainer = styled.div`
     background-color: black;
 `;
 
+// Estilo de los botones de interacción (como "Me gusta", "Guardar", etc.)
 const Button = styled.button`
     background: none;
     border: none;
@@ -165,58 +167,59 @@ const Button = styled.button`
     justify-content: center;
     align-items: center;
 
-    &:hover {
+    &:hover { // Efecto hover para escalar el botón
         color: white;
         transform: scale(1.2);
     }
 `;
 
+// Contenedor adicional para la imagen (puede ser usado para flexibilidad)
 const ImageContainer = styled.div``;
 
+// Descripción de "Me gusta" en elementos específicos
 const ItemDescription__liked = styled.p`
     font-size: 10px;
     margin: 10px;
     text-align: center;
-  
 `;
 
+// Descripción de "Guardadas" en elementos específicos
 const ItemDescription__saved = styled.p`
     font-size: 10px;
     margin: 10px;
     text-align: center;
 `;
 
+// Estilo para el contador de "Me gusta"
 const LikesStyled = styled.p`
     font-size: 15px;
 
-    @media (max-width: 768px) { // Cambia a móviles
-    font-size: 3.5vw;
+    @media (max-width: 768px) { // Escala en pantallas pequeñas
+        font-size: 3.5vw;
     }
 `
 
+// Botón de "Regresar" en el diseño grid
 const RegresarBoton = styled.button`
-  grid-column: 2 / 3;
-  grid-row: 3;
-  padding: 10px 20px;
-  font-size: 1rem;
-  background-color: #0a6ad8;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  width: 200px;
-  height: auto;
+    grid-column: 2 / 3; // Posición del botón en la cuadrícula
+    grid-row: 3;
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #0a6ad8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 200px;
+    height: auto;
+    justify-self: center; 
+    align-self: center; 
 
-  /* Centrado en la celda */
-  justify-self: center; /* Centra horizontalmente */
-  align-self: center;   /* Centra verticalmente */
-
-  &:hover {
-    background-color: #0056b3;
-  }
+    &:hover { // Cambia el color de fondo al hacer hover
+        background-color: #0056b3;
+    }
 `;
-
 
 
 const Galeria = () => {
@@ -254,7 +257,7 @@ const Galeria = () => {
 
 
     return (
-        (<GalleryContainer>
+        <GalleryContainer>
             {loading ? ( // Verifica si está cargando
                 (<Spinner />) // Muestra un spinner mientras se cargan los datos
             ) : (
@@ -330,7 +333,7 @@ const Galeria = () => {
                     <RegresarBoton onClick={handleRegresarClick}>Regresar a inicio</RegresarBoton> {/* Botón para regresar a la página de inicio */}
                 </>
             )}
-        </GalleryContainer>)
+        </GalleryContainer>
     );
 };
 

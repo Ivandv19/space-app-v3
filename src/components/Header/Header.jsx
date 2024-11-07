@@ -6,11 +6,9 @@ import Navbar from './Navbar';
 import Sidebar from "./Sidebar"
 
 
-
-
 const HeaderStyled = styled.header`
   width: 100%;
-  height: ${({ shrink }) => (shrink ? '70px' : '100px')};
+  height: ${({ shrink }) => (shrink ? '70px' : '100px')}; /* Ajusta la altura del header según 'shrink' */
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -20,18 +18,20 @@ const HeaderStyled = styled.header`
   position: fixed;
   top: 0;
   z-index: 1000;
-  transition: height 0.3s ease;
+  transition: height 0.3s ease; /* Transición suave en el cambio de altura */
 
+  /* Media query para pantallas medianas */
   @media (max-width: 1024px) {
-    height: ${({ shrink }) => (shrink ? '80px' : '100px')}; 
-    padding: 0 15px; 
+    height: ${({ shrink }) => (shrink ? '80px' : '100px')}; /* Ajusta la altura en pantallas medianas según 'shrink' */
+    padding: 0 15px; /* Disminuye el padding lateral en pantallas medianas */
   }
 
+  /* Media query para pantallas pequeñas */
   @media (max-width: 768px) {
-    height: ${({ shrink }) => (shrink ? '50px' : '60px')}; 
-    padding: 0 20px; 
-    flex-direction: row-reverse;
-   justify-content: space-between;
+    height: ${({ shrink }) => (shrink ? '50px' : '60px')}; /* Ajusta la altura en pantallas pequeñas según 'shrink' */
+    padding: 0 20px;
+    flex-direction: row-reverse; /* Invierte la dirección de los elementos */
+    justify-content: space-between; /* Ajusta el espacio entre elementos */
   }
 `;
 
@@ -39,8 +39,9 @@ const Logo = styled.h1`
   font-size: 24px; 
   margin: 0;
 
-  @media (max-width: 768px) { // Cambia a móviles
-  font-size: 6vw;
+  /* Ajusta el tamaño de fuente en pantallas pequeñas */
+  @media (max-width: 768px) { 
+    font-size: 6vw;
   }
 `;
 
@@ -55,17 +56,18 @@ const LogoContainer = styled.div`
 
 const ImgContainer = styled.div`
   svg {
-    width: ${({ shrink }) => (shrink ? '40px' : '50px')}; 
+    width: ${({ shrink }) => (shrink ? '40px' : '50px')}; /* Ajusta el tamaño del ícono según 'shrink' */
     height: ${({ shrink }) => (shrink ? '40px' : '50px')};
-    transition: width 0.3s ease, height 0.3s ease; 
+    transition: width 0.3s ease, height 0.3s ease; /* Transición suave en el cambio de tamaño */
   }
 
-  @media (max-width: 768px) { // Cambia a móviles
-  svg {
-    width: ${({ shrink }) => (shrink ? '30px' : '40px')}; 
-    height: ${({ shrink }) => (shrink ? 'auto' : 'auto')};
-    transition: width 0.3s ease, height 0.3s ease; 
-  }
+  /* Media query para pantallas pequeñas */
+  @media (max-width: 768px) { 
+    svg {
+      width: ${({ shrink }) => (shrink ? '30px' : '40px')}; /* Ajusta el tamaño del ícono en pantallas pequeñas */
+      height: ${({ shrink }) => (shrink ? 'auto' : 'auto')}; /* Mantiene proporciones automáticas */
+      transition: width 0.3s ease, height 0.3s ease;
+    }
   }
 `;
 
@@ -111,7 +113,7 @@ function Header() {
         </ImgContainer>
         <Logo>Space App</Logo> {/* Nombre de la aplicación */}
       </LogoContainer>
-      
+
       {/* Ícono de menú hamburguesa para abrir la barra lateral en móvil */}
       {isMobile && <FaBars onClick={toggleSidebar} style={{ cursor: 'pointer', fontSize: '24px' }} />}
 
@@ -119,7 +121,7 @@ function Header() {
       {isMobile ? (
         <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
       ) : (
-        <Navbar/>
+        <Navbar />
       )}
     </HeaderStyled>
   );

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+// Contenedor principal del carrusel
 const CarouselContainer = styled.div`
   display: grid;
-  grid-template-columns: auto 1fr auto; /* Tres columnas */
-  align-items: center; /* Centra verticalmente los elementos */
+  grid-template-columns: auto 1fr auto; /* Tres columnas para los elementos del carrusel */
+  align-items: center; /* Centra los elementos verticalmente */
   overflow: hidden;
   position: relative;
   padding: 1rem;
@@ -13,72 +14,80 @@ const CarouselContainer = styled.div`
   border-radius: 8px; /* Bordes redondeados */
 `;
 
+// Elementos individuales dentro del carrusel
 const CarouselItem = styled.div`
   background-color: #f4f4f4;
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 10px;
   text-align: center;
-  transition: transform 0.5s ease; /* Transición suave */
+  transition: transform 0.5s ease; /* Transición suave para el efecto de movimiento */
   width: 100%;
 
   img {
-    max-width: 600px; /* Asegura que la imagen se ajuste al contenedor */
+    max-width: 600px; /* Asegura que la imagen se ajuste dentro del contenedor */
     height: auto;
     border-radius: 8px; /* Bordes redondeados para la imagen */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para la imagen */
   }
 
-  @media (max-width: 768px) { // Cambia a móviles
+  // Media query para dispositivos móviles
+  @media (max-width: 768px) { 
     img {
-      width: 100%;
+      width: 100%; /* Imagen ocupa todo el ancho en móviles */
     }
-    }
-`;
-
-const Button = styled.button`
-  background: #ffffff; /* Fondo blanco para los botones */
-  border: 1px solid #ccc;
-  border-radius: 50%;
-  padding: 10px;
-  cursor: pointer;
-  color: #333;
-  transition: background 0.3s, transform 0.3s; /* Transiciones suaves */
-  
-  &:hover {
-    background: #f0f0f0; /* Color de fondo al pasar el ratón */
-    transform: scale(1.1); /* Aumentar el tamaño al pasar el ratón */
   }
 `;
 
+// Estilo para los botones (anterior y siguiente)
+const Button = styled.button`
+  background: #ffffff; /* Fondo blanco para los botones */
+  border: 1px solid #ccc;
+  border-radius: 50%; /* Botón circular */
+  padding: 10px;
+  cursor: pointer;
+  color: #333;
+  transition: background 0.3s, transform 0.3s; /* Transiciones suaves para el hover */
+  
+  &:hover {
+    background: #f0f0f0; /* Cambia el fondo al pasar el ratón */
+    transform: scale(1.1); /* Aumenta el tamaño del botón al hacer hover */
+  }
+`;
+
+// Botón para ir al elemento anterior
 const PrevButton = styled(Button)`
-  justify-self: start; /* Justifica el botón a la izquierda */
+  justify-self: start; /* Alinea el botón hacia la izquierda */
 `;
 
+// Botón para ir al siguiente elemento
 const NextButton = styled(Button)`
-  justify-self: end; /* Justifica el botón a la derecha */
+  justify-self: end; /* Alinea el botón hacia la derecha */
 `;
 
+// Contenedor para los puntos de navegación
 const DotsContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 10px;
 `;
 
+// Estilo de cada punto de navegación
 const Dot = styled.div`
   height: 10px;
   width: 10px;
   margin: 0 5px;
-  border-radius: 50%;
-  background-color: ${({ active }) => (active ? 'black' : 'lightgray')};
+  border-radius: 50%; /* Puntos circulares */
+  background-color: ${({ active }) => (active ? 'black' : 'lightgray')}; /* Color dependiendo si está activo */
   cursor: pointer;
-  transition: background 0.3s; /* Transición para el punto */
+  transition: background 0.3s; /* Transición suave para el cambio de color */
   
   &:hover {
-    background-color: darkgray; /* Color al pasar el ratón */
+    background-color: darkgray; /* Cambia el color cuando el ratón pasa sobre el punto */
   }
 `;
 
+// Contenedor principal de la sección con los elementos del carrusel
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -88,9 +97,10 @@ const MainContainer = styled.div`
   max-width: 800px;
   height: auto;
 
-  @media (max-width: 768px) { // Cambia a móviles
-    font-size: 3vw;
-    }
+  // Media query para dispositivos móviles
+  @media (max-width: 768px) { 
+    font-size: 3vw; /* Ajuste del tamaño de fuente en móviles */
+  }
 `;
 
 // Componente Carousel que recibe como props la categoría seleccionada y los datos

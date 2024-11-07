@@ -8,13 +8,13 @@ const SidebarStyled = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: 250px; /* Ajusta el ancho según sea necesario */
+  width: 250px; 
   height: 100%;
   background-color: #fff;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
   transform: translateX(${({ isOpen }) => (isOpen ? '0' : '-100%')}); /* Oculta o muestra la barra lateral */
   transition: transform 0.3s ease;
-  z-index: 20; /* Asegúrate de que esté por encima de otros elementos */
+  z-index: 20; 
 `;
 
 const CloseButton = styled.button`
@@ -33,21 +33,21 @@ const MenuItems = styled.ul`
   gap: 20px;
 
   li {
-    margin: 15px 0; /* Espaciado entre elementos del menú */
+    margin: 15px 0; 
   }
 `;
 
 const NavLink = styled(Link)`
   text-decoration: none;
-  color: #333; /* Color del texto */
-  font-family: 'SourceSansProRegular', sans-serif; /* Usando la fuente personalizada */
+  color: #333; 
+  font-family: 'SourceSansProRegular', sans-serif; 
   font-size: 16px;
   display: flex;
   align-items: center;
   gap: 8px;
   
   &:hover {
-    color: #007bff; /* Color al pasar el cursor */
+    color: #007bff; 
   }
 `;
 

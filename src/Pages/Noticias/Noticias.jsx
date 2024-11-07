@@ -8,6 +8,7 @@ import Titulo from '../Galeria/Titulo';
 import Descripcion from '../Galeria/Descripcion';
 
 
+// Contenedor principal para las noticias, con padding y disposición en columna
 const NoticiasContainer = styled.div`
     padding: 150px 100px;
     display: flex;
@@ -16,48 +17,56 @@ const NoticiasContainer = styled.div`
     gap: 50px;
 
     @media (max-width: 1024px) {
-        padding: 15vh 1vw 10vh 1vw; /* Padding relativo al tamaño de la pantalla */
-  }
+        // Ajuste del padding para pantallas de tamaño medio
+        padding: 15vh 1vw 10vh 1vw;
+    }
 
-  @media (max-width: 768px) {
-    padding: 15vh 1vw 10vh 1vw; /* Padding relativo al tamaño de la pantalla */
-  }
+    @media (max-width: 768px) {
+        // Ajuste del padding para pantallas pequeñas (móviles)
+        padding: 15vh 1vw 10vh 1vw;
+    }
 `;
 
+// Estilo para el input de búsqueda, con padding y ajuste de tamaño en móviles
 const SearchInput = styled.input`
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 100%;
 
-    @media (max-width: 768px) { // Cambia a móviles
-    font-size: 4vw;
+    @media (max-width: 768px) {
+        // Ajuste del tamaño de la fuente en móviles
+        font-size: 4vw;
     }
-  
-    `;
+`;
 
+// Estilo para el select de filtros, con padding y ajuste de tamaño en móviles
 const FilterSelect = styled.select`
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin: 10px 0;
 
-    @media (max-width: 768px) { // Cambia a móviles
-    font-size: 4vw;
+    @media (max-width: 768px) {
+        // Ajuste del tamaño de la fuente en móviles
+        font-size: 4vw;
     }
 `;
 
+// Estilo para el select de orden, con padding y ajuste de tamaño en móviles
 const OrderSelect = styled.select`
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin: 10px 0;
 
-    @media (max-width: 768px) { // Cambia a móviles
-    font-size: 4vw;
+    @media (max-width: 768px) {
+        // Ajuste del tamaño de la fuente en móviles
+        font-size: 4vw;
     }
 `;
 
+// Contenedor para cada noticia, con borde, padding, y efectos de hover
 const NoticiaItem = styled.div`
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -69,13 +78,15 @@ const NoticiaItem = styled.div`
     width: 100%;
     max-width: 800px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s; // Añade transición para el crecimiento
+    transition: transform 0.3s; // Transición de escala al hacer hover
 
     &:hover {
-        transform: scale(1.05); // Escala la tarjeta al pasar el mouse
+        // Escala el contenedor de la noticia al pasar el mouse
+        transform: scale(1.05);
     }
 `;
 
+// Estilo para el título de la noticia
 const NoticiaTitle = styled.h2`
     font-size: 1.8rem;
     margin: 0;
@@ -83,22 +94,26 @@ const NoticiaTitle = styled.h2`
     text-align: center;
 `;
 
+// Estilo para la descripción de la noticia
 const NoticiaDescription = styled.p`
     font-size: 1rem;
     color: #555;
     text-align: center;
 `;
 
+// Estilo para el autor de la noticia
 const NoticiaAuthor = styled.p`
     font-size: 0.9rem;
     color: #777;
 `;
 
+// Estilo para la fecha de la noticia
 const NoticiaDate = styled.p`
     font-size: 0.9rem;
     color: #777;
 `;
 
+// Contenedor para el slider, con disposición en columna
 const SliderContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -106,18 +121,20 @@ const SliderContainer = styled.div`
     margin: 10px 0;
 `;
 
+// Estilo para el slider de ajuste
 const Slider = styled.input`
     margin: 10px 0;
 `;
 
-
+// Función para generar un slug a partir del título de la noticia
 const generarSlug = (title) => {
     return title
         .toLowerCase()
-        .replace(/[^a-z0-9áéíóúüñ\s]+/g, '')
-        .replace(/\s+/g, '-');
+        .replace(/[^a-z0-9áéíóúüñ\s]+/g, '')  // Elimina caracteres no alfanuméricos
+        .replace(/\s+/g, '-');  // Reemplaza espacios por guiones
 };
 
+// Estilo para el botón "Ver Más"
 const VerMasButton = styled.a`
     display: inline-block;
     margin-top: 10px;
@@ -129,17 +146,19 @@ const VerMasButton = styled.a`
     transition: background-color 0.3s;
 
     &:hover {
+        // Cambio de color al hacer hover
         background-color: #0056b3;
     }
 `;
 
-
+// Estilo para la imagen de la noticia
 const NoticiaImage = styled.img`
     width: 70%;
     height: auto;
     border-radius: 10px;
-
 `
+
+// Contenedor para la búsqueda, con disposición en columna
 const BusquedaContainer = styled.section`
     display: flex;
     flex-direction: column;
@@ -147,39 +166,44 @@ const BusquedaContainer = styled.section`
     align-items: center;
     gap: 20px;
 
-    @media (max-width: 768px) { // Cambia a móviles
-    width: 100%;
+    @media (max-width: 768px) {
+        // Ajuste del ancho para pantallas móviles
+        width: 100%;
     }
 `
 
+// Contenedor para los filtros, con disposición en fila en pantallas grandes y columna en móviles
 const FilstrosContainer = styled.section`
     display: flex;
     flex-direction: row;
     gap: 20px;
 
-    @media (max-width: 768px) { // Cambia a móviles
-    width: 100%;
-    flex-direction: column;
-
+    @media (max-width: 768px) {
+        // Ajuste de disposición para pantallas móviles
+        width: 100%;
+        flex-direction: column;
     }
 `
 
+// Sección de noticias en formato de grid, con 3 columnas en pantallas grandes y adaptabilidad en móviles
 const NoticiasSection = styled.section`
     display: grid;
-    grid-template-columns: repeat(3, 1fr); // Establece exactamente 3 columnas
-    gap: 20px; // Espacio entre los elementos del grid
+    grid-template-columns: repeat(3, 1fr);  // Establece 3 columnas
+    gap: 20px; // Espacio entre elementos del grid
     width: 100%; // Asegura que el grid ocupe todo el ancho disponible
 
     @media (max-width: 1024px) {
+        // Ajuste de columnas para pantallas medianas
         grid-template-columns: repeat(auto-fit, minmax(30vw, 1fr));
-  }
+    }
 
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  
-  }
+    @media (max-width: 768px) {
+        // Solo una columna en pantallas móviles
+        grid-template-columns: 1fr;
+    }
 `;
 
+// Estilo para el botón de regresar
 const RegresarBoton = styled.button`
     padding: 10px 20px;
     font-size: 1rem;
@@ -191,10 +215,10 @@ const RegresarBoton = styled.button`
     transition: background-color 0.3s;
 
     &:hover {
+        // Cambio de color al hacer hover
         background-color: #0056b3;
     }
 `;
-
 
 // Componente Noticias
 const Noticias = () => {
