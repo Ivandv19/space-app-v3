@@ -1,6 +1,9 @@
 # Space App V3
 
-**Space App V3** es una aplicación interactiva para gestionar y visualizar contenido diverso, incluyendo una galería de imágenes, noticias y un apartado del sistema solar. Diseñada para proporcionar una experiencia visualmente atractiva, la aplicación está dividida en cuatro secciones principales.
+## Descripción
+
+Space App V3 es una aplicación interactiva para gestionar y visualizar contenido diverso sobre el espacio, incluyendo una galería de imágenes, noticias y un apartado del sistema solar. 
+
 
 ## Secciones
 
