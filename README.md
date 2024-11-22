@@ -70,3 +70,7 @@ El sitio web está desplegado en Vercel y se puede acceder a través del siguien
 Este software es propiedad de **Ivan Cruz**. Se permite el uso de este software solo para fines personales y no comerciales. No se permite la distribución, modificación ni uso comercial de este software sin el consentimiento expreso de **Ivan Cruz**.
 
 Cualquier uso no autorizado puede resultar en acciones legales.
+
+## Proyecto En Portafolio Web
+
+-Este repositorio es parte de los proyectos mostrados en mi portafolio web
