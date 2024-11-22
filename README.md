@@ -64,7 +64,7 @@ Este proyecto fue desarrollado como parte de un ejercicio de desarrollo web.
 
 ## Despliegue
 
-El sitio web está desplegado en Vercel y se puede acceder a través del siguiente enlace: [Space App V3](https://space-app-v3.vercel.app/).
+El sitio web está desplegado en Vercel y se puede acceder a través del siguiente enlace: [Space App V3]( https://space-app-v3.vercel.app/ ).
 
 ## Licencia
 
