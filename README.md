@@ -20,7 +20,7 @@ Space App V3 es una aplicación interactiva para gestionar y visualizar contenid
 
 ## Uso
 
-- **Visualización del Proyecto:** Para visualizar el proyecto, sigue los pasos que se encuentran en la sección [Instalación](#instalación) o visita el enlace desplegado en [Vercel](https://space-app-v3.vercel.app/).
+- **Visualización del Proyecto:** Para visualizar el proyecto, sigue los pasos que se encuentran en la sección [Instalación](#instalación) o visita el enlace desplegado en [Vercel]( https://space-app-v3.vercel.app/ ).
 - **Navegar entre Secciones**: Utiliza el menú de navegación para acceder a la galería de imágenes, noticias y el apartado del sistema solar.
 - **Explorar Contenido**: Interactúa con el contenido para obtener más información sobre imágenes y noticias.
 
