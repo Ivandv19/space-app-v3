@@ -76,7 +76,7 @@ Cualquier uso no autorizado puede resultar en acciones legales.
 
 ## Imagen
 
-![space-app-v3 vercel app_]( https://github.com/user-attachments/assets/3f1fe530-4d5c-45a5-b421-57385f4dca9a )
+![space-app-v3 vercel app_ (2)]( https://github.com/user-attachments/assets/17e9bb16-85fa-42c3-83bd-8fb858da0ef6 )
 
 ## Proyecto En Portafolio Web
 
