@@ -74,6 +74,10 @@ Este software es propiedad de **Ivan Cruz**. Se permite el uso de este software 
 
 Cualquier uso no autorizado puede resultar en acciones legales.
 
+## Imagen
+
+![space-app-v3 vercel app_]( https://github.com/user-attachments/assets/3f1fe530-4d5c-45a5-b421-57385f4dca9a )
+
 ## Proyecto En Portafolio Web
 
--Este repositorio es parte de los proyectos mostrados en mi portafolio web
+-Este proyecto es parte de los proyectos mostrados en mi portafolio web
