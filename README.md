@@ -78,6 +78,6 @@ Cualquier uso no autorizado puede resultar en acciones legales.
 
 ![space-app-v3 vercel app_ (2)]( https://github.com/user-attachments/assets/17e9bb16-85fa-42c3-83bd-8fb858da0ef6 )
 
-## Proyecto En Portafolio Web
+## Proyecto En Portafolio Web ##2
 
 -Este proyecto es parte de los proyectos mostrados en mi portafolio web
