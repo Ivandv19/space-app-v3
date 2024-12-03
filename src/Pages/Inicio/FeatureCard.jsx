@@ -5,28 +5,28 @@ import { Link } from "react-router-dom";
 // Estilo para la tarjeta principal, con diseño flexible y caja con sombra
 const Card = styled.div`
   background-color: white;
-  width: 70%; 
-  height: 700px; 
+  width: 70%;
+  height: 700px;
   justify-content: space-evenly;
   align-items: center;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // Sombra sutil para darle profundidad
   text-align: center;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   padding: 20px 20px;
 
   // Media query para pantallas más pequeñas (max-width: 1024px)
   @media (max-width: 1024px) {
     display: flex;
-    flex-direction: column; 
-    height: auto; 
+    flex-direction: column;
+    height: auto;
   }
 
   // Media query para pantallas móviles (max-width: 768px)
   @media (max-width: 768px) {
-    width: 100%; 
-    padding: 20px 10px; 
+    width: 100%;
+    padding: 20px 10px;
   }
 `;
 
@@ -38,7 +38,7 @@ const FeatureTitle = styled.h3`
   color: #282c34;
 
   // Media query para pantallas móviles (max-width: 768px)
-  @media (max-width: 768px) { 
+  @media (max-width: 768px) {
     font-size: 5vw; // Ajusta el tamaño de la fuente en función del ancho de la pantalla
   }
 `;
@@ -50,7 +50,7 @@ const FeatureDescription = styled.p`
   color: #555;
 
   // Media query para pantallas móviles (max-width: 768px)
-  @media (max-width: 768px) { 
+  @media (max-width: 768px) {
     font-size: 3.5vw; // Ajusta el tamaño de la fuente en función del ancho de la pantalla
   }
 `;
@@ -72,7 +72,7 @@ const ShowMoreLink = styled(Link)`
   }
 
   // Media query para pantallas móviles (max-width: 768px)
-  @media (max-width: 768px) { 
+  @media (max-width: 768px) {
     font-size: 4vw; // Ajusta el tamaño de la fuente en función del ancho de la pantalla
   }
 `;
@@ -88,7 +88,9 @@ function FeatureCard({ titulo, descripcion, images }) {
       {/* Renderizar el carrusel con un máximo de 3 imágenes */}
       <Carousel images={images.slice(0, 3)} />
       {/* Enlace para mostrar más contenido relacionado */}
-      <ShowMoreLink to={`/${titulo.toLowerCase().replace(/\s+/g, '-')}`}>Mostrar más</ShowMoreLink>
+      <ShowMoreLink to={`/${titulo.toLowerCase().replace(/\s+/g, "-")}`}>
+        Mostrar más
+      </ShowMoreLink>
     </Card>
   );
 }

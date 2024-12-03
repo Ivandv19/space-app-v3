@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { useGlobalContext } from '../../context/GlobalContext';
-import Navbar from './Navbar';
-import Carousel from './Carousel';
-import { useNavigate } from 'react-router-dom';
-import Spinner from '../Galeria/Spinner';
-import Titulo from '../Galeria/Titulo';
-import Descripcion from '../Galeria/Descripcion';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { useGlobalContext } from "../../context/GlobalContext";
+import Navbar from "./Navbar";
+import Carousel from "./Carousel";
+import { useNavigate } from "react-router-dom";
+import Spinner from "../Galeria/Spinner";
+import Titulo from "../Galeria/Titulo";
+import Descripcion from "../Galeria/Descripcion";
 
 const Container = styled.div`
   /* Estilos principales */
@@ -42,16 +42,15 @@ const RegresarBoton = styled.button`
   transition: background-color 0.3s;
 
   /* Media query para pantallas pequeñas (móviles) */
-  @media (max-width: 768px) { 
+  @media (max-width: 768px) {
     font-size: 4vw;
   }
 `;
 
-
 const SistemaSolar = () => {
   const navigate = useNavigate(); // Inicializa el hook de navegación
   const handleRegresarClick = () => {
-    navigate('/'); // Función para regresar a la página principal
+    navigate("/"); // Función para regresar a la página principal
   };
 
   const { sistemaSolar } = useGlobalContext(); // Obtiene los datos del contexto global
@@ -68,7 +67,7 @@ const SistemaSolar = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true); // Activa el estado de carga
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Simula una carga de 2 segundos
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simula una carga de 2 segundos
       setLoading(false); // Desactiva el estado de carga
     };
 
@@ -76,15 +75,20 @@ const SistemaSolar = () => {
   }, []); // Este efecto se ejecuta solo una vez al montar el componente
 
   return (
-    <Container> {/* Contenedor principal del componente */}
+    <Container>
+      {" "}
+      {/* Contenedor principal del componente */}
       {loading ? ( // Condición para mostrar el spinner si está cargando
         <Spinner />
       ) : !categoriaSeleccionada ? ( // Condición para mostrar mensaje si no hay categorías
         <p>No hay categorías disponibles.</p>
       ) : (
-        <> {/* Fragmento para agrupar los elementos */}
+        <>
+          {" "}
+          {/* Fragmento para agrupar los elementos */}
           <Titulo titulo="Sistema solar" /> {/* Componente para el título */}
-          <Descripcion descripcion="Explora el Sistema Solar a través de diversas categorías, donde puedes ver información sobre planetas, lunas y más. Navega fácilmente entre los elementos utilizando la barra de navegación y el carrusel interactivo." /> {/* Componente para la descripción */}
+          <Descripcion descripcion="Explora el Sistema Solar a través de diversas categorías, donde puedes ver información sobre planetas, lunas y más. Navega fácilmente entre los elementos utilizando la barra de navegación y el carrusel interactivo." />{" "}
+          {/* Componente para la descripción */}
           <Navbar
             categorias={Object.keys(sistemaSolar)} // Pasa las categorías al componente Navbar
             categoriaSeleccionada={categoriaSeleccionada} // Pasa la categoría seleccionada
@@ -94,7 +98,10 @@ const SistemaSolar = () => {
             categoriaSeleccionada={categoriaSeleccionada} // Pasa la categoría seleccionada al carrusel
             datos={sistemaSolar[categoriaSeleccionada]} // Pasa los datos de la categoría seleccionada
           />
-          <RegresarBoton onClick={handleRegresarClick}>Regresar a inicio</RegresarBoton> {/* Botón para regresar a la página principal */}
+          <RegresarBoton onClick={handleRegresarClick}>
+            Regresar a inicio
+          </RegresarBoton>{" "}
+          {/* Botón para regresar a la página principal */}
         </>
       )}
     </Container>

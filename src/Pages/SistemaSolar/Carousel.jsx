@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 
 // Contenedor principal del carrusel
 const CarouselContainer = styled.div`
@@ -32,7 +32,7 @@ const CarouselItem = styled.div`
   }
 
   // Media query para dispositivos móviles
-  @media (max-width: 768px) { 
+  @media (max-width: 768px) {
     img {
       width: 100%; /* Imagen ocupa todo el ancho en móviles */
     }
@@ -47,8 +47,10 @@ const Button = styled.button`
   padding: 10px;
   cursor: pointer;
   color: #333;
-  transition: background 0.3s, transform 0.3s; /* Transiciones suaves para el hover */
-  
+  transition:
+    background 0.3s,
+    transform 0.3s; /* Transiciones suaves para el hover */
+
   &:hover {
     background: #f0f0f0; /* Cambia el fondo al pasar el ratón */
     transform: scale(1.1); /* Aumenta el tamaño del botón al hacer hover */
@@ -78,10 +80,11 @@ const Dot = styled.div`
   width: 10px;
   margin: 0 5px;
   border-radius: 50%; /* Puntos circulares */
-  background-color: ${({ active }) => (active ? 'black' : 'lightgray')}; /* Color dependiendo si está activo */
+  background-color: ${({ active }) =>
+    active ? "black" : "lightgray"}; /* Color dependiendo si está activo */
   cursor: pointer;
   transition: background 0.3s; /* Transición suave para el cambio de color */
-  
+
   &:hover {
     background-color: darkgray; /* Cambia el color cuando el ratón pasa sobre el punto */
   }
@@ -98,7 +101,7 @@ const MainContainer = styled.div`
   height: auto;
 
   // Media query para dispositivos móviles
-  @media (max-width: 768px) { 
+  @media (max-width: 768px) {
     font-size: 3vw; /* Ajuste del tamaño de fuente en móviles */
   }
 `;
@@ -119,13 +122,17 @@ const Carousel = ({ categoriaSeleccionada, datos }) => {
   // Función para manejar el clic en el botón "Prev" (anterior)
   const handlePrev = () => {
     // Actualiza el índice actual, si es 0 regresa al último elemento
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? datos.length - 1 : prevIndex - 1));
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? datos.length - 1 : prevIndex - 1,
+    );
   };
 
   // Función para manejar el clic en el botón "Next" (siguiente)
   const handleNext = () => {
     // Actualiza el índice actual, si es el último regresa al primer elemento
-    setCurrentIndex((prevIndex) => (prevIndex === datos.length - 1 ? 0 : prevIndex + 1));
+    setCurrentIndex((prevIndex) =>
+      prevIndex === datos.length - 1 ? 0 : prevIndex + 1,
+    );
   };
 
   // Renderiza el carrusel
@@ -133,24 +140,41 @@ const Carousel = ({ categoriaSeleccionada, datos }) => {
     <MainContainer>
       <h2>{categoriaSeleccionada}</h2> {/* Muestra la categoría seleccionada */}
       <CarouselContainer>
-        <PrevButton onClick={handlePrev}>◀</PrevButton> {/* Botón para ir al elemento anterior */}
+        <PrevButton onClick={handlePrev}>◀</PrevButton>{" "}
+        {/* Botón para ir al elemento anterior */}
         <CarouselItem>
           {datos[currentIndex] ? ( // Verifica si hay datos para mostrar
             <>
-              <h3>{datos[currentIndex].title}</h3> {/* Muestra el título del elemento actual */}
-              <img src={datos[currentIndex].url} alt={datos[currentIndex].title} /> {/* Muestra la imagen del elemento actual */}
-              <p>{datos[currentIndex].explanation}</p> {/* Muestra la explicación del elemento actual */}
+              <h3>{datos[currentIndex].title}</h3>{" "}
+              {/* Muestra el título del elemento actual */}
+              <img
+                src={datos[currentIndex].url}
+                alt={datos[currentIndex].title}
+              />{" "}
+              {/* Muestra la imagen del elemento actual */}
+              <p>{datos[currentIndex].explanation}</p>{" "}
+              {/* Muestra la explicación del elemento actual */}
             </>
           ) : (
             <p>No hay datos disponibles.</p> // Mensaje alternativo en caso de que no haya datos
           )}
         </CarouselItem>
-        <NextButton onClick={handleNext}>▶</NextButton> {/* Botón para ir al siguiente elemento */}
+        <NextButton onClick={handleNext}>▶</NextButton>{" "}
+        {/* Botón para ir al siguiente elemento */}
       </CarouselContainer>
       <DotsContainer>
-        {datos.map((_, index) => ( // Mapea los datos para crear los puntos de navegación
-          <Dot key={index} active={index === currentIndex} onClick={() => setCurrentIndex(index)} /> // Cada punto puede ser clickeado para cambiar el elemento mostrado
-        ))}
+        {datos.map(
+          (
+            _,
+            index, // Mapea los datos para crear los puntos de navegación
+          ) => (
+            <Dot
+              key={index}
+              active={index === currentIndex}
+              onClick={() => setCurrentIndex(index)}
+            /> // Cada punto puede ser clickeado para cambiar el elemento mostrado
+          ),
+        )}
       </DotsContainer>
     </MainContainer>
   );

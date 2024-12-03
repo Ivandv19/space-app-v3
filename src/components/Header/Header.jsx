@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { BsRocket } from 'react-icons/bs';
-import { FaBars } from 'react-icons/fa';
-import Navbar from './Navbar';
-import Sidebar from "./Sidebar"
-
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { BsRocket } from "react-icons/bs";
+import { FaBars } from "react-icons/fa";
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
 
 const HeaderStyled = styled.header`
   width: 100%;
-  height: ${({ shrink }) => (shrink ? '70px' : '100px')}; /* Ajusta la altura del header según 'shrink' */
+  height: ${({ shrink }) =>
+    shrink ? "70px" : "100px"}; /* Ajusta la altura del header según 'shrink' */
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -22,13 +22,19 @@ const HeaderStyled = styled.header`
 
   /* Media query para pantallas medianas */
   @media (max-width: 1024px) {
-    height: ${({ shrink }) => (shrink ? '80px' : '100px')}; /* Ajusta la altura en pantallas medianas según 'shrink' */
+    height: ${({ shrink }) =>
+      shrink
+        ? "80px"
+        : "100px"}; /* Ajusta la altura en pantallas medianas según 'shrink' */
     padding: 0 15px; /* Disminuye el padding lateral en pantallas medianas */
   }
 
   /* Media query para pantallas pequeñas */
   @media (max-width: 768px) {
-    height: ${({ shrink }) => (shrink ? '50px' : '60px')}; /* Ajusta la altura en pantallas pequeñas según 'shrink' */
+    height: ${({ shrink }) =>
+      shrink
+        ? "50px"
+        : "60px"}; /* Ajusta la altura en pantallas pequeñas según 'shrink' */
     padding: 0 20px;
     flex-direction: row-reverse; /* Invierte la dirección de los elementos */
     justify-content: space-between; /* Ajusta el espacio entre elementos */
@@ -36,11 +42,11 @@ const HeaderStyled = styled.header`
 `;
 
 const Logo = styled.h1`
-  font-size: 24px; 
+  font-size: 24px;
   margin: 0;
 
   /* Ajusta el tamaño de fuente en pantallas pequeñas */
-  @media (max-width: 768px) { 
+  @media (max-width: 768px) {
     font-size: 6vw;
   }
 `;
@@ -56,17 +62,26 @@ const LogoContainer = styled.div`
 
 const ImgContainer = styled.div`
   svg {
-    width: ${({ shrink }) => (shrink ? '40px' : '50px')}; /* Ajusta el tamaño del ícono según 'shrink' */
-    height: ${({ shrink }) => (shrink ? '40px' : '50px')};
-    transition: width 0.3s ease, height 0.3s ease; /* Transición suave en el cambio de tamaño */
+    width: ${({ shrink }) =>
+      shrink ? "40px" : "50px"}; /* Ajusta el tamaño del ícono según 'shrink' */
+    height: ${({ shrink }) => (shrink ? "40px" : "50px")};
+    transition:
+      width 0.3s ease,
+      height 0.3s ease; /* Transición suave en el cambio de tamaño */
   }
 
   /* Media query para pantallas pequeñas */
-  @media (max-width: 768px) { 
+  @media (max-width: 768px) {
     svg {
-      width: ${({ shrink }) => (shrink ? '30px' : '40px')}; /* Ajusta el tamaño del ícono en pantallas pequeñas */
-      height: ${({ shrink }) => (shrink ? 'auto' : 'auto')}; /* Mantiene proporciones automáticas */
-      transition: width 0.3s ease, height 0.3s ease;
+      width: ${({ shrink }) =>
+        shrink
+          ? "30px"
+          : "40px"}; /* Ajusta el tamaño del ícono en pantallas pequeñas */
+      height: ${({ shrink }) =>
+        shrink ? "auto" : "auto"}; /* Mantiene proporciones automáticas */
+      transition:
+        width 0.3s ease,
+        height 0.3s ease;
     }
   }
 `;
@@ -88,15 +103,15 @@ function Header() {
     };
 
     // Agrega los listeners de scroll y resize
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
 
     handleResize(); // Inicializa `isMobile` al cargar el componente
 
     // Limpia los listeners al desmontar el componente
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -115,7 +130,12 @@ function Header() {
       </LogoContainer>
 
       {/* Ícono de menú hamburguesa para abrir la barra lateral en móvil */}
-      {isMobile && <FaBars onClick={toggleSidebar} style={{ cursor: 'pointer', fontSize: '24px' }} />}
+      {isMobile && (
+        <FaBars
+          onClick={toggleSidebar}
+          style={{ cursor: "pointer", fontSize: "24px" }}
+        />
+      )}
 
       {/* Renderiza la barra lateral en móvil y la barra de navegación normal en escritorio */}
       {isMobile ? (

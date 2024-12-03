@@ -1,7 +1,12 @@
 // Footer.jsx
-import React from 'react';
-import styled from 'styled-components';
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
+import React from "react";
+import styled from "styled-components";
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedinIn,
+} from "react-icons/fa";
 
 const FooterContainer = styled.footer`
   background-color: #282c34;
@@ -15,14 +20,13 @@ const FooterContainer = styled.footer`
   gap: 10px;
 
   @media (max-width: 1024px) {
-
-}
-
-@media (max-width: 768px) {
-  p{
-    font-size: 14px;
   }
-}
+
+  @media (max-width: 768px) {
+    p {
+      font-size: 14px;
+    }
+  }
 `;
 
 const FooterLink = styled.a`
@@ -52,9 +56,10 @@ const IconLink = styled.a`
 const Footer = () => {
   return (
     <FooterContainer>
-
       {/* Texto de derechos reservados */}
-      <p>© 2024 Space App. <br /> Todos los derechos reservados.</p>
+      <p>
+        © 2024 Space App. <br /> Todos los derechos reservados.
+      </p>
 
       {/* Enlaces de navegación principales */}
       <p>
@@ -66,16 +71,32 @@ const Footer = () => {
 
       {/* Iconos de redes sociales con enlaces externos */}
       <SocialIcons>
-        <IconLink href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+        <IconLink
+          href="https://facebook.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <FaFacebookF />
         </IconLink>
-        <IconLink href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+        <IconLink
+          href="https://twitter.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <FaTwitter />
         </IconLink>
-        <IconLink href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+        <IconLink
+          href="https://instagram.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <FaInstagram />
         </IconLink>
-        <IconLink href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+        <IconLink
+          href="https://linkedin.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <FaLinkedinIn />
         </IconLink>
       </SocialIcons>

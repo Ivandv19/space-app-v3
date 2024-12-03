@@ -2,8 +2,7 @@
 
 ## Descripción
 
-Space App V3 es una aplicación interactiva para gestionar y visualizar contenido diverso sobre el espacio, incluyendo una galería de imágenes, noticias y un apartado del sistema solar. 
-
+Space App V3 es una aplicación interactiva para gestionar y visualizar contenido diverso sobre el espacio, incluyendo una galería de imágenes, noticias y un apartado del sistema solar.
 
 ## Secciones
 
@@ -20,7 +19,7 @@ Space App V3 es una aplicación interactiva para gestionar y visualizar contenid
 
 ## Uso
 
-- **Visualización del Proyecto:** Para visualizar el proyecto, sigue los pasos que se encuentran en la sección [Instalación](#instalación) o visita el enlace desplegado en [Vercel]( https://space-app-v3.vercel.app/ ).
+- **Visualización del Proyecto:** Para visualizar el proyecto, sigue los pasos que se encuentran en la sección [Instalación](#instalación) o visita el enlace desplegado en [Vercel](https://space-app-v3.vercel.app/).
 - **Navegar entre Secciones**: Utiliza el menú de navegación para acceder a la galería de imágenes, noticias y el apartado del sistema solar.
 - **Explorar Contenido**: Interactúa con el contenido para obtener más información sobre imágenes y noticias.
 
@@ -56,6 +55,7 @@ pnpm install
 ```bash
 pnpm run dev
 ```
+
 ## Créditos
 
 Este proyecto fue desarrollado como parte de un ejercicio de desarrollo web.
@@ -64,7 +64,7 @@ Este proyecto fue desarrollado como parte de un ejercicio de desarrollo web.
 
 ## Despliegue
 
-El sitio web está desplegado en Vercel y se puede acceder a través del siguiente enlace: [Space App V3]( https://space-app-v3.vercel.app/ ).
+El sitio web está desplegado en Vercel y se puede acceder a través del siguiente enlace: [Space App V3](https://space-app-v3.vercel.app/).
 
 ## Licencia
 
@@ -76,7 +76,7 @@ Cualquier uso no autorizado puede resultar en acciones legales.
 
 ## Imagen
 
-![space-app-v3 vercel app_ (2)]( https://github.com/user-attachments/assets/17e9bb16-85fa-42c3-83bd-8fb858da0ef6 )
+![space-app-v3 vercel app_ (2)](https://github.com/user-attachments/assets/17e9bb16-85fa-42c3-83bd-8fb858da0ef6)
 
 ## Proyecto En Portafolio Web ##3
 
