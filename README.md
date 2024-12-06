@@ -1,5 +1,5 @@
 # Space App V3
-[![wakatime](https://wakatime.com/badge/github/Ivandv19/space-app-v3.svg)](https://wakatime.com/badge/github/Ivandv19/space-app-v3)
+[![wakatime](https://wakatime.com/badge/user/c585b1da-c687-4d3b-89c1-72901e86fb52/project/77268fef-5b84-43a0-8146-4e54ea14f59f.svg)](https://wakatime.com/badge/user/c585b1da-c687-4d3b-89c1-72901e86fb52/project/77268fef-5b84-43a0-8146-4e54ea14f59f)
 
 ## Descripción
 
