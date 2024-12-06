@@ -1,7 +1,7 @@
 # Space App V3
 [![wakatime](https://wakatime.com/badge/user/c585b1da-c687-4d3b-89c1-72901e86fb52/project/77268fef-5b84-43a0-8146-4e54ea14f59f.svg)](https://wakatime.com/badge/user/c585b1da-c687-4d3b-89c1-72901e86fb52/project/77268fef-5b84-43a0-8146-4e54ea14f59f)
 [![wakatime](https://wakatime.com/badge/github/Ivandv19/space-app-v3.svg)](https://wakatime.com/badge/github/Ivandv19/space-app-v3)
-
+<figure><embed src="https://wakatime.com/share/@Ivandv19/45a5e06c-d9e8-48f4-92a3-62c237a71886.svg"></embed></figure>
 ## Descripción
 
 Space App V3 es una aplicación interactiva para gestionar y visualizar contenido diverso sobre el espacio, incluyendo una galería de imágenes, noticias y un apartado del sistema solar.
