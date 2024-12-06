@@ -1,8 +1,7 @@
 # Space App V3
 [![wakatime](https://wakatime.com/badge/user/c585b1da-c687-4d3b-89c1-72901e86fb52/project/77268fef-5b84-43a0-8146-4e54ea14f59f.svg)](https://wakatime.com/badge/user/c585b1da-c687-4d3b-89c1-72901e86fb52/project/77268fef-5b84-43a0-8146-4e54ea14f59f)
 [![wakatime](https://wakatime.com/badge/github/Ivandv19/space-app-v3.svg)](https://wakatime.com/badge/github/Ivandv19/space-app-v3)
-(.. image:: https://wakatime.com/share/@Ivandv19/b3a0509c-3769-470e-b181-2297add0486e.png
-    :target: https://wakatime.com/)
+
 
 ## Descripción
 
