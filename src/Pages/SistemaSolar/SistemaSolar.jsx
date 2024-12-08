@@ -58,25 +58,21 @@ const SistemaSolar = () => {
   const [loading, setLoading] = useState(true); // Inicializa el estado de carga como verdadero
 
   useEffect(() => {
-    if (sistemaSolar && Object.keys(sistemaSolar).length > 0) {
-      // Verifica si el sistemaSolar tiene datos antes de establecer la categoría
-      setCategoriaSeleccionada(Object.keys(sistemaSolar)[0]); // Establece la primera categoría como seleccionada
-    }
-  }, [sistemaSolar]); // Este useEffect se ejecuta cuando sistemaSolar cambia
-
-  useEffect(() => {
-    const fetchData = async () => {
+    const verificacion = async () => {
       setLoading(true); // Activa el estado de carga
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simula una carga de 2 segundos
+      await new Promise((resolve) => setTimeout(resolve, 2500)); // Simula una carga de 2.5 segundos
+      if (sistemaSolar && Object.keys(sistemaSolar).length > 0) {
+        // Verifica si el sistemaSolar tiene datos antes de establecer la categoría
+        setCategoriaSeleccionada(Object.keys(sistemaSolar)[0]); // Establece la primera categoría como seleccionada
+     
+      }
       setLoading(false); // Desactiva el estado de carga
     };
-
-    fetchData(); // Llama a la función para obtener datos
-  }, []); // Este efecto se ejecuta solo una vez al montar el componente
+    verificacion(); // Llama a la función para obtener datos
+  }, [sistemaSolar]);
 
   return (
     <Container>
-      {" "}
       {/* Contenedor principal del componente */}
       {loading ? ( // Condición para mostrar el spinner si está cargando
         <Spinner />
@@ -84,7 +80,6 @@ const SistemaSolar = () => {
         <p>No hay categorías disponibles.</p>
       ) : (
         <>
-          {" "}
           {/* Fragmento para agrupar los elementos */}
           <Titulo titulo="Sistema solar" /> {/* Componente para el título */}
           <Descripcion descripcion="Explora el Sistema Solar a través de diversas categorías, donde puedes ver información sobre planetas, lunas y más. Navega fácilmente entre los elementos utilizando la barra de navegación y el carrusel interactivo." />{" "}
