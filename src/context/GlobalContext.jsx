@@ -33,7 +33,7 @@ const reducer = (state, action) => {
       if (newLikedImages.some((likedImage) => likedImage.date === image.date)) {
         // Elimina la imagen si ya está "liked"
         newLikedImages = newLikedImages.filter(
-          (likedImage) => likedImage.date !== image.date,
+          (likedImage) => likedImage.date !== image.date
         );
         image.likes -= 1; // Decrementa el número de likes
       } else {
@@ -56,7 +56,7 @@ const reducer = (state, action) => {
       // Determina si agregar o eliminar la imagen del array
       if (newSavedImages.some((savedImage) => savedImage.date === image.date)) {
         newSavedImages = newSavedImages.filter(
-          (savedImage) => savedImage.date !== image.date,
+          (savedImage) => savedImage.date !== image.date
         ); // Elimina si ya está guardada
       } else {
         newSavedImages.push(image); // Agrega si no está guardada
@@ -102,83 +102,98 @@ export const GlobalProvider = ({ children }) => {
 
   //Llamada a api DailyImage
   const [dailyImage, setDailyImage] = useState([]);
+
   useEffect(() => {
-    fetch(
-      "https://api.nasa.gov/planetary/apod?api_key=je5e0Ea2hTgbHjumbfYV7PxzWeGUXdVHntdsJY7G",
-    )
-      .then((response) => {
+    // Definir la función asincrónica dentro del useEffect
+    const obtenerImagenDiaria = async () => {
+      try {
+        const response = await fetch(
+          "https://api.nasa.gov/planetary/apod?api_key=je5e0Ea2hTgbHjumbfYV7PxzWeGUXdVHntdsJY7G"
+        );
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error(
+            `error al obtener respuesta de la API ${response.status}`
+          );
         }
-        return response.json();
-      })
-      .then((data) => {
+        const data = await response.json();
         setDailyImage(data);
-      })
-      .catch((err) => {
-        console.log("Error al obtener datos", err);
-      });
-  }, []); // Solo se ejecuta cuando el componente se monta
+      } catch (error) {
+        console.log("Error al obtener los datos:", error);
+      }
+    };
+    obtenerImagenDiaria(); // Llamamos a la función asincrónica
+  }, []);
 
   //Llamada a api Galeria de la NASA
   const [imagesGaleria, setImagesGaleria] = useState([]);
+
   useEffect(() => {
-    fetch(
-      "https://api.nasa.gov/planetary/apod?api_key=je5e0Ea2hTgbHjumbfYV7PxzWeGUXdVHntdsJY7G&count=15",
-    )
-      .then((response) => {
+    const obtenerImagenesDeLaNasa = async () => {
+      try {
+        const response = await fetch(
+          "https://api.nasa.gov/planetary/apod?api_key=je5e0Ea2hTgbHjumbfYV7PxzWeGUXdVHntdsJY7G&count=15"
+        );
         if (!response.ok) {
-          throw new Error("Error al cargar las imágenes");
+          throw new Error(
+            `error al obtener respuesta de la API, codigo: ${response.status}`
+          );
         }
-        return response.json();
-      })
-      .then((data) => {
+        const data = await response.json();
         setImagesGaleria(data);
-      })
-      .catch((err) => {
-        console.log("Error al obtener datos", err);
-      });
-  }, []); // Solo se ejecuta cuando el componente se monta
+      } catch (error) {
+        console.log("error al obtener los datos:", error);
+      }
+    };
+    obtenerImagenesDeLaNasa();
+  }, []);
 
   //Llamada a API de Noticias
   const [noticias, setNoticias] = useState([]);
+
   useEffect(() => {
-    fetch(
-      "https://my-json-server.typicode.com/ivandevI9/api_info_noticias_spaceappv3/noticias",
-    ) // Cambia esto a la URL correcta
-      .then((response) => {
+    const obtenerNoticias = async () => {
+      try {
+        const response = await fetch(
+          "https://my-json-server.typicode.com/ivandevI9/api_info_noticias_spaceappv3/noticias"
+        );
         if (!response.ok) {
-          throw new Error("Error al cargar las noticias");
+          throw new Error(
+            `error al obtener respuesta de la API, codigo: ${response.status}`
+          );
         }
-        return response.json(); // Convierte la respuesta a JSON
-      })
-      .then((data) => {
-        setNoticias(data); // Guarda el array de noticias en el estado
-      })
-      .catch((err) => {
-        console.log("Error al obtener datos", err);
-      });
-  }, []); // Solo se ejecuta al montar el componente
+        const data = await response.json();
+        setNoticias(data);
+      } catch (error) {
+        console.log("error al obtener los datos:", error);
+      }
+    };
+
+    obtenerNoticias();
+  }, []);
 
   //Llamada a api de Sistema Solar
   const [sistemaSolar, setSistemaSolar] = useState({});
+
   useEffect(() => {
-    fetch(
-      "https://my-json-server.typicode.com/ivandevI9/api_info_sistemasolar_spaceappv3/sistema-solar",
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Error al cargar el archivo");
+    const obtenerDatosSistemaSolar = async () => {
+      try {
+        const response = await fetch(
+          "https://my-json-server.typicode.com/ivandevI9/api_info_sistemasolar_spaceappv3/sistema-solar"
+        );
+        if (!response) {
+          throw new Error(
+            `error al obtener respuesta de la API, codigo: ${response.status}`
+          );
         }
-        return response.json();
-      })
-      .then((data) => {
+        const data = await response.json();
         setSistemaSolar(data);
-      })
-      .catch((err) => {
-        console.log("Error al obtener datos", err);
-      });
-  }, []); // Solo se ejecuta cuando el componente se monta
+      } catch (error) {
+        console.log("error al obtener los datos:", error);
+      }
+    };
+    obtenerDatosSistemaSolar();
+  }, []);
+ 
 
   return (
     <GlobalContext.Provider
