@@ -71,7 +71,7 @@ El sitio web está desplegado en Vercel y se puede acceder a través del siguien
 
 ## Licencia
 
-**Licencia de Uso Personal**
+Licencia de Uso Personal:
 
 Este software es propiedad de **Ivan Cruz**. Se permite el uso de este software solo para fines personales y no comerciales. No se permite la distribución, modificación ni uso comercial de este software sin el consentimiento expreso de **Ivan Cruz**.
 
@@ -79,7 +79,7 @@ Cualquier uso no autorizado puede resultar en acciones legales.
 
 ## Imagen
 
-![space-app-v3 vercel app_ (2)]( https://github.com/user-attachments/assets/17e9bb16-85fa-42c3-83bd-8fb858da0ef6 )
+![space-app-v3]( https://github.com/user-attachments/assets/17e9bb16-85fa-42c3-83bd-8fb858da0ef6 )
 
 ## Proyecto En Portafolio Web ##3
 
