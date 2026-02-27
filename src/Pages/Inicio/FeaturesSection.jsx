@@ -1,8 +1,8 @@
 // src/components/FeaturesSection.js
 import styled from "styled-components";
-import FeatureCard from "./FeatureCard";
 import { useGlobalContext } from "../../context/GlobalContext";
 import Titulo from "../Galeria/Titulo";
+import FeatureCard from "./FeatureCard";
 
 // Sección principal con alineación centrada y separación
 const Section = styled.section`
@@ -28,53 +28,53 @@ const FeaturesContainer = styled.div`
 `;
 
 function FeaturesSection() {
-  const { noticias, imagesGaleria, sistemaSolar } = useGlobalContext();
+	const { noticias, imagesGaleria, sistemaSolar } = useGlobalContext();
 
-  // Registra todo el sistemaSolar para verificar su estructura
-  console.log("Sistema Solar:", sistemaSolar);
+	// Registra todo el sistemaSolar para verificar su estructura
+	console.log("Sistema Solar:", sistemaSolar);
 
-  // Asegúrate de que los datos sean definidos antes de usarlos
-  const planetas = sistemaSolar?.planetas || [];
-  const asteroides = sistemaSolar?.asteroides || [];
-  const cometas = sistemaSolar?.cometas || [];
-  const lunas = sistemaSolar?.lunas || [];
-  const estrellas = sistemaSolar?.estrellas || [];
+	// Asegúrate de que los datos sean definidos antes de usarlos
+	const planetas = sistemaSolar?.planetas || [];
+	const asteroides = sistemaSolar?.asteroides || [];
+	const cometas = sistemaSolar?.cometas || [];
+	const lunas = sistemaSolar?.lunas || [];
+	const estrellas = sistemaSolar?.estrellas || [];
 
-  // Registra los arreglos individuales para inspeccionar su contenido
-  console.log("Planetas:", planetas);
-  console.log("Asteroides:", asteroides);
-  console.log("Cometas:", cometas);
-  console.log("Lunas:", lunas);
-  console.log("Estrellas:", estrellas);
+	// Registra los arreglos individuales para inspeccionar su contenido
+	console.log("Planetas:", planetas);
+	console.log("Asteroides:", asteroides);
+	console.log("Cometas:", cometas);
+	console.log("Lunas:", lunas);
+	console.log("Estrellas:", estrellas);
 
-  return (
-    <Section id="caracteristicas">
-      <Titulo titulo="Explora el Universo" />
-      <FeaturesContainer>
-        <FeatureCard
-          titulo={"Galería Espacial"}
-          descripcion={
-            "Descubre la belleza del universo a través de una colección curada de imágenes impresionantes, desde nebulosas brillantes hasta galaxias lejanas."
-          }
-          images={imagesGaleria}
-        />
-        <FeatureCard
-          titulo={"Noticias"}
-          descripcion={
-            "Mantente al día con los últimos descubrimientos espaciales, avances científicos y misiones de exploración que están ampliando nuestros horizontes cósmicos."
-          }
-          images={noticias}
-        />
-        <FeatureCard
-          titulo={"Sistema Solar"}
-          descripcion={
-            "Explora los últimos descubrimientos y avances en nuestro vecindario cósmico. Aprende sobre los planetas, lunas, y otros cuerpos celestes que conforman el sistema solar, junto con las misiones espaciales que los estudian."
-          }
-          images={planetas}
-        />
-      </FeaturesContainer>
-    </Section>
-  );
+	return (
+		<Section id="caracteristicas">
+			<Titulo titulo="Explora el Universo" />
+			<FeaturesContainer>
+				<FeatureCard
+					titulo={"Galería Espacial"}
+					descripcion={
+						"Descubre la belleza del universo a través de una colección curada de imágenes impresionantes, desde nebulosas brillantes hasta galaxias lejanas."
+					}
+					images={imagesGaleria}
+				/>
+				<FeatureCard
+					titulo={"Noticias"}
+					descripcion={
+						"Mantente al día con los últimos descubrimientos espaciales, avances científicos y misiones de exploración que están ampliando nuestros horizontes cósmicos."
+					}
+					images={noticias}
+				/>
+				<FeatureCard
+					titulo={"Sistema Solar"}
+					descripcion={
+						"Explora los últimos descubrimientos y avances en nuestro vecindario cósmico. Aprende sobre los planetas, lunas, y otros cuerpos celestes que conforman el sistema solar, junto con las misiones espaciales que los estudian."
+					}
+					images={planetas}
+				/>
+			</FeaturesContainer>
+		</Section>
+	);
 }
 
 export default FeaturesSection;

@@ -24,9 +24,9 @@ const NavList = styled.ul`
 const NavItem = styled.li`
   margin: 0 15px; /* Espaciado entre los elementos */
   color: ${({ isSelected }) =>
-    isSelected
-      ? "#61dafb;"
-      : "white"}; /* Color dinámico dependiendo de la selección */
+		isSelected
+			? "#61dafb;"
+			: "white"}; /* Color dinámico dependiendo de la selección */
   cursor: pointer; /* Cambio de cursor al pasar sobre el item */
 
   &:hover {
@@ -42,34 +42,34 @@ const NavItem = styled.li`
 
 // Componente Navbar que recibe como props las categorías, la función para establecer la categoría seleccionada y la categoría seleccionada
 const Navbar = ({
-  categorias,
-  setCategoriaSeleccionada,
-  categoriaSeleccionada,
+	categorias,
+	setCategoriaSeleccionada,
+	categoriaSeleccionada,
 }) => {
-  return (
-    <Nav>
-      {" "}
-      {/* Contenedor principal de la barra de navegación */}
-      <NavList>
-        {" "}
-        {/* Lista de elementos de navegación */}
-        {categorias.map(
-          (
-            categoria,
-            index, // Mapea las categorías para crear elementos de navegación
-          ) => (
-            <NavItem
-              key={index} // Asigna una clave única para cada elemento
-              onClick={() => setCategoriaSeleccionada(categoria)} // Establece la categoría seleccionada al hacer clic
-              isSelected={categoria === categoriaSeleccionada} // Comparación para aplicar estilo al elemento seleccionado
-            >
-              {categoria} {/* Muestra el nombre de la categoría */}
-            </NavItem>
-          ),
-        )}
-      </NavList>
-    </Nav>
-  );
+	return (
+		<Nav>
+			{" "}
+			{/* Contenedor principal de la barra de navegación */}
+			<NavList>
+				{" "}
+				{/* Lista de elementos de navegación */}
+				{categorias.map(
+					(
+						categoria,
+						index, // Mapea las categorías para crear elementos de navegación
+					) => (
+						<NavItem
+							key={index} // Asigna una clave única para cada elemento
+							onClick={() => setCategoriaSeleccionada(categoria)} // Establece la categoría seleccionada al hacer clic
+							isSelected={categoria === categoriaSeleccionada} // Comparación para aplicar estilo al elemento seleccionado
+						>
+							{categoria} {/* Muestra el nombre de la categoría */}
+						</NavItem>
+					),
+				)}
+			</NavList>
+		</Nav>
+	);
 };
 
 export default Navbar; // Exporta el componente Navbar

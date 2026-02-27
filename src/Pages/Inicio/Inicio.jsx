@@ -1,6 +1,6 @@
-import HeroSection from "./HeroSection";
-import FeaturesSection from "./FeaturesSection";
 import styled from "styled-components";
+import FeaturesSection from "./FeaturesSection";
+import HeroSection from "./HeroSection";
 
 const MainContainer = styled.main`
   width: 100%;
@@ -13,12 +13,12 @@ const MainContainer = styled.main`
 `;
 
 function Inicio() {
-  return (
-    <MainContainer>
-      <HeroSection />
-      <FeaturesSection />
-    </MainContainer>
-  );
+	return (
+		<MainContainer>
+			<HeroSection />
+			<FeaturesSection />
+		</MainContainer>
+	);
 }
 
 export default Inicio;

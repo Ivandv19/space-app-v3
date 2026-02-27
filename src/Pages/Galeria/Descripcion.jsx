@@ -14,7 +14,7 @@ const PageDescription = styled.p`
 `;
 
 function Descripcion({ descripcion }) {
-  return <PageDescription>{descripcion}</PageDescription>;
+	return <PageDescription>{descripcion}</PageDescription>;
 }
 
 export default Descripcion;

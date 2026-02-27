@@ -1,6 +1,6 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Carousel from "./Carousel";
-import { Link } from "react-router-dom";
 
 // Estilo para la tarjeta principal, con diseño flexible y caja con sombra
 const Card = styled.div`
@@ -79,20 +79,20 @@ const ShowMoreLink = styled(Link)`
 
 // Componente FeatureCard que recibe título, descripción e imágenes como props
 function FeatureCard({ titulo, descripcion, images }) {
-  return (
-    <Card>
-      {/* Mostrar el título de la característica */}
-      <FeatureTitle>{titulo}</FeatureTitle>
-      {/* Mostrar la descripción de la característica */}
-      <FeatureDescription>{descripcion}</FeatureDescription>
-      {/* Renderizar el carrusel con un máximo de 3 imágenes */}
-      <Carousel images={images.slice(0, 3)} />
-      {/* Enlace para mostrar más contenido relacionado */}
-      <ShowMoreLink to={`/${titulo.toLowerCase().replace(/\s+/g, "-")}`}>
-        Mostrar más
-      </ShowMoreLink>
-    </Card>
-  );
+	return (
+		<Card>
+			{/* Mostrar el título de la característica */}
+			<FeatureTitle>{titulo}</FeatureTitle>
+			{/* Mostrar la descripción de la característica */}
+			<FeatureDescription>{descripcion}</FeatureDescription>
+			{/* Renderizar el carrusel con un máximo de 3 imágenes */}
+			<Carousel images={images.slice(0, 3)} />
+			{/* Enlace para mostrar más contenido relacionado */}
+			<ShowMoreLink to={`/${titulo.toLowerCase().replace(/\s+/g, "-")}`}>
+				Mostrar más
+			</ShowMoreLink>
+		</Card>
+	);
 }
 
 // Exportar el componente FeatureCard

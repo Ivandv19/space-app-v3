@@ -16,9 +16,9 @@ const PageTitle = styled.h2`
 
 // Componente funcional que recibe un título como propiedad y lo muestra
 function Titulo({ titulo }) {
-  return (
-    <PageTitle>{titulo}</PageTitle> // Muestra el título dentro del componente estilizado
-  );
+	return (
+		<PageTitle>{titulo}</PageTitle> // Muestra el título dentro del componente estilizado
+	);
 }
 
 export default Titulo; // Exporta el componente Titulo

@@ -1,8 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useGlobalContext } from "../../context/GlobalContext";
-import Titulo from "../Galeria/Titulo";
 import Descripcion from "../Galeria/Descripcion";
+import Titulo from "../Galeria/Titulo";
 
 // Contenedor principal para la noticia, con espaciado, fondo sutil y bordes redondeados
 const NoticiaContainer = styled.div`
@@ -93,46 +93,44 @@ const RegresarBoton = styled.button`
 
 // Componente Noticia
 const Noticia = () => {
-  const location = useLocation(); // Obtener la ubicación actual
-  const navigate = useNavigate(); // Inicializa el hook para la navegación
-  const { id } = location.state || {}; // Obtiene el ID de la noticia desde el estado de ubicación
+	const location = useLocation(); // Obtener la ubicación actual
+	const navigate = useNavigate(); // Inicializa el hook para la navegación
+	const { id } = location.state || {}; // Obtiene el ID de la noticia desde el estado de ubicación
 
-  // Obtener las noticias desde el contexto global
-  const { noticias } = useGlobalContext();
+	// Obtener las noticias desde el contexto global
+	const { noticias } = useGlobalContext();
 
-  // Busca la noticia correspondiente al ID
-  const noticia = noticias.find((n) => n.id === id);
+	// Busca la noticia correspondiente al ID
+	const noticia = noticias.find((n) => n.id === id);
 
-  // Maneja el clic en el botón "Regresar"
-  const handleRegresarClick = () => {
-    navigate("/noticias"); // Cambia '/noticias' a la ruta correcta para regresar a la lista de noticias
-  };
+	// Maneja el clic en el botón "Regresar"
+	const handleRegresarClick = () => {
+		navigate("/noticias"); // Cambia '/noticias' a la ruta correcta para regresar a la lista de noticias
+	};
 
-  // Renderiza el componente
-  return (
-    <NoticiaContainer>
-      <NoticiaCenter>
-        <Titulo titulo={noticia.title} />{" "}
-        {/* Componente que muestra el título de la noticia */}
-        <Descripcion descripcion={noticia.explanation} />{" "}
-        {/* Componente que muestra la explicación de la noticia */}
-        <NoticiaAuthor>Por: {noticia.author}</NoticiaAuthor>{" "}
-        {/* Muestra el autor de la noticia */}
-        <NoticiaDate>
-          {new Date(noticia.date).toLocaleDateString()}
-        </NoticiaDate>{" "}
-        {/* Formatea y muestra la fecha de la noticia */}
-        <NoticiaImage src={noticia.url} alt={noticia.title} />{" "}
-        {/* Imagen asociada a la noticia */}
-        <ContentDiv>{noticia.content}</ContentDiv>{" "}
-        {/* Contenido completo de la noticia */}
-        <RegresarBoton onClick={handleRegresarClick}>
-          Regresar a Noticias
-        </RegresarBoton>{" "}
-        {/* Botón para regresar */}
-      </NoticiaCenter>
-    </NoticiaContainer>
-  );
+	// Renderiza el componente
+	return (
+		<NoticiaContainer>
+			<NoticiaCenter>
+				<Titulo titulo={noticia.title} />{" "}
+				{/* Componente que muestra el título de la noticia */}
+				<Descripcion descripcion={noticia.explanation} />{" "}
+				{/* Componente que muestra la explicación de la noticia */}
+				<NoticiaAuthor>Por: {noticia.author}</NoticiaAuthor>{" "}
+				{/* Muestra el autor de la noticia */}
+				<NoticiaDate>{new Date(noticia.date).toLocaleDateString()}</NoticiaDate>{" "}
+				{/* Formatea y muestra la fecha de la noticia */}
+				<NoticiaImage src={noticia.url} alt={noticia.title} />{" "}
+				{/* Imagen asociada a la noticia */}
+				<ContentDiv>{noticia.content}</ContentDiv>{" "}
+				{/* Contenido completo de la noticia */}
+				<RegresarBoton onClick={handleRegresarClick}>
+					Regresar a Noticias
+				</RegresarBoton>{" "}
+				{/* Botón para regresar */}
+			</NoticiaCenter>
+		</NoticiaContainer>
+	);
 };
 
 // Exportar el componente Noticia

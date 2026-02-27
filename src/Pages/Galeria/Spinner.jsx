@@ -33,12 +33,12 @@ const SpinnerFigure = styled.div`
 
 // Componente funcional que muestra el spinner y el mensaje de carga
 function Spinner() {
-  return (
-    <SpinnerContainer>
-      <SpinnerFigure /> {/* Elemento visual del spinner */}
-      <p>Cargando imágenes...</p> {/* Mensaje de carga debajo del spinner */}
-    </SpinnerContainer>
-  );
+	return (
+		<SpinnerContainer>
+			<SpinnerFigure /> {/* Elemento visual del spinner */}
+			<p>Cargando imágenes...</p> {/* Mensaje de carga debajo del spinner */}
+		</SpinnerContainer>
+	);
 }
 
 export default Spinner;

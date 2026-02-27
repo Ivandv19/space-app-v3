@@ -1,12 +1,12 @@
 // Footer.jsx
 import React from "react";
-import styled from "styled-components";
 import {
-  FaFacebookF,
-  FaTwitter,
-  FaInstagram,
-  FaLinkedinIn,
+	FaFacebookF,
+	FaInstagram,
+	FaLinkedinIn,
+	FaTwitter,
 } from "react-icons/fa";
+import styled from "styled-components";
 
 const FooterContainer = styled.footer`
   background-color: #282c34;
@@ -54,54 +54,54 @@ const IconLink = styled.a`
 `;
 
 const Footer = () => {
-  return (
-    <FooterContainer>
-      {/* Texto de derechos reservados */}
-      <p>
-        © 2024 Space App. <br /> Todos los derechos reservados.
-      </p>
+	return (
+		<FooterContainer>
+			{/* Texto de derechos reservados */}
+			<p>
+				© 2024 Space App. <br /> Todos los derechos reservados.
+			</p>
 
-      {/* Enlaces de navegación principales */}
-      <p>
-        <FooterLink href="/">Inicio</FooterLink> |
-        <FooterLink href="/noticias">Noticias</FooterLink> |
-        <FooterLink href="/galería-espacial">Galería</FooterLink> |
-        <FooterLink href="/sistema-solar">Sistema Solar</FooterLink>
-      </p>
+			{/* Enlaces de navegación principales */}
+			<p>
+				<FooterLink href="/">Inicio</FooterLink> |
+				<FooterLink href="/noticias">Noticias</FooterLink> |
+				<FooterLink href="/galería-espacial">Galería</FooterLink> |
+				<FooterLink href="/sistema-solar">Sistema Solar</FooterLink>
+			</p>
 
-      {/* Iconos de redes sociales con enlaces externos */}
-      <SocialIcons>
-        <IconLink
-          href="https://facebook.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <FaFacebookF />
-        </IconLink>
-        <IconLink
-          href="https://twitter.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <FaTwitter />
-        </IconLink>
-        <IconLink
-          href="https://instagram.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <FaInstagram />
-        </IconLink>
-        <IconLink
-          href="https://linkedin.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <FaLinkedinIn />
-        </IconLink>
-      </SocialIcons>
-    </FooterContainer>
-  );
+			{/* Iconos de redes sociales con enlaces externos */}
+			<SocialIcons>
+				<IconLink
+					href="https://facebook.com"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<FaFacebookF />
+				</IconLink>
+				<IconLink
+					href="https://twitter.com"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<FaTwitter />
+				</IconLink>
+				<IconLink
+					href="https://instagram.com"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<FaInstagram />
+				</IconLink>
+				<IconLink
+					href="https://linkedin.com"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<FaLinkedinIn />
+				</IconLink>
+			</SocialIcons>
+		</FooterContainer>
+	);
 };
 
 export default Footer;

@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import { useGlobalContext } from "../../context/GlobalContext";
-import { useEffect } from "react";
+import Descripcion from "../Galeria/Descripcion";
 import Spinner from "../Galeria/Spinner";
 import Titulo from "../Galeria/Titulo";
-import Descripcion from "../Galeria/Descripcion";
 
 // Contenedor principal para las noticias, con padding y disposición en columna
 const NoticiasContainer = styled.div`
@@ -127,10 +126,10 @@ const Slider = styled.input`
 
 // Función para generar un slug a partir del título de la noticia
 const generarSlug = (title) => {
-  return title
-    .toLowerCase()
-    .replace(/[^a-z0-9áéíóúüñ\s]+/g, "") // Elimina caracteres no alfanuméricos
-    .replace(/\s+/g, "-"); // Reemplaza espacios por guiones
+	return title
+		.toLowerCase()
+		.replace(/[^a-z0-9áéíóúüñ\s]+/g, "") // Elimina caracteres no alfanuméricos
+		.replace(/\s+/g, "-"); // Reemplaza espacios por guiones
 };
 
 // Estilo para el botón "Ver Más"
@@ -221,193 +220,191 @@ const RegresarBoton = styled.button`
 
 // Componente Noticias
 const Noticias = () => {
-  const navigate = useNavigate(); // Inicializa el hook para la navegación
+	const navigate = useNavigate(); // Inicializa el hook para la navegación
 
-  const handleRegresarClick = () => {
-    navigate("/");
-  };
+	const handleRegresarClick = () => {
+		navigate("/");
+	};
 
-  const [orderDirection, setOrderDirection] = useState("reciente"); // Estado para la dirección de orden
-  const [orderBy, setOrderBy] = useState(""); // Estado para el criterio de orden
-  const [showViewsSlider, setShowViewsSlider] = useState(false); // Estado para mostrar el slider de vistas
-  const [viewsLimit, setViewsLimit] = useState(0); // Estado para el límite de vistas
-  const { noticias } = useGlobalContext(); // Obtener noticias del contexto global
-  const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
-  const [selectedCategory, setSelectedCategory] = useState(""); // Estado para la categoría seleccionada
-  const [selectedAuthor, setSelectedAuthor] = useState(""); // Estado para el autor seleccionado
-  const [selectedTag, setSelectedTag] = useState(""); // Estado para la etiqueta seleccionada
-  const [loading, setLoading] = useState(true); // Estado de carga
+	const [orderDirection, setOrderDirection] = useState("reciente"); // Estado para la dirección de orden
+	const [orderBy, setOrderBy] = useState(""); // Estado para el criterio de orden
+	const [showViewsSlider, setShowViewsSlider] = useState(false); // Estado para mostrar el slider de vistas
+	const [viewsLimit, setViewsLimit] = useState(0); // Estado para el límite de vistas
+	const { noticias } = useGlobalContext(); // Obtener noticias del contexto global
+	const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
+	const [selectedCategory, setSelectedCategory] = useState(""); // Estado para la categoría seleccionada
+	const [selectedAuthor, setSelectedAuthor] = useState(""); // Estado para el autor seleccionado
+	const [selectedTag, setSelectedTag] = useState(""); // Estado para la etiqueta seleccionada
+	const [loading, setLoading] = useState(true); // Estado de carga
 
-  // Obtener categorías y autores únicos
-  const categories = [...new Set(noticias.map((noticia) => noticia.categoria))];
-  const authors = [...new Set(noticias.map((noticia) => noticia.author))];
+	// Obtener categorías y autores únicos
+	const categories = [...new Set(noticias.map((noticia) => noticia.categoria))];
+	const authors = [...new Set(noticias.map((noticia) => noticia.author))];
 
-  // Filtrar noticias según el término de búsqueda y otros filtros seleccionados
-  const filteredNoticias = noticias.filter((noticia) => {
-    const matchesTitle = noticia.title
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory
-      ? noticia.categoria === selectedCategory
-      : true;
-    const matchesAuthor = selectedAuthor
-      ? noticia.author === selectedAuthor
-      : true;
-    const matchesTag = selectedTag
-      ? noticia.keywords.includes(selectedTag)
-      : true;
+	// Filtrar noticias según el término de búsqueda y otros filtros seleccionados
+	const filteredNoticias = noticias.filter((noticia) => {
+		const matchesTitle = noticia.title
+			.toLowerCase()
+			.includes(searchTerm.toLowerCase());
+		const matchesCategory = selectedCategory
+			? noticia.categoria === selectedCategory
+			: true;
+		const matchesAuthor = selectedAuthor
+			? noticia.author === selectedAuthor
+			: true;
+		const matchesTag = selectedTag
+			? noticia.keywords.includes(selectedTag)
+			: true;
 
-    return (
-      matchesTitle &&
-      matchesCategory &&
-      matchesAuthor &&
-      matchesTag &&
-      noticia.views >= viewsLimit
-    ); // Filtrar por vistas
-  });
+		return (
+			matchesTitle &&
+			matchesCategory &&
+			matchesAuthor &&
+			matchesTag &&
+			noticia.views >= viewsLimit
+		); // Filtrar por vistas
+	});
 
-  // Ordenar noticias según el criterio y dirección seleccionados
-  const sortedNoticias = [...filteredNoticias].sort((a, b) => {
-    if (orderBy === "fecha") {
-      return orderDirection === "reciente"
-        ? new Date(b.date) - new Date(a.date) // Más reciente primero
-        : new Date(a.date) - new Date(b.date); // Más antiguo primero
-    } else if (orderBy === "relevancia") {
-      return orderDirection === "masVistas"
-        ? b.views - a.views // Más vistas primero
-        : a.views - b.views; // Menos vistas primero
-    }
-    return 0; // No se hace nada si no se está ordenando
-  });
+	// Ordenar noticias según el criterio y dirección seleccionados
+	const sortedNoticias = [...filteredNoticias].sort((a, b) => {
+		if (orderBy === "fecha") {
+			return orderDirection === "reciente"
+				? new Date(b.date) - new Date(a.date) // Más reciente primero
+				: new Date(a.date) - new Date(b.date); // Más antiguo primero
+		} else if (orderBy === "relevancia") {
+			return orderDirection === "masVistas"
+				? b.views - a.views // Más vistas primero
+				: a.views - b.views; // Menos vistas primero
+		}
+		return 0; // No se hace nada si no se está ordenando
+	});
 
-  // Manejar el cambio en el criterio de orden
-  const handleOrderByChange = (e) => {
-    const value = e.target.value;
-    setOrderBy(value);
-    setShowViewsSlider(value === "relevancia"); // Mostrar el slider solo si se selecciona "relevancia"
-    if (value !== "relevancia") {
-      setOrderDirection("reciente"); // Resetear a 'reciente' si se cambia a otro orden
-    }
-  };
+	// Manejar el cambio en el criterio de orden
+	const handleOrderByChange = (e) => {
+		const value = e.target.value;
+		setOrderBy(value);
+		setShowViewsSlider(value === "relevancia"); // Mostrar el slider solo si se selecciona "relevancia"
+		if (value !== "relevancia") {
+			setOrderDirection("reciente"); // Resetear a 'reciente' si se cambia a otro orden
+		}
+	};
 
-  // Efecto para simular la carga de datos
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true); // Inicia el estado de carga
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simula una llamada a la API
-      setLoading(false); // Cambia el estado de carga a false
-    };
+	// Efecto para simular la carga de datos
+	useEffect(() => {
+		const fetchData = async () => {
+			setLoading(true); // Inicia el estado de carga
+			await new Promise((resolve) => setTimeout(resolve, 2000)); // Simula una llamada a la API
+			setLoading(false); // Cambia el estado de carga a false
+		};
 
-    fetchData();
-  }, [noticias]);
+		fetchData();
+	}, [noticias]);
 
-  // Renderizar el componente
-  return (
-    <NoticiasContainer>
-      {loading ? ( // Mostrar spinner si está cargando
-        <Spinner />
-      ) : (
-        <>
-          <Titulo titulo="Últimas Noticias del Mundo Espacial" />{" "}
-          {/* Título de la sección */}
-          <Descripcion descripcion="Aquí encontrarás las noticias más recientes sobre exploración espacial, astronomía, astrofísica y tecnología espacial. Mantente al día con los descubrimientos más emocionantes y eventos importantes en el ámbito de la ciencia." />{" "}
-          {/* Descripción de la sección */}
-          <BusquedaContainer>
-            <SearchInput
-              onChange={(e) => setSearchTerm(e.target.value)} // Manejar el cambio en el input de búsqueda
-              placeholder="Buscar por título"
-            />
-            <FilstrosContainer>
-              <FilterSelect
-                onChange={(e) => setSelectedCategory(e.target.value)}
-              >
-                <option value="">Todas las categorías</option>
-                {categories.map((category) => (
-                  <option key={category} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </FilterSelect>
-              <FilterSelect onChange={(e) => setSelectedAuthor(e.target.value)}>
-                <option value="">Todos los autores</option>
-                {authors.map((author) => (
-                  <option key={author} value={author}>
-                    {author}
-                  </option>
-                ))}
-              </FilterSelect>
-              <OrderSelect onChange={handleOrderByChange}>
-                <option value="">Ordenar por</option>
-                <option value="fecha">Fecha</option>
-                <option value="relevancia">Relevancia</option>
-              </OrderSelect>
-              {showViewsSlider && (
-                <SliderContainer>
-                  <label htmlFor="viewsRange">
-                    Filtrar por vistas: {viewsLimit}
-                  </label>
-                  <Slider
-                    type="range"
-                    id="viewsRange"
-                    min="1000"
-                    max="10000"
-                    step="1000" // Paso de 1000 para cada movimiento del slider
-                    value={viewsLimit}
-                    onChange={(e) => setViewsLimit(e.target.value)} // Manejar el cambio en el slider
-                  />
-                </SliderContainer>
-              )}
-              {orderBy === "fecha" && (
-                <FilterSelect
-                  onChange={(e) => setOrderDirection(e.target.value)}
-                >
-                  <option value="reciente">Más Reciente</option>
-                  <option value="antigua">Más Antigua</option>
-                </FilterSelect>
-              )}
-            </FilstrosContainer>
-          </BusquedaContainer>
-          <NoticiasSection>
-            {sortedNoticias.map(
-              (
-                noticia, // Mapear las noticias ordenadas y filtradas
-              ) => (
-                <NoticiaItem key={noticia.id}>
-                  <NoticiaImage src={noticia.url} />{" "}
-                  {/* Imagen de la noticia */}
-                  <NoticiaTitle>{noticia.title}</NoticiaTitle>{" "}
-                  {/* Título de la noticia */}
-                  <NoticiaDescription>
-                    {noticia.explanation}
-                  </NoticiaDescription>{" "}
-                  {/* Descripción de la noticia */}
-                  <NoticiaAuthor>Por: {noticia.author}</NoticiaAuthor>{" "}
-                  {/* Autor de la noticia */}
-                  <NoticiaDate>
-                    {new Date(noticia.date).toLocaleDateString()}
-                  </NoticiaDate>{" "}
-                  {/* Fecha de la noticia */}
-                  <Link
-                    to={`/noticias/${generarSlug(noticia.title)}`}
-                    state={{ id: noticia.id }}
-                  >
-                    {" "}
-                    {/* Enlace a la página de detalle de la noticia */}
-                    <VerMasButton>Ver Más</VerMasButton>{" "}
-                    {/* Botón para ver más detalles */}
-                  </Link>
-                </NoticiaItem>
-              ),
-            )}
-          </NoticiasSection>
-          <RegresarBoton onClick={handleRegresarClick}>
-            Regresar a inicio
-          </RegresarBoton>{" "}
-          {/* Botón para regresar a la página de inicio */}
-        </>
-      )}
-    </NoticiasContainer>
-  );
+	// Renderizar el componente
+	return (
+		<NoticiasContainer>
+			{loading ? ( // Mostrar spinner si está cargando
+				<Spinner />
+			) : (
+				<>
+					<Titulo titulo="Últimas Noticias del Mundo Espacial" />{" "}
+					{/* Título de la sección */}
+					<Descripcion descripcion="Aquí encontrarás las noticias más recientes sobre exploración espacial, astronomía, astrofísica y tecnología espacial. Mantente al día con los descubrimientos más emocionantes y eventos importantes en el ámbito de la ciencia." />{" "}
+					{/* Descripción de la sección */}
+					<BusquedaContainer>
+						<SearchInput
+							onChange={(e) => setSearchTerm(e.target.value)} // Manejar el cambio en el input de búsqueda
+							placeholder="Buscar por título"
+						/>
+						<FilstrosContainer>
+							<FilterSelect
+								onChange={(e) => setSelectedCategory(e.target.value)}
+							>
+								<option value="">Todas las categorías</option>
+								{categories.map((category) => (
+									<option key={category} value={category}>
+										{category}
+									</option>
+								))}
+							</FilterSelect>
+							<FilterSelect onChange={(e) => setSelectedAuthor(e.target.value)}>
+								<option value="">Todos los autores</option>
+								{authors.map((author) => (
+									<option key={author} value={author}>
+										{author}
+									</option>
+								))}
+							</FilterSelect>
+							<OrderSelect onChange={handleOrderByChange}>
+								<option value="">Ordenar por</option>
+								<option value="fecha">Fecha</option>
+								<option value="relevancia">Relevancia</option>
+							</OrderSelect>
+							{showViewsSlider && (
+								<SliderContainer>
+									<label htmlFor="viewsRange">
+										Filtrar por vistas: {viewsLimit}
+									</label>
+									<Slider
+										type="range"
+										id="viewsRange"
+										min="1000"
+										max="10000"
+										step="1000" // Paso de 1000 para cada movimiento del slider
+										value={viewsLimit}
+										onChange={(e) => setViewsLimit(e.target.value)} // Manejar el cambio en el slider
+									/>
+								</SliderContainer>
+							)}
+							{orderBy === "fecha" && (
+								<FilterSelect
+									onChange={(e) => setOrderDirection(e.target.value)}
+								>
+									<option value="reciente">Más Reciente</option>
+									<option value="antigua">Más Antigua</option>
+								</FilterSelect>
+							)}
+						</FilstrosContainer>
+					</BusquedaContainer>
+					<NoticiasSection>
+						{sortedNoticias.map(
+							(
+								noticia, // Mapear las noticias ordenadas y filtradas
+							) => (
+								<NoticiaItem key={noticia.id}>
+									<NoticiaImage src={noticia.url} />{" "}
+									{/* Imagen de la noticia */}
+									<NoticiaTitle>{noticia.title}</NoticiaTitle>{" "}
+									{/* Título de la noticia */}
+									<NoticiaDescription>{noticia.explanation}</NoticiaDescription>{" "}
+									{/* Descripción de la noticia */}
+									<NoticiaAuthor>Por: {noticia.author}</NoticiaAuthor>{" "}
+									{/* Autor de la noticia */}
+									<NoticiaDate>
+										{new Date(noticia.date).toLocaleDateString()}
+									</NoticiaDate>{" "}
+									{/* Fecha de la noticia */}
+									<Link
+										to={`/noticias/${generarSlug(noticia.title)}`}
+										state={{ id: noticia.id }}
+									>
+										{" "}
+										{/* Enlace a la página de detalle de la noticia */}
+										<VerMasButton>Ver Más</VerMasButton>{" "}
+										{/* Botón para ver más detalles */}
+									</Link>
+								</NoticiaItem>
+							),
+						)}
+					</NoticiasSection>
+					<RegresarBoton onClick={handleRegresarClick}>
+						Regresar a inicio
+					</RegresarBoton>{" "}
+					{/* Botón para regresar a la página de inicio */}
+				</>
+			)}
+		</NoticiasContainer>
+	);
 };
 
 // Exportar el componente Noticias

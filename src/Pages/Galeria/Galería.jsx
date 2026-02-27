@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import { useGlobalContext } from "../../context/GlobalContext";
+import React, { useEffect, useState } from "react";
 import {
-  IoHeart,
-  IoChatbubble,
-  IoShareSocial,
-  IoBookmark,
+	IoBookmark,
+	IoChatbubble,
+	IoHeart,
+	IoShareSocial,
 } from "react-icons/io5";
 import { Navigate, useNavigate } from "react-router-dom";
-import Titulo from "./Titulo";
+import styled from "styled-components";
+import { useGlobalContext } from "../../context/GlobalContext";
+import useOrderByLikes from "../../hooks/useOrderByLikes";
+import useRandomLikes from "../../hooks/useRandomLikes";
 import Descripcion from "./Descripcion";
 import Spinner from "./Spinner";
-import useRandomLikes from "../../hooks/useRandomLikes";
-import useOrderByLikes from "../../hooks/useOrderByLikes";
+import Titulo from "./Titulo";
 
 // Contenedor principal con un diseño de grid para organizar las secciones
 const GalleryContainer = styled.div`
@@ -239,175 +239,175 @@ const RegresarBoton = styled.button`
 `;
 
 const Galeria = () => {
-  // Hook de navegación para cambiar de ruta
-  const navigate = useNavigate();
+	// Hook de navegación para cambiar de ruta
+	const navigate = useNavigate();
 
-  // Función para manejar el clic en el botón "Regresar"
-  const handleRegresarClick = () => {
-    navigate("/"); // Navega a la ruta raíz
-  };
+	// Función para manejar el clic en el botón "Regresar"
+	const handleRegresarClick = () => {
+		navigate("/"); // Navega a la ruta raíz
+	};
 
-  // Desestructuración del contexto global para acceder a datos y funciones
-  const { imagesGaleria, state, toggleSave, toggleLike } = useGlobalContext();
-  const { savedImages, likedImages } = state; // Extrae las imágenes guardadas y "liked" del estado global
-  const [loading, setLoading] = useState(true); // Estado para manejar la carga de datos
+	// Desestructuración del contexto global para acceder a datos y funciones
+	const { imagesGaleria, state, toggleSave, toggleLike } = useGlobalContext();
+	const { savedImages, likedImages } = state; // Extrae las imágenes guardadas y "liked" del estado global
+	const [loading, setLoading] = useState(true); // Estado para manejar la carga de datos
 
-  // Custom hooks para asignar likes aleatorios y ordenar las imágenes
-  const itemsWithLikes = useRandomLikes(imagesGaleria) || []; // Asigna likes aleatorios a las imágenes
-  const topFiveItems = useOrderByLikes(itemsWithLikes) || []; // Ordena las imágenes por la cantidad de likes
+	// Custom hooks para asignar likes aleatorios y ordenar las imágenes
+	const itemsWithLikes = useRandomLikes(imagesGaleria) || []; // Asigna likes aleatorios a las imágenes
+	const topFiveItems = useOrderByLikes(itemsWithLikes) || []; // Ordena las imágenes por la cantidad de likes
 
-  // Efecto que se ejecuta al montar el componente o cambiar imagesGaleria
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true); // Activa el estado de carga
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simula una espera de 1 segundo
-      setLoading(false); // Desactiva el estado de carga
-    };
+	// Efecto que se ejecuta al montar el componente o cambiar imagesGaleria
+	useEffect(() => {
+		const fetchData = async () => {
+			setLoading(true); // Activa el estado de carga
+			await new Promise((resolve) => setTimeout(resolve, 1000)); // Simula una espera de 1 segundo
+			setLoading(false); // Desactiva el estado de carga
+		};
 
-    fetchData(); // Llama a la función fetchData
-  }, [imagesGaleria]); // Se ejecuta cada vez que imagesGaleria cambia
+		fetchData(); // Llama a la función fetchData
+	}, [imagesGaleria]); // Se ejecuta cada vez que imagesGaleria cambia
 
-  console.log("imagenes con likes: ", likedImages);
-  console.log("imagenes con guardadas: ", savedImages);
+	console.log("imagenes con likes: ", likedImages);
+	console.log("imagenes con guardadas: ", savedImages);
 
-  return (
-    <GalleryContainer>
-      {loading ? ( // Verifica si está cargando
-        <Spinner /> // Muestra un spinner mientras se cargan los datos
-      ) : (
-        <>
-          <HeaderSection>
-            <Titulo titulo="Galería" /> {/* Título de la galería */}
-            <Descripcion descripcion="Explora una colección impresionante de imágenes del espacio. Desde nebulosas hasta planetas, cada imagen cuenta una historia sobre el universo que nos rodea." />{" "}
-            {/* Descripción de la galería */}
-          </HeaderSection>
-          <LikedSavedSection>
-            <h3>Imágenes con más likes</h3>{" "}
-            {/* Título de la sección de imágenes más liked */}
-            {topFiveItems.length > 0 ? ( // Verifica si hay imágenes para mostrar
-              topFiveItems.map(
-                (
-                  image // Mapea las imágenes más liked
-                ) => (
-                  <GalleryItem key={image.date}>
-                    <Image src={image.url} alt={image.title} />{" "}
-                    {/* Muestra la imagen */}
-                    <Overlay>
-                      {" "}
-                      {/* Superposición con información adicional */}
-                      <ItemTitle>{image.title}</ItemTitle>{" "}
-                      {/* Título de la imagen */}
-                      <ItemDescription__liked>
-                        {image.explanation}
-                      </ItemDescription__liked>{" "}
-                      {/* Descripción de la imagen */}
-                    </Overlay>
-                  </GalleryItem>
-                )
-              )
-            ) : (
-              <p>No hay imágenes para mostrar.</p> // Mensaje si no hay imágenes
-            )}
-          </LikedSavedSection>
-          <GallerySection>
-            <h3>Galería Principal</h3> {/* Título de la galería principal */}
-            {itemsWithLikes.map(
-              (
-                image // Mapea todas las imágenes con likes
-              ) => (
-                <GalleryItem key={image.date}>
-                  <ImageContainer>
-                    <Image src={image.url} alt={image.title} />{" "}
-                    {/* Muestra la imagen */}
-                    <Overlay>
-                      {" "}
-                      {/* Superposición con información adicional */}
-                      <ItemTitle>{image.title}</ItemTitle>{" "}
-                      {/* Título de la imagen */}
-                      <ItemDescription>
-                        {image.explanation}
-                      </ItemDescription>{" "}
-                      {/* Descripción de la imagen */}
-                    </Overlay>
-                  </ImageContainer>
-                  <ButtonContainer>
-                    {" "}
-                    {/* Contenedor de botones para acciones */}
-                    <Button onClick={() => toggleLike(image)}>
-                      {" "}
-                      {/* Botón para dar like */}
-                      <IoHeart
-                        color={
-                          likedImages.some(
-                            (likedImage) => likedImage.date === image.date
-                          )
-                            ? "red"
-                            : "white"
-                        }
-                      />{" "}
-                      {/* Icono de corazón que cambia de color */}
-                      <LikesStyled>
-                        {" "}
-                        {image.likes} {/* Muestra la cantidad de likes */}
-                      </LikesStyled>
-                    </Button>
-                    <Button>
-                      <IoChatbubble /> {/* Botón para comentarios */}
-                    </Button>
-                    <Button>
-                      <IoShareSocial /> {/* Botón para compartir */}
-                    </Button>
-                    <Button onClick={() => toggleSave(image)}>
-                      {" "}
-                      {/* Botón para guardar imagen */}
-                      <IoBookmark
-                        color={
-                          savedImages.some(
-                            (savedImage) => savedImage.date === image.date
-                          )
-                            ? "blue"
-                            : "white"
-                        }
-                      />{" "}
-                      {/* Icono de marcador que cambia de color */}
-                    </Button>
-                  </ButtonContainer>
-                </GalleryItem>
-              )
-            )}
-          </GallerySection>
-          <LikedSavedSection>
-            <h3>Imágenes guardadas</h3>{" "}
-            {/* Título de la sección de imágenes guardadas */}
-            {itemsWithLikes
-              .filter((image) =>
-                savedImages.some((savedImage) => savedImage.date === image.date)
-              )
-              .map((image) => (
-                <GalleryItem key={image.date}>
-                  <Image src={image.url} alt={image.title} />{" "}
-                  {/* Muestra la imagen guardada */}
-                  <Overlay>
-                    {" "}
-                    {/* Superposición con información adicional */}
-                    <ItemTitle>{image.title}</ItemTitle>{" "}
-                    {/* Título de la imagen guardada */}
-                    <ItemDescription__saved>
-                      {image.explanation}
-                    </ItemDescription__saved>{" "}
-                    {/* Descripción de la imagen guardada */}
-                  </Overlay>
-                </GalleryItem>
-              ))}
-          </LikedSavedSection>
-          <RegresarBoton onClick={handleRegresarClick}>
-            Regresar a inicio
-          </RegresarBoton>{" "}
-          {/* Botón para regresar a la página de inicio */}
-        </>
-      )}
-    </GalleryContainer>
-  );
+	return (
+		<GalleryContainer>
+			{loading ? ( // Verifica si está cargando
+				<Spinner /> // Muestra un spinner mientras se cargan los datos
+			) : (
+				<>
+					<HeaderSection>
+						<Titulo titulo="Galería" /> {/* Título de la galería */}
+						<Descripcion descripcion="Explora una colección impresionante de imágenes del espacio. Desde nebulosas hasta planetas, cada imagen cuenta una historia sobre el universo que nos rodea." />{" "}
+						{/* Descripción de la galería */}
+					</HeaderSection>
+					<LikedSavedSection>
+						<h3>Imágenes con más likes</h3>{" "}
+						{/* Título de la sección de imágenes más liked */}
+						{topFiveItems.length > 0 ? ( // Verifica si hay imágenes para mostrar
+							topFiveItems.map(
+								(
+									image, // Mapea las imágenes más liked
+								) => (
+									<GalleryItem key={image.date}>
+										<Image src={image.url} alt={image.title} />{" "}
+										{/* Muestra la imagen */}
+										<Overlay>
+											{" "}
+											{/* Superposición con información adicional */}
+											<ItemTitle>{image.title}</ItemTitle>{" "}
+											{/* Título de la imagen */}
+											<ItemDescription__liked>
+												{image.explanation}
+											</ItemDescription__liked>{" "}
+											{/* Descripción de la imagen */}
+										</Overlay>
+									</GalleryItem>
+								),
+							)
+						) : (
+							<p>No hay imágenes para mostrar.</p> // Mensaje si no hay imágenes
+						)}
+					</LikedSavedSection>
+					<GallerySection>
+						<h3>Galería Principal</h3> {/* Título de la galería principal */}
+						{itemsWithLikes.map(
+							(
+								image, // Mapea todas las imágenes con likes
+							) => (
+								<GalleryItem key={image.date}>
+									<ImageContainer>
+										<Image src={image.url} alt={image.title} />{" "}
+										{/* Muestra la imagen */}
+										<Overlay>
+											{" "}
+											{/* Superposición con información adicional */}
+											<ItemTitle>{image.title}</ItemTitle>{" "}
+											{/* Título de la imagen */}
+											<ItemDescription>{image.explanation}</ItemDescription>{" "}
+											{/* Descripción de la imagen */}
+										</Overlay>
+									</ImageContainer>
+									<ButtonContainer>
+										{" "}
+										{/* Contenedor de botones para acciones */}
+										<Button onClick={() => toggleLike(image)}>
+											{" "}
+											{/* Botón para dar like */}
+											<IoHeart
+												color={
+													likedImages.some(
+														(likedImage) => likedImage.date === image.date,
+													)
+														? "red"
+														: "white"
+												}
+											/>{" "}
+											{/* Icono de corazón que cambia de color */}
+											<LikesStyled>
+												{" "}
+												{image.likes} {/* Muestra la cantidad de likes */}
+											</LikesStyled>
+										</Button>
+										<Button>
+											<IoChatbubble /> {/* Botón para comentarios */}
+										</Button>
+										<Button>
+											<IoShareSocial /> {/* Botón para compartir */}
+										</Button>
+										<Button onClick={() => toggleSave(image)}>
+											{" "}
+											{/* Botón para guardar imagen */}
+											<IoBookmark
+												color={
+													savedImages.some(
+														(savedImage) => savedImage.date === image.date,
+													)
+														? "blue"
+														: "white"
+												}
+											/>{" "}
+											{/* Icono de marcador que cambia de color */}
+										</Button>
+									</ButtonContainer>
+								</GalleryItem>
+							),
+						)}
+					</GallerySection>
+					<LikedSavedSection>
+						<h3>Imágenes guardadas</h3>{" "}
+						{/* Título de la sección de imágenes guardadas */}
+						{itemsWithLikes
+							.filter((image) =>
+								savedImages.some(
+									(savedImage) => savedImage.date === image.date,
+								),
+							)
+							.map((image) => (
+								<GalleryItem key={image.date}>
+									<Image src={image.url} alt={image.title} />{" "}
+									{/* Muestra la imagen guardada */}
+									<Overlay>
+										{" "}
+										{/* Superposición con información adicional */}
+										<ItemTitle>{image.title}</ItemTitle>{" "}
+										{/* Título de la imagen guardada */}
+										<ItemDescription__saved>
+											{image.explanation}
+										</ItemDescription__saved>{" "}
+										{/* Descripción de la imagen guardada */}
+									</Overlay>
+								</GalleryItem>
+							))}
+					</LikedSavedSection>
+					<RegresarBoton onClick={handleRegresarClick}>
+						Regresar a inicio
+					</RegresarBoton>{" "}
+					{/* Botón para regresar a la página de inicio */}
+				</>
+			)}
+		</GalleryContainer>
+	);
 };
 
 export default Galeria;
