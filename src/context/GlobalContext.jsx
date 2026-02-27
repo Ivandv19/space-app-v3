@@ -1,11 +1,12 @@
 import {
-	Children,
 	createContext,
 	useContext,
 	useEffect,
 	useReducer,
 	useState,
 } from "react";
+import { noticias as noticiasData } from "../data/noticias";
+import { sistemaSolar as sistemaSolarData } from "../data/sistemaSolar";
 
 // Definir los tipos de acción directamente aquí
 const actionTypes = {
@@ -108,7 +109,7 @@ export const GlobalProvider = ({ children }) => {
 		const obtenerImagenDiaria = async () => {
 			try {
 				const response = await fetch(
-					"https://api.nasa.gov/planetary/apod?api_key=je5e0Ea2hTgbHjumbfYV7PxzWeGUXdVHntdsJY7G",
+					`https://api.nasa.gov/planetary/apod?api_key=${import.meta.env.VITE_NASA_API_KEY}`,
 				);
 				if (!response.ok) {
 					throw new Error(
@@ -131,7 +132,7 @@ export const GlobalProvider = ({ children }) => {
 		const obtenerImagenesDeLaNasa = async () => {
 			try {
 				const response = await fetch(
-					"https://api.nasa.gov/planetary/apod?api_key=je5e0Ea2hTgbHjumbfYV7PxzWeGUXdVHntdsJY7G&count=15",
+					`https://api.nasa.gov/planetary/apod?api_key=${import.meta.env.VITE_NASA_API_KEY}&count=15`,
 				);
 				if (!response.ok) {
 					throw new Error(
@@ -147,52 +148,11 @@ export const GlobalProvider = ({ children }) => {
 		obtenerImagenesDeLaNasa();
 	}, []);
 
-	//Llamada a API de Noticias
-	const [noticias, setNoticias] = useState([]);
+	//Datos locales de Noticias
+	const [noticias, setNoticias] = useState(noticiasData);
 
-	useEffect(() => {
-		const obtenerNoticias = async () => {
-			try {
-				const response = await fetch(
-					"https://my-json-server.typicode.com/ivandevI9/api_info_noticias_spaceappv3/noticias",
-				);
-				if (!response.ok) {
-					throw new Error(
-						`error al obtener respuesta de la API, codigo: ${response.status}`,
-					);
-				}
-				const data = await response.json();
-				setNoticias(data);
-			} catch (error) {
-				console.log("error al obtener los datos:", error);
-			}
-		};
-
-		obtenerNoticias();
-	}, []);
-
-	//Llamada a api de Sistema Solar
-	const [sistemaSolar, setSistemaSolar] = useState({});
-
-	useEffect(() => {
-		const obtenerDatosSistemaSolar = async () => {
-			try {
-				const response = await fetch(
-					"https://my-json-server.typicode.com/ivandevI9/api_info_sistemasolar_spaceappv3/sistema-solar",
-				);
-				if (!response) {
-					throw new Error(
-						`error al obtener respuesta de la API, codigo: ${response.status}`,
-					);
-				}
-				const data = await response.json();
-				setSistemaSolar(data);
-			} catch (error) {
-				console.log("error al obtener los datos:", error);
-			}
-		};
-		obtenerDatosSistemaSolar();
-	}, []);
+	//Datos locales de Sistema Solar
+	const [sistemaSolar, setSistemaSolar] = useState(sistemaSolarData);
 
 	return (
 		<GlobalContext.Provider
