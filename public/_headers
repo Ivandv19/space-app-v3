@@ -3,4 +3,5 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://apod.nasa.gov https://img.youtube.com https://i.ytimg.com; connect-src 'self' https://api.nasa.gov https://my-json-server.typicode.com; frame-src https://www.youtube.com;
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://apod.nasa.gov https://img.youtube.com https://i.ytimg.com https://www.youtube.com; connect-src 'self' https://api.nasa.gov; frame-src https://www.youtube.com;
+
