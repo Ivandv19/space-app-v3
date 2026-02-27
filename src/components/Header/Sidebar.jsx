@@ -13,7 +13,7 @@ const SidebarStyled = styled.div`
   background-color: #fff;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
   transform: translateX(
-    ${({ isOpen }) => (isOpen ? "0" : "-100%")}
+    ${({ $isOpen }) => ($isOpen ? "0" : "-100%")}
   ); /* Oculta o muestra la barra lateral */
   transition: transform 0.3s ease;
   z-index: 20;
@@ -55,7 +55,7 @@ const NavLink = styled(Link)`
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
 	return (
-		<SidebarStyled isOpen={isOpen}>
+		<SidebarStyled $isOpen={isOpen}>
 			{/* Botón de cierre para ocultar la barra lateral, llama a toggleSidebar al hacer clic */}
 			<CloseButton onClick={toggleSidebar}>
 				<AiOutlineClose />

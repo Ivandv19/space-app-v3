@@ -1,412 +1,347 @@
 import React, { useEffect, useState } from "react";
-import {
-	IoBookmark,
-	IoChatbubble,
-	IoHeart,
-	IoShareSocial,
-} from "react-icons/io5";
-import { Navigate, useNavigate } from "react-router-dom";
+import { IoBookmark, IoClose, IoHeart } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useGlobalContext } from "../../context/GlobalContext";
 import useOrderByLikes from "../../hooks/useOrderByLikes";
 import useRandomLikes from "../../hooks/useRandomLikes";
-import Descripcion from "./Descripcion";
-import Spinner from "./Spinner";
 import Titulo from "./Titulo";
 
-// Contenedor principal con un diseño de grid para organizar las secciones
-const GalleryContainer = styled.div`
-  padding: 150px 20px 50px 20px;
-  width: 100%;
-  display: grid;
-  grid-template-rows: auto auto 200px; // Define las filas de la cuadrícula
-  grid-template-columns: 1fr 2fr 1fr; // Define las columnas de la cuadrícula
-  gap: 20px;
-
-  @media (max-width: 1024px) {
-    // En pantallas medianas o menores, cambia a flex layout
-    display: flex;
-    flex-direction: column;
-  }
-
-  @media (max-width: 768px) {
-    // En pantallas pequeñas, ajusta el padding
-    padding: 15vh 1vw 10vh 1vw;
-  }
+/* ─── Layout principal ─────────────────────────────────── */
+const PageWrapper = styled.div`
+  padding: 100px 20px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
 `;
 
-// Sección para el título y descripción, abarca toda la fila en el grid layout
+/* ─── Cabecera ─────────────────────────────────────────── */
 const HeaderSection = styled.div`
-  grid-column: 1 / span 3; // Ocupa las tres columnas en la primera fila
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 20px;
-  margin-bottom: 100px;
-
-  @media (max-width: 768px) {
-    padding: 0 20px;
-  }
+  gap: 12px;
 `;
 
-// Sección de imágenes "Me gusta" y "Guardadas"
-const LikedSavedSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-
-  @media (max-width: 1024px) {
-    // Ocultar esta sección en pantallas medianas o menores
-    display: none;
-  }
-`;
-
-// Contenedor principal de la galería
-const GallerySection = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-
-  @media (max-width: 768px) {
-    // Ajustes en pantallas pequeñas
-    h3 {
-      font-size: 4vw;
-    }
-  }
-`;
-
-// Estilo para cada elemento individual de la galería
-const GalleryItem = styled.div`
-  position: relative;
-  overflow: hidden;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  width: 100%;
-  cursor: pointer;
-
-  &:hover img {
-    // Efecto hover para hacer zoom en la imagen
-    transform: scale(1.05);
-  }
-`;
-
-// Imagen dentro de cada elemento de la galería
-const Image = styled.img`
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  transition: transform 0.3s ease; // Animación de transición suave para el zoom
-`;
-
-// Capa superpuesta sobre la imagen al hacer hover
-const Overlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); // Fondo oscuro semitransparente
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  opacity: 0; // Inicialmente invisible
-  transition: opacity 0.3s ease; // Transición suave al aparecer
-
-  ${GalleryItem}:hover & {
-    // Hace que la capa aparezca al hacer hover sobre GalleryItem
-    opacity: 1;
-  }
-
-  @media (max-width: 768px) {
-    // Ajustes en pantallas pequeñas
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-`;
-
-// Título de cada elemento dentro de la superposición
-const ItemTitle = styled.h3`
-  font-size: 1.5rem;
-  margin: 10px 0;
-  text-align: center;
-
-  @media (max-width: 768px) {
-    // Escala del texto en pantallas pequeñas
-    font-size: 2vw;
-  }
-`;
-
-// Descripción de cada elemento en la superposición
-const ItemDescription = styled.p`
+const Subtitle = styled.p`
   font-size: 1rem;
-  margin: 10px;
-  text-align: center;
-
-  @media (max-width: 768px) {
-    // Escala del texto en pantallas pequeñas
-    font-size: 2.5vw;
-  }
+  color: #666;
+  max-width: 640px;
 `;
 
-// Contenedor de botones en la parte inferior de cada elemento
-const ButtonContainer = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+/* ─── Sección con título + fila horizontal ─────────────── */
+const Section = styled.section`
   display: flex;
-  justify-content: space-evenly;
-  padding: 10px;
-  z-index: 0;
-  background-color: black;
+  flex-direction: column;
+  gap: 16px;
 `;
 
-// Estilo de los botones de interacción (como "Me gusta", "Guardar", etc.)
-const Button = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: white;
-  font-size: 1.5rem;
-  transition: transform 0.2s ease;
+const SectionTitle = styled.h3`
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #282c34;
+  border-left: 4px solid #1a1a2e;
+  padding-left: 12px;
+`;
+
+/* ─── Fila scrolleable ─────────────────────────────────── */
+const ScrollRow = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 12px;
 
-  &:hover {
-    // Efecto hover para escalar el botón
-    color: white;
-    transform: scale(1.2);
-  }
+  &::-webkit-scrollbar { height: 6px; }
+  &::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+  &::-webkit-scrollbar-thumb { background: #c0c0c0; border-radius: 10px; }
 `;
 
-// Contenedor adicional para la imagen (puede ser usado para flexibilidad)
-const ImageContainer = styled.div``;
-
-// Descripción de "Me gusta" en elementos específicos
-const ItemDescription__liked = styled.p`
-  font-size: 10px;
-  margin: 10px;
-  text-align: center;
-`;
-
-// Descripción de "Guardadas" en elementos específicos
-const ItemDescription__saved = styled.p`
-  font-size: 10px;
-  margin: 10px;
-  text-align: center;
-`;
-
-// Estilo para el contador de "Me gusta"
-const LikesStyled = styled.p`
-  font-size: 15px;
-
-  @media (max-width: 768px) {
-    // Escala en pantallas pequeñas
-    font-size: 3.5vw;
-  }
-`;
-
-// Botón de "Regresar" en el diseño grid
-const RegresarBoton = styled.button`
-  grid-column: 2 / 3; // Posición del botón en la cuadrícula
-  grid-row: 3;
-  padding: 10px 20px;
-  font-size: 1rem;
-  background-color: #0a6ad8;
-  color: white;
-  border: none;
-  border-radius: 5px;
+/* ─── Tarjeta de imagen ────────────────────────────────── */
+const Card = styled.div`
+  position: relative;
+  flex: 0 0 260px;
+  height: 200px;
+  border-radius: 12px;
+  overflow: hidden;
   cursor: pointer;
-  transition: background-color 0.3s;
-  width: 200px;
-  height: auto;
-  justify-self: center;
-  align-self: center;
+  border: 1px solid #e0e0e0;
 
-  &:hover {
-    // Cambia el color de fondo al hacer hover
-    background-color: #0056b3;
+  &:hover img {
+    transform: scale(1.06);
   }
 `;
 
+const CardImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+`;
+
+const CardOverlay = styled.div`
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  ${Card}:hover & {
+    opacity: 1;
+  }
+`;
+
+const CardTitle = styled.p`
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.3;
+`;
+
+/* ─── Botones de acción ────────────────────────────────── */
+const ActionBar = styled.div`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 6px;
+`;
+
+const ActionBtn = styled.button`
+  background: rgba(0, 0, 0, 0.55);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  font-size: 1rem;
+  transition: background 0.2s;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.85);
+  }
+`;
+
+/* ─── Empty state ──────────────────────────────────────── */
+const EmptyState = styled.p`
+  color: #999;
+  font-size: 0.9rem;
+  font-style: italic;
+`;
+
+/* ─── Modal ────────────────────────────────────────────── */
+const ModalBackdrop = styled.div`
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+`;
+
+const ModalBox = styled.div`
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  max-width: 860px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.25s ease;
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+`;
+
+const ModalImage = styled.img`
+  width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  background: #000;
+`;
+
+const ModalBody = styled.div`
+  padding: 24px;
+  overflow-y: auto;
+`;
+
+const ModalTitle = styled.h2`
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 12px;
+`;
+
+const ModalDescription = styled.p`
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.7;
+`;
+
+const CloseBtn = styled.button`
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0,0,0,0.6);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  color: white;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1001;
+
+  &:hover { background: rgba(0,0,0,0.9); }
+`;
+
+const ModalImageWrapper = styled.div`
+  position: relative;
+`;
+
+/* ─── Componente principal ─────────────────────────────── */
 const Galeria = () => {
-	// Hook de navegación para cambiar de ruta
 	const navigate = useNavigate();
-
-	// Función para manejar el clic en el botón "Regresar"
-	const handleRegresarClick = () => {
-		navigate("/"); // Navega a la ruta raíz
-	};
-
-	// Desestructuración del contexto global para acceder a datos y funciones
 	const { imagesGaleria, state, toggleSave, toggleLike } = useGlobalContext();
-	const { savedImages, likedImages } = state; // Extrae las imágenes guardadas y "liked" del estado global
-	const [loading, setLoading] = useState(true); // Estado para manejar la carga de datos
+	const { savedImages, likedImages } = state;
+	const [selectedImage, setSelectedImage] = useState(null);
 
-	// Custom hooks para asignar likes aleatorios y ordenar las imágenes
-	const itemsWithLikes = useRandomLikes(imagesGaleria) || []; // Asigna likes aleatorios a las imágenes
-	const topFiveItems = useOrderByLikes(itemsWithLikes) || []; // Ordena las imágenes por la cantidad de likes
+	const itemsWithLikes = useRandomLikes(imagesGaleria) || [];
+	const topFiveItems = useOrderByLikes(itemsWithLikes) || [];
 
-	// Efecto que se ejecuta al montar el componente o cambiar imagesGaleria
+	// Cerrar modal con Escape
 	useEffect(() => {
-		const fetchData = async () => {
-			setLoading(true); // Activa el estado de carga
-			await new Promise((resolve) => setTimeout(resolve, 1000)); // Simula una espera de 1 segundo
-			setLoading(false); // Desactiva el estado de carga
-		};
+		const onKey = (e) => { if (e.key === "Escape") setSelectedImage(null); };
+		window.addEventListener("keydown", onKey);
+		return () => window.removeEventListener("keydown", onKey);
+	}, []);
 
-		fetchData(); // Llama a la función fetchData
-	}, [imagesGaleria]); // Se ejecuta cada vez que imagesGaleria cambia
-
-	console.log("imagenes con likes: ", likedImages);
-	console.log("imagenes con guardadas: ", savedImages);
+	const savedItemsWithLikes = itemsWithLikes.filter((img) =>
+		savedImages.some((s) => s.date === img.date),
+	);
 
 	return (
-		<GalleryContainer>
-			{loading ? ( // Verifica si está cargando
-				<Spinner /> // Muestra un spinner mientras se cargan los datos
-			) : (
-				<>
-					<HeaderSection>
-						<Titulo titulo="Galería" /> {/* Título de la galería */}
-						<Descripcion descripcion="Explora una colección impresionante de imágenes del espacio. Desde nebulosas hasta planetas, cada imagen cuenta una historia sobre el universo que nos rodea." />{" "}
-						{/* Descripción de la galería */}
-					</HeaderSection>
-					<LikedSavedSection>
-						<h3>Imágenes con más likes</h3>{" "}
-						{/* Título de la sección de imágenes más liked */}
-						{topFiveItems.length > 0 ? ( // Verifica si hay imágenes para mostrar
-							topFiveItems.map(
-								(
-									image, // Mapea las imágenes más liked
-								) => (
-									<GalleryItem key={image.date}>
-										<Image src={image.url} alt={image.title} />{" "}
-										{/* Muestra la imagen */}
-										<Overlay>
-											{" "}
-											{/* Superposición con información adicional */}
-											<ItemTitle>{image.title}</ItemTitle>{" "}
-											{/* Título de la imagen */}
-											<ItemDescription__liked>
-												{image.explanation}
-											</ItemDescription__liked>{" "}
-											{/* Descripción de la imagen */}
-										</Overlay>
-									</GalleryItem>
-								),
-							)
-						) : (
-							<p>No hay imágenes para mostrar.</p> // Mensaje si no hay imágenes
-						)}
-					</LikedSavedSection>
-					<GallerySection>
-						<h3>Galería Principal</h3> {/* Título de la galería principal */}
-						{itemsWithLikes.map(
-							(
-								image, // Mapea todas las imágenes con likes
-							) => (
-								<GalleryItem key={image.date}>
-									<ImageContainer>
-										<Image src={image.url} alt={image.title} />{" "}
-										{/* Muestra la imagen */}
-										<Overlay>
-											{" "}
-											{/* Superposición con información adicional */}
-											<ItemTitle>{image.title}</ItemTitle>{" "}
-											{/* Título de la imagen */}
-											<ItemDescription>{image.explanation}</ItemDescription>{" "}
-											{/* Descripción de la imagen */}
-										</Overlay>
-									</ImageContainer>
-									<ButtonContainer>
-										{" "}
-										{/* Contenedor de botones para acciones */}
-										<Button onClick={() => toggleLike(image)}>
-											{" "}
-											{/* Botón para dar like */}
-											<IoHeart
-												color={
-													likedImages.some(
-														(likedImage) => likedImage.date === image.date,
-													)
-														? "red"
-														: "white"
-												}
-											/>{" "}
-											{/* Icono de corazón que cambia de color */}
-											<LikesStyled>
-												{" "}
-												{image.likes} {/* Muestra la cantidad de likes */}
-											</LikesStyled>
-										</Button>
-										<Button>
-											<IoChatbubble /> {/* Botón para comentarios */}
-										</Button>
-										<Button>
-											<IoShareSocial /> {/* Botón para compartir */}
-										</Button>
-										<Button onClick={() => toggleSave(image)}>
-											{" "}
-											{/* Botón para guardar imagen */}
-											<IoBookmark
-												color={
-													savedImages.some(
-														(savedImage) => savedImage.date === image.date,
-													)
-														? "blue"
-														: "white"
-												}
-											/>{" "}
-											{/* Icono de marcador que cambia de color */}
-										</Button>
-									</ButtonContainer>
-								</GalleryItem>
-							),
-						)}
-					</GallerySection>
-					<LikedSavedSection>
-						<h3>Imágenes guardadas</h3>{" "}
-						{/* Título de la sección de imágenes guardadas */}
-						{itemsWithLikes
-							.filter((image) =>
-								savedImages.some(
-									(savedImage) => savedImage.date === image.date,
-								),
-							)
-							.map((image) => (
-								<GalleryItem key={image.date}>
-									<Image src={image.url} alt={image.title} />{" "}
-									{/* Muestra la imagen guardada */}
-									<Overlay>
-										{" "}
-										{/* Superposición con información adicional */}
-										<ItemTitle>{image.title}</ItemTitle>{" "}
-										{/* Título de la imagen guardada */}
-										<ItemDescription__saved>
-											{image.explanation}
-										</ItemDescription__saved>{" "}
-										{/* Descripción de la imagen guardada */}
-									</Overlay>
-								</GalleryItem>
-							))}
-					</LikedSavedSection>
-					<RegresarBoton onClick={handleRegresarClick}>
-						Regresar a inicio
-					</RegresarBoton>{" "}
-					{/* Botón para regresar a la página de inicio */}
-				</>
+		<PageWrapper>
+			{/* ── Modal ── */}
+			{selectedImage && (
+				<ModalBackdrop onClick={() => setSelectedImage(null)}>
+					<ModalBox onClick={(e) => e.stopPropagation()}>
+						<ModalImageWrapper>
+							<CloseBtn onClick={() => setSelectedImage(null)}>
+								<IoClose />
+							</CloseBtn>
+							<ModalImage src={selectedImage.url} alt={selectedImage.title} />
+						</ModalImageWrapper>
+						<ModalBody>
+							<ModalTitle>{selectedImage.title}</ModalTitle>
+							<ModalDescription>{selectedImage.explanation}</ModalDescription>
+						</ModalBody>
+					</ModalBox>
+				</ModalBackdrop>
 			)}
-		</GalleryContainer>
+			{/* Cabecera */}
+			<HeaderSection>
+				<Titulo titulo="Galería Espacial" />
+				<Subtitle>
+					Explora una colección impresionante de imágenes del espacio. Desde
+					nebulosas hasta planetas, cada imagen cuenta una historia del universo.
+				</Subtitle>
+			</HeaderSection>
+
+			{/* ── Galería Principal ── */}
+			<Section>
+				<SectionTitle>Galería Principal</SectionTitle>
+				<ScrollRow>
+					{itemsWithLikes.map((image) => (
+						<Card key={image.date} onClick={() => setSelectedImage(image)}>
+							<CardImage src={image.url} alt={image.title} />
+							<CardOverlay>
+								<CardTitle>{image.title}</CardTitle>
+							</CardOverlay>
+							<ActionBar>
+								<ActionBtn onClick={(e) => { e.stopPropagation(); toggleLike(image); }} title="Me gusta">
+									<IoHeart
+										color={
+											likedImages.some((l) => l.date === image.date)
+												? "#ff4d6d"
+												: "white"
+										}
+									/>
+								</ActionBtn>
+								<ActionBtn onClick={(e) => { e.stopPropagation(); toggleSave(image); }} title="Guardar">
+									<IoBookmark
+										color={
+											savedImages.some((s) => s.date === image.date)
+												? "#5b8dee"
+												: "white"
+										}
+									/>
+								</ActionBtn>
+							</ActionBar>
+						</Card>
+					))}
+				</ScrollRow>
+			</Section>
+
+			{/* ── Top Likes ── */}
+			<Section>
+				<SectionTitle>⭐ Con más likes</SectionTitle>
+				<ScrollRow>
+					{topFiveItems.map((image) => (
+						<Card key={image.date} onClick={() => setSelectedImage(image)}>
+							<CardImage src={image.url} alt={image.title} />
+							<CardOverlay>
+								<CardTitle>{image.title}</CardTitle>
+							</CardOverlay>
+						</Card>
+					))}
+				</ScrollRow>
+			</Section>
+
+			{/* ── Guardadas ── */}
+			<Section>
+				<SectionTitle>🔖 Guardadas</SectionTitle>
+				{savedItemsWithLikes.length === 0 ? (
+					<EmptyState>Aún no has guardado ninguna imagen.</EmptyState>
+				) : (
+					<ScrollRow>
+						{savedItemsWithLikes.map((image) => (
+							<Card key={image.date} onClick={() => setSelectedImage(image)}>
+								<CardImage src={image.url} alt={image.title} />
+								<CardOverlay>
+									<CardTitle>{image.title}</CardTitle>
+								</CardOverlay>
+							</Card>
+						))}
+					</ScrollRow>
+				)}
+			</Section>
+		</PageWrapper>
 	);
 };
 

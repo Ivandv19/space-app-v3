@@ -7,8 +7,8 @@ import Sidebar from "./Sidebar";
 
 const HeaderStyled = styled.header`
   width: 100%;
-  height: ${({ shrink }) =>
-		shrink ? "70px" : "100px"}; /* Ajusta la altura del header según 'shrink' */
+  height: ${({ $shrink }) =>
+		$shrink ? "55px" : "70px"};
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -22,19 +22,19 @@ const HeaderStyled = styled.header`
 
   /* Media query para pantallas medianas */
   @media (max-width: 1024px) {
-    height: ${({ shrink }) =>
-			shrink
-				? "80px"
-				: "100px"}; /* Ajusta la altura en pantallas medianas según 'shrink' */
+    height: ${({ $shrink }) =>
+		$shrink
+			? "60px"
+			: "80px"};
     padding: 0 15px; /* Disminuye el padding lateral en pantallas medianas */
   }
 
   /* Media query para pantallas pequeñas */
   @media (max-width: 768px) {
-    height: ${({ shrink }) =>
-			shrink
-				? "50px"
-				: "60px"}; /* Ajusta la altura en pantallas pequeñas según 'shrink' */
+    height: ${({ $shrink }) =>
+		$shrink
+			? "40px"
+			: "50px"};
     padding: 0 20px;
     flex-direction: row-reverse; /* Invierte la dirección de los elementos */
     justify-content: space-between; /* Ajusta el espacio entre elementos */
@@ -62,9 +62,9 @@ const LogoContainer = styled.div`
 
 const ImgContainer = styled.div`
   svg {
-    width: ${({ shrink }) =>
-			shrink ? "40px" : "50px"}; /* Ajusta el tamaño del ícono según 'shrink' */
-    height: ${({ shrink }) => (shrink ? "40px" : "50px")};
+    width: ${({ $shrink }) =>
+		$shrink ? "40px" : "50px"}; /* Ajusta el tamaño del ícono según '$shrink' */
+    height: ${({ $shrink }) => ($shrink ? "40px" : "50px")};
     transition:
       width 0.3s ease,
       height 0.3s ease; /* Transición suave en el cambio de tamaño */
@@ -73,12 +73,12 @@ const ImgContainer = styled.div`
   /* Media query para pantallas pequeñas */
   @media (max-width: 768px) {
     svg {
-      width: ${({ shrink }) =>
-				shrink
-					? "30px"
-					: "40px"}; /* Ajusta el tamaño del ícono en pantallas pequeñas */
-      height: ${({ shrink }) =>
-				shrink ? "auto" : "auto"}; /* Mantiene proporciones automáticas */
+      width: ${({ $shrink }) =>
+		$shrink
+			? "30px"
+			: "40px"}; /* Ajusta el tamaño del ícono en pantallas pequeñas */
+      height: ${({ $shrink }) =>
+		$shrink ? "auto" : "auto"}; /* Mantiene proporciones automáticas */
       transition:
         width 0.3s ease,
         height 0.3s ease;
@@ -121,9 +121,9 @@ function Header() {
 	};
 
 	return (
-		<HeaderStyled shrink={shrink}>
+		<HeaderStyled $shrink={shrink}>
 			<LogoContainer>
-				<ImgContainer shrink={shrink}>
+				<ImgContainer $shrink={shrink}>
 					<BsRocket /> {/* Ícono de cohete para el logo */}
 				</ImgContainer>
 				<Logo>Space App</Logo> {/* Nombre de la aplicación */}

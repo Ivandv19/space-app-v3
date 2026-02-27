@@ -6,7 +6,7 @@ import Carousel from "./Carousel";
 const Card = styled.div`
   background-color: white;
   width: 70%;
-  height: 700px;
+  height: auto;
   justify-content: space-evenly;
   align-items: center;
   border-radius: 10px;
@@ -60,15 +60,15 @@ const ShowMoreLink = styled(Link)`
   display: inline-block;
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #61dafb;
-  color: black;
+  background-color: #1a1a2e;
+  color: white;
   text-decoration: none;
   border-radius: 5px;
   transition: background-color 0.3s;
-  max-width: 200px; // Ajusta el ancho máximo según sea necesario
+  max-width: 200px;
 
   &:hover {
-    background-color: #21a1f1; // Cambio de color en hover
+    background-color: #2d2d5e;
   }
 
   // Media query para pantallas móviles (max-width: 768px)
@@ -79,20 +79,20 @@ const ShowMoreLink = styled(Link)`
 
 // Componente FeatureCard que recibe título, descripción e imágenes como props
 function FeatureCard({ titulo, descripcion, images }) {
-	return (
-		<Card>
-			{/* Mostrar el título de la característica */}
-			<FeatureTitle>{titulo}</FeatureTitle>
-			{/* Mostrar la descripción de la característica */}
-			<FeatureDescription>{descripcion}</FeatureDescription>
-			{/* Renderizar el carrusel con un máximo de 3 imágenes */}
-			<Carousel images={images.slice(0, 3)} />
-			{/* Enlace para mostrar más contenido relacionado */}
-			<ShowMoreLink to={`/${titulo.toLowerCase().replace(/\s+/g, "-")}`}>
-				Mostrar más
-			</ShowMoreLink>
-		</Card>
-	);
+  return (
+    <Card>
+      {/* Mostrar el título de la característica */}
+      <FeatureTitle>{titulo}</FeatureTitle>
+      {/* Mostrar la descripción de la característica */}
+      <FeatureDescription>{descripcion}</FeatureDescription>
+      {/* Renderizar el carrusel con un máximo de 3 imágenes */}
+      <Carousel images={images.slice(0, 3)} />
+      {/* Enlace para mostrar más contenido relacionado */}
+      <ShowMoreLink to={`/${titulo.toLowerCase().replace(/\s+/g, "-")}`}>
+        Mostrar más
+      </ShowMoreLink>
+    </Card>
+  );
 }
 
 // Exportar el componente FeatureCard

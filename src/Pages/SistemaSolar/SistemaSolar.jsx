@@ -9,41 +9,18 @@ import Carousel from "./Carousel";
 import Navbar from "./Navbar";
 
 const Container = styled.div`
-  /* Estilos principales */
   text-align: center;
-  font-family: Arial, sans-serif;
-  padding: 150px 50px;
+  padding: 100px 20px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 25px;
 
-  /* Media query para pantallas medianas (tabletas) */
   @media (max-width: 1024px) {
-    padding: 15vh 1vw 10vh 1vw;
-  }
-
-  /* Media query para pantallas pequeñas (móviles) */
-  @media (max-width: 768px) {
-    padding: 15vh 1vw 10vh 1vw;
-  }
-`;
-
-const RegresarBoton = styled.button`
-  /* Estilos principales del botón */
-  padding: 10px 20px;
-  font-size: 1rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-
-  /* Media query para pantallas pequeñas (móviles) */
-  @media (max-width: 768px) {
-    font-size: 4vw;
+    padding: 90px 16px 40px;
   }
 `;
 
@@ -53,49 +30,32 @@ const SistemaSolar = () => {
 		navigate("/"); // Función para regresar a la página principal
 	};
 
-	const { sistemaSolar } = useGlobalContext(); // Obtiene los datos del contexto global
-	const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null); // Inicializa la categoría seleccionada con null
-	const [loading, setLoading] = useState(true); // Inicializa el estado de carga como verdadero
+	const { sistemaSolar } = useGlobalContext();
+	const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
 
 	useEffect(() => {
-		const verificacion = async () => {
-			setLoading(true); // Activa el estado de carga
-			await new Promise((resolve) => setTimeout(resolve, 2500)); // Simula una carga de 2.5 segundos
-			if (sistemaSolar && Object.keys(sistemaSolar).length > 0) {
-				// Verifica si el sistemaSolar tiene datos antes de establecer la categoría
-				setCategoriaSeleccionada(Object.keys(sistemaSolar)[0]); // Establece la primera categoría como seleccionada
-			}
-			setLoading(false); // Desactiva el estado de carga
-		};
-		verificacion(); // Llama a la función para obtener datos
+		if (sistemaSolar && Object.keys(sistemaSolar).length > 0) {
+			setCategoriaSeleccionada(Object.keys(sistemaSolar)[0]);
+		}
 	}, [sistemaSolar]);
 
 	return (
 		<Container>
-			{/* Contenedor principal del componente */}
-			{loading ? ( // Condición para mostrar el spinner si está cargando
-				<Spinner />
-			) : !categoriaSeleccionada ? ( // Condición para mostrar mensaje si no hay categorías
+			{!categoriaSeleccionada ? (
 				<p>No hay categorías disponibles.</p>
 			) : (
 				<>
-					{/* Fragmento para agrupar los elementos */}
-					<Titulo titulo="Sistema solar" /> {/* Componente para el título */}
-					<Descripcion descripcion="Explora el Sistema Solar a través de diversas categorías, donde puedes ver información sobre planetas, lunas y más. Navega fácilmente entre los elementos utilizando la barra de navegación y el carrusel interactivo." />{" "}
-					{/* Componente para la descripción */}
+					<Titulo titulo="Sistema solar" />
+					<Descripcion descripcion="Explora el Sistema Solar a través de diversas categorías, donde puedes ver información sobre planetas, lunas y más. Navega fácilmente entre los elementos utilizando la barra de navegación y el carrusel interactivo." />
 					<Navbar
-						categorias={Object.keys(sistemaSolar)} // Pasa las categorías al componente Navbar
-						categoriaSeleccionada={categoriaSeleccionada} // Pasa la categoría seleccionada
-						setCategoriaSeleccionada={setCategoriaSeleccionada} // Pasa la función para cambiar la categoría seleccionada
+						categorias={Object.keys(sistemaSolar)}
+						categoriaSeleccionada={categoriaSeleccionada}
+						setCategoriaSeleccionada={setCategoriaSeleccionada}
 					/>
 					<Carousel
-						categoriaSeleccionada={categoriaSeleccionada} // Pasa la categoría seleccionada al carrusel
-						datos={sistemaSolar[categoriaSeleccionada]} // Pasa los datos de la categoría seleccionada
+						categoriaSeleccionada={categoriaSeleccionada}
+						datos={sistemaSolar[categoriaSeleccionada]}
 					/>
-					<RegresarBoton onClick={handleRegresarClick}>
-						Regresar a inicio
-					</RegresarBoton>{" "}
-					{/* Botón para regresar a la página principal */}
 				</>
 			)}
 		</Container>

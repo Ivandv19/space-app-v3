@@ -30,8 +30,7 @@ const FeaturesContainer = styled.div`
 function FeaturesSection() {
 	const { noticias, imagesGaleria, sistemaSolar } = useGlobalContext();
 
-	// Registra todo el sistemaSolar para verificar su estructura
-	console.log("Sistema Solar:", sistemaSolar);
+
 
 	// Asegúrate de que los datos sean definidos antes de usarlos
 	const planetas = sistemaSolar?.planetas || [];
@@ -40,12 +39,7 @@ function FeaturesSection() {
 	const lunas = sistemaSolar?.lunas || [];
 	const estrellas = sistemaSolar?.estrellas || [];
 
-	// Registra los arreglos individuales para inspeccionar su contenido
-	console.log("Planetas:", planetas);
-	console.log("Asteroides:", asteroides);
-	console.log("Cometas:", cometas);
-	console.log("Lunas:", lunas);
-	console.log("Estrellas:", estrellas);
+
 
 	return (
 		<Section id="caracteristicas">

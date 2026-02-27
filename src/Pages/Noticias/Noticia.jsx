@@ -1,137 +1,170 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useGlobalContext } from "../../context/GlobalContext";
-import Descripcion from "../Galeria/Descripcion";
-import Titulo from "../Galeria/Titulo";
 
-// Contenedor principal para la noticia, con espaciado, fondo sutil y bordes redondeados
-const NoticiaContainer = styled.div`
+/* ─── Layout ────────────────────────────────────────────── */
+const PageWrapper = styled.div`
+  padding: 100px 20px 60px;
+  max-width: 820px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 30px; // Aumentar el espacio entre elementos
-  padding: 150px 20px; // Ajustar el padding para un mejor espaciado
-  text-align: center;
+  gap: 28px;
+`;
+
+/* ─── Hero image ────────────────────────────────────────── */
+const HeroImage = styled.img`
   width: 100%;
-  height: auto;
-  background-color: #f9f9f9; // Fondo sutil para resaltar la noticia
-  border-radius: 10px; // Bordes redondeados
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); // Sombra para dar profundidad
-
-  @media (max-width: 768px) {
-    // Ajuste del padding relativo al tamaño de la pantalla en dispositivos móviles
-    padding: 13vh 1vw 10vh 1vw;
-  }
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
 `;
 
-// Contenedor para el contenido de la noticia, ajustando el tamaño de la fuente y color del texto
-const ContentDiv = styled.section`
-  max-width: 80vw;
-  font-size: 1rem; // Ajustar el tamaño de fuente para una mejor legibilidad
-  color: #333; // Color de texto oscuro para el contenido
-  line-height: 1.5; // Aumentar el espacio entre líneas
-`;
-
-// Estilo para el autor de la noticia, ajustando el tamaño de la fuente y el margen
-const NoticiaAuthor = styled.p`
-  font-size: 0.9rem;
-  color: #777;
-  margin: 5px 0; // Espacio ajustado
-`;
-
-// Estilo para la fecha de la noticia, ajustando el tamaño de la fuente y el margen
-const NoticiaDate = styled.p`
-  font-size: 0.9rem;
-  color: #777;
-  margin: 5px 0; // Espacio ajustado
-`;
-
-// Estilo para la imagen de la noticia, ajustando el ancho máximo y los bordes
-const NoticiaImage = styled.img`
-  max-width: 50%; // Aumentar el ancho máximo de la imagen
-  height: auto; // Mantener la proporción de la imagen
-  border-radius: 10px; // Bordes redondeados para la imagen
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Sombra sutil para la imagen
-
-  @media (max-width: 768px) {
-    // Ajuste del tamaño de la imagen en dispositivos móviles
-    max-width: 100%;
-  }
-`;
-
-// Sección centrada para organizar el contenido de la noticia de manera ordenada
-const NoticiaCenter = styled.section`
+/* ─── Meta ──────────────────────────────────────────────── */
+const Meta = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 25px;
-  max-width: 70%;
+  gap: 16px;
+  font-size: 0.82rem;
+  color: #888;
+  flex-wrap: wrap;
+`;
 
-  @media (max-width: 768px) {
-    // Ajuste del ancho máximo de la sección en dispositivos móviles
-    max-width: 100%;
+const Category = styled.span`
+  background: #1a1a2e;
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+`;
+
+/* ─── Título ────────────────────────────────────────────── */
+const Title = styled.h1`
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  line-height: 1.3;
+  margin: 0;
+
+  @media (max-width: 640px) {
+    font-size: 1.4rem;
   }
 `;
 
-// Estilo para el botón de regresar, con transición de color en hover para una mejor interacción
-const RegresarBoton = styled.button`
-  padding: 10px 20px;
+/* ─── Resumen ───────────────────────────────────────────── */
+const Explanation = styled.p`
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.7;
+  border-left: 4px solid #1a1a2e;
+  padding-left: 16px;
+  margin: 0;
+`;
+
+/* ─── Cuerpo ────────────────────────────────────────────── */
+const Content = styled.p`
   font-size: 1rem;
-  background-color: #007bff;
+  color: #333;
+  line-height: 1.8;
+  margin: 0;
+`;
+
+/* ─── Tags ──────────────────────────────────────────────── */
+const TagsRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+`;
+
+const Tag = styled.span`
+  background: #f0f0f5;
+  color: #555;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.78rem;
+`;
+
+/* ─── Divider ───────────────────────────────────────────── */
+const Divider = styled.hr`
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 0;
+`;
+
+/* ─── Back button ───────────────────────────────────────── */
+const BackBtn = styled.button`
+  align-self: flex-start;
+  padding: 10px 20px;
+  background: #1a1a2e;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background 0.25s;
 
   &:hover {
-    // Cambio de color al pasar el cursor por encima
-    background-color: #0056b3;
+    background: #2d2d5e;
   }
 `;
 
-// Componente Noticia
+/* ─── Componente ────────────────────────────────────────── */
 const Noticia = () => {
-	const location = useLocation(); // Obtener la ubicación actual
-	const navigate = useNavigate(); // Inicializa el hook para la navegación
-	const { id } = location.state || {}; // Obtiene el ID de la noticia desde el estado de ubicación
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { id } = location.state || {};
+  const { noticias } = useGlobalContext();
+  const noticia = noticias.find((n) => n.id === id);
 
-	// Obtener las noticias desde el contexto global
-	const { noticias } = useGlobalContext();
+  if (!noticia) {
+    return (
+      <PageWrapper>
+        <p>Noticia no encontrada.</p>
+        <BackBtn onClick={() => navigate("/noticias")}>← Volver a Noticias</BackBtn>
+      </PageWrapper>
+    );
+  }
 
-	// Busca la noticia correspondiente al ID
-	const noticia = noticias.find((n) => n.id === id);
+  return (
+    <PageWrapper>
+      {/* Imagen principal */}
+      <HeroImage src={noticia.url} alt={noticia.title} />
 
-	// Maneja el clic en el botón "Regresar"
-	const handleRegresarClick = () => {
-		navigate("/noticias"); // Cambia '/noticias' a la ruta correcta para regresar a la lista de noticias
-	};
+      {/* Meta: categoría + autor + fecha */}
+      <Meta>
+        <Category>{noticia.categoria}</Category>
+        <span>Por {noticia.author}</span>
+        <span>{new Date(noticia.date).toLocaleDateString("es-MX", { year: "numeric", month: "long", day: "numeric" })}</span>
+        <span>👁 {noticia.views.toLocaleString()} vistas</span>
+      </Meta>
 
-	// Renderiza el componente
-	return (
-		<NoticiaContainer>
-			<NoticiaCenter>
-				<Titulo titulo={noticia.title} />{" "}
-				{/* Componente que muestra el título de la noticia */}
-				<Descripcion descripcion={noticia.explanation} />{" "}
-				{/* Componente que muestra la explicación de la noticia */}
-				<NoticiaAuthor>Por: {noticia.author}</NoticiaAuthor>{" "}
-				{/* Muestra el autor de la noticia */}
-				<NoticiaDate>{new Date(noticia.date).toLocaleDateString()}</NoticiaDate>{" "}
-				{/* Formatea y muestra la fecha de la noticia */}
-				<NoticiaImage src={noticia.url} alt={noticia.title} />{" "}
-				{/* Imagen asociada a la noticia */}
-				<ContentDiv>{noticia.content}</ContentDiv>{" "}
-				{/* Contenido completo de la noticia */}
-				<RegresarBoton onClick={handleRegresarClick}>
-					Regresar a Noticias
-				</RegresarBoton>{" "}
-				{/* Botón para regresar */}
-			</NoticiaCenter>
-		</NoticiaContainer>
-	);
+      {/* Título */}
+      <Title>{noticia.title}</Title>
+
+      {/* Resumen destacado */}
+      <Explanation>{noticia.explanation}</Explanation>
+
+      <Divider />
+
+      {/* Contenido completo */}
+      <Content>{noticia.content}</Content>
+
+      {/* Tags / Keywords */}
+      <TagsRow>
+        {noticia.keywords.map((kw) => (
+          <Tag key={kw}>#{kw}</Tag>
+        ))}
+      </TagsRow>
+
+      <Divider />
+
+      {/* Regresar */}
+      <BackBtn onClick={() => navigate("/noticias")}>← Volver a Noticias</BackBtn>
+    </PageWrapper>
+  );
 };
 
-// Exportar el componente Noticia
 export default Noticia;

@@ -13,11 +13,10 @@ const HeroSectionStyled = styled.section`
   gap: 20px;
   align-items: center;
   padding: 20px 20px 60px 20px;
-  background-color: #282c34;
   color: white;
   text-align: center;
-  background-image: ${({ Image }) =>
-		Image ? `url(${Image})` : "none"}; // Condicional para la imagen de fondo
+  background-image: ${({ $image }) =>
+    $image ? `url(${$image})` : "none"}; // Condicional para la imagen de fondo
   background-size: cover;
   background-position: center;
   position: relative;
@@ -118,12 +117,10 @@ const TitleImage = styled.p`
 const Tooltip = styled.div`
   position: absolute;
   background: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 10px;
   border-radius: 5px;
   top: 30px;
   left: 10px;
-  opacity: ${({ visible }) => (visible ? 1 : 0)};
+  opacity: ${({ $visible }) => ($visible ? 1 : 0)};
   transition: opacity 0.2s ease;
   pointer-events: none;
   width: 50vw;
@@ -141,7 +138,7 @@ const Tooltip = styled.div`
 
 // Icono de información que cambia de color según estado activo
 const InfoIcon = styled(IoIosInformationCircle)`
-  color: ${({ isActive }) => (isActive ? "black" : "white")};
+  color: ${({ $isActive }) => ($isActive ? "black" : "white")};
   transition: color 0.2s ease;
   width: 20px;
   height: auto;
@@ -160,45 +157,45 @@ const InfoMainSection = styled.section`
 
 // Componente HeroSection
 function HeroSection() {
-	// Obtener la imagen diaria del contexto global
-	const { dailyImage } = useGlobalContext();
-	// Estado para controlar la visibilidad del tooltip
-	const [tooltipVisible, setTooltipVisible] = useState(false);
+  // Obtener la imagen diaria del contexto global
+  const { dailyImage } = useGlobalContext();
+  // Estado para controlar la visibilidad del tooltip
+  const [tooltipVisible, setTooltipVisible] = useState(false);
 
-	return (
-		<HeroSectionStyled Image={dailyImage.url}>
-			{" "}
-			{/* Estilo del componente Hero usando la imagen diaria */}
-			<OverlayStyled /> {/* Overlay para dar efecto visual */}
-			<InfoSection
-				onMouseEnter={() => setTooltipVisible(true)} // Muestra el tooltip al pasar el mouse
-				onMouseLeave={() => setTooltipVisible(false)} // Oculta el tooltip al salir el mouse
-			>
-				<InfoIcon isActive={tooltipVisible} size={24} />{" "}
-				{/* Icono que cambia de estado según la visibilidad del tooltip */}
-				<TitleImage>
-					{dailyImage.title} {/* Muestra el título de la imagen diaria */}
-				</TitleImage>
-				<Tooltip visible={tooltipVisible}>
-					{" "}
-					{/* Tooltip que muestra la explicación de la imagen */}
-					<p>{dailyImage.explanation}</p>
-				</Tooltip>
-			</InfoSection>
-			<InfoMainSection>
-				<HeroTitle>Explora el Universo</HeroTitle>{" "}
-				{/* Título principal de la sección */}
-				<HeroSubtitle>
-					Descubre los misterios del espacio con nosotros. Sumérgete en un viaje
-					cósmico donde cada estrella, planeta y galaxia nos revela secretos
-					fascinantes del universo.
-				</HeroSubtitle>{" "}
-				{/* Subtítulo que invita a la exploración */}
-				<CTAButton href="#caracteristicas">Comienza Ahora</CTAButton>{" "}
-				{/* Botón de llamada a la acción */}
-			</InfoMainSection>
-		</HeroSectionStyled>
-	);
+  return (
+    <HeroSectionStyled $image={dailyImage.url}>
+      {" "}
+      {/* Estilo del componente Hero usando la imagen diaria */}
+      <OverlayStyled /> {/* Overlay para dar efecto visual */}
+      <InfoSection
+        onMouseEnter={() => setTooltipVisible(true)} // Muestra el tooltip al pasar el mouse
+        onMouseLeave={() => setTooltipVisible(false)} // Oculta el tooltip al salir el mouse
+      >
+        <InfoIcon $isActive={tooltipVisible} size={24} />{" "}
+        {/* Icono que cambia de estado según la visibilidad del tooltip */}
+        <TitleImage>
+          {dailyImage.title} {/* Muestra el título de la imagen diaria */}
+        </TitleImage>
+        <Tooltip $visible={tooltipVisible}>
+          {" "}
+          {/* Tooltip que muestra la explicación de la imagen */}
+          <p>{dailyImage.explanation}</p>
+        </Tooltip>
+      </InfoSection>
+      <InfoMainSection>
+        <HeroTitle>Explora el Universo</HeroTitle>{" "}
+        {/* Título principal de la sección */}
+        <HeroSubtitle>
+          Descubre los misterios del espacio con nosotros. Sumérgete en un viaje
+          cósmico donde cada estrella, planeta y galaxia nos revela secretos
+          fascinantes del universo.
+        </HeroSubtitle>{" "}
+        {/* Subtítulo que invita a la exploración */}
+        <CTAButton href="#caracteristicas">Comienza Ahora</CTAButton>{" "}
+        {/* Botón de llamada a la acción */}
+      </InfoMainSection>
+    </HeroSectionStyled>
+  );
 }
 
 // Exportar el componente HeroSection
