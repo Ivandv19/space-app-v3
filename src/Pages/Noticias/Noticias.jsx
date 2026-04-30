@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { motion, AnimatePresence } from "framer-motion";
 import { useGlobalContext } from "../../context/GlobalContext";
 import Titulo from "../Galeria/Titulo";
 
 /* ─── Layout ────────────────────────────────────────────── */
-const PageWrapper = styled.div`
+const PageWrapper = styled(motion.div)`
   padding: 100px 40px 60px;
   max-width: 1200px;
   margin: 0 auto;
@@ -18,7 +19,7 @@ const PageWrapper = styled.div`
   }
 `;
 
-const HeaderSection = styled.div`
+const HeaderSection = styled(motion.div)`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,7 +35,7 @@ const Subtitle = styled.p`
 `;
 
 /* ─── Filtros ───────────────────────────────────────────── */
-const FiltersBar = styled.section`
+const FiltersBar = styled(motion.section)`
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
@@ -70,7 +71,7 @@ const Select = styled.select`
 `;
 
 /* ─── Grid de noticias ──────────────────────────────────── */
-const NoticiasGrid = styled.section`
+const NoticiasGrid = styled(motion.section)`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
@@ -85,7 +86,7 @@ const NoticiasGrid = styled.section`
 `;
 
 /* ─── Tarjeta ───────────────────────────────────────────── */
-const Card = styled.div`
+const Card = styled(motion.div)`
   border: 1px solid #e8e8e8;
   border-radius: 12px;
   overflow: hidden;
@@ -137,13 +138,13 @@ const CardMeta = styled.div`
   color: #999;
 `;
 
-const TagsRow = styled.div`
+const TagsRow = styled(motion.div)`
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
 `;
 
-const Tag = styled.button`
+const Tag = styled(motion.button)`
   background: ${({ $active }) => ($active ? "#1a1a2e" : "#f0f0f5")};
   color: ${({ $active }) => ($active ? "#fff" : "#555")};
   border: none;
@@ -178,7 +179,7 @@ const VerMasLink = styled(Link)`
 `;
 
 /* ─── Empty state ───────────────────────────────────────── */
-const EmptyState = styled.p`
+const EmptyState = styled(motion.p)`
   color: #999;
   font-style: italic;
   text-align: center;
@@ -191,6 +192,24 @@ const generarSlug = (title) =>
 		.toLowerCase()
 		.replace(/[^a-z0-9áéíóúüñ\s]+/g, "")
 		.replace(/\s+/g, "-");
+
+/* ─── Variantes de animación ────────────────────────────── */
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 0.5, ease: "easeOut" } 
+  }
+};
 
 /* ─── Componente ────────────────────────────────────────── */
 const Noticias = () => {
@@ -237,9 +256,13 @@ const Noticias = () => {
 	};
 
 	return (
-		<PageWrapper>
+		<PageWrapper
+			initial="hidden"
+			animate="visible"
+			variants={containerVariants}
+		>
 			{/* Cabecera */}
-			<HeaderSection>
+			<HeaderSection variants={itemVariants}>
 				<Titulo titulo="Últimas Noticias" />
 				<Subtitle>
 					Las noticias más recientes sobre exploración espacial, astronomía y
@@ -248,7 +271,7 @@ const Noticias = () => {
 			</HeaderSection>
 
 			{/* Filtros */}
-			<FiltersBar>
+			<FiltersBar variants={itemVariants}>
 				<Input
 					placeholder="Buscar por título..."
 					onChange={(e) => setSearchTerm(e.target.value)}
@@ -285,10 +308,12 @@ const Noticias = () => {
 			</FiltersBar>
 
 			{/* Tags */}
-			<TagsRow>
+			<TagsRow variants={itemVariants}>
 				<Tag
 					$active={selectedTag === ""}
 					onClick={() => setSelectedTag("")}
+					whileHover={{ scale: 1.05 }}
+					whileTap={{ scale: 0.95 }}
 				>
 					Todos los tags
 				</Tag>
@@ -297,6 +322,8 @@ const Noticias = () => {
 						key={tag}
 						$active={selectedTag === tag}
 						onClick={() => setSelectedTag(tag)}
+						whileHover={{ scale: 1.05 }}
+						whileTap={{ scale: 0.95 }}
 					>
 						{tag}
 					</Tag>
@@ -304,31 +331,49 @@ const Noticias = () => {
 			</TagsRow>
 
 			{/* Grid */}
-			{filtered.length === 0 ? (
-				<EmptyState>No se encontraron noticias con esos filtros.</EmptyState>
-			) : (
-				<NoticiasGrid>
-					{filtered.map((noticia) => (
-						<Card key={noticia.id}>
-							<CardImage src={noticia.url} alt={noticia.title} />
-							<CardBody>
-								<CardTitle>{noticia.title}</CardTitle>
-								<CardExplanation>{noticia.explanation}</CardExplanation>
-								<CardMeta>
-									<span>Por: {noticia.author}</span>
-									<span>{new Date(noticia.date).toLocaleDateString()}</span>
-								</CardMeta>
-								<VerMasLink
-									to={`/noticias/${generarSlug(noticia.title)}`}
-									state={{ id: noticia.id }}
-								>
-									Ver más →
-								</VerMasLink>
-							</CardBody>
-						</Card>
-					))}
-				</NoticiasGrid>
-			)}
+			<AnimatePresence mode="popLayout">
+				{filtered.length === 0 ? (
+					<EmptyState 
+						key="empty"
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+					>
+						No se encontraron noticias con esos filtros.
+					</EmptyState>
+				) : (
+					<NoticiasGrid 
+						key="grid"
+						initial="hidden"
+						animate="visible"
+						variants={containerVariants}
+					>
+						{filtered.map((noticia) => (
+							<Card 
+								key={noticia.id} 
+								variants={itemVariants}
+								layout
+							>
+								<CardImage src={noticia.url} alt={noticia.title} />
+								<CardBody>
+									<CardTitle>{noticia.title}</CardTitle>
+									<CardExplanation>{noticia.explanation}</CardExplanation>
+									<CardMeta>
+										<span>Por: {noticia.author}</span>
+										<span>{new Date(noticia.date).toLocaleDateString()}</span>
+									</CardMeta>
+									<VerMasLink
+										to={`/noticias/${generarSlug(noticia.title)}`}
+										state={{ id: noticia.id }}
+									>
+										Ver más →
+									</VerMasLink>
+								</CardBody>
+							</Card>
+						))}
+					</NoticiasGrid>
+				)}
+			</AnimatePresence>
 		</PageWrapper>
 	);
 };
