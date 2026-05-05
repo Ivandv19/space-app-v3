@@ -188,10 +188,20 @@ const Footer = () => {
 				{/* DATOS */}
 				<NavCol>
 					<ColTitle>Datos</ColTitle>
-					<NavLink as="a" href="https://api.nasa.gov" target="_blank" rel="noreferrer">
+					<NavLink
+						as="a"
+						href="https://api.nasa.gov"
+						target="_blank"
+						rel="noreferrer"
+					>
 						NASA API
 					</NavLink>
-					<NavLink as="a" href="https://apod.nasa.gov" target="_blank" rel="noreferrer">
+					<NavLink
+						as="a"
+						href="https://apod.nasa.gov"
+						target="_blank"
+						rel="noreferrer"
+					>
 						APOD
 					</NavLink>
 				</NavCol>
@@ -208,4 +218,3 @@ const Footer = () => {
 };
 
 export default Footer;
-

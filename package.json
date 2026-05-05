@@ -9,24 +9,38 @@
 		"lint": "biome lint .",
 		"format": "biome format --write .",
 		"check": "biome check --write .",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"test": "vitest run",
+		"test:watch": "vitest"
 	},
 	"dependencies": {
 		"framer-motion": "^12.38.0",
 		"react": "^19.2.5",
 		"react-dom": "^19.2.5",
 		"react-icons": "^5.6.0",
-		"react-router-dom": "^7.14.2",
+		"react-router-dom": "^7.15.0",
 		"styled-components": "^6.4.1"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.4.13",
+		"@biomejs/biome": "^2.4.14",
+		"@testing-library/jest-dom": "^6.9.1",
+		"@testing-library/react": "^16.3.2",
 		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
 		"@vitejs/plugin-react-swc": "^4.3.0",
-		"vite": "^8.0.10"
+		"jsdom": "^29.1.1",
+		"vite": "^8.0.10",
+		"vitest": "^4.1.5"
 	},
-	"description": "Apis a usar:",
+	"description": "Space App V3 es una aplicación interactiva para gestionar y visualizar contenido diverso sobre el espacio, incluyendo una galería de imágenes, noticias y un apartado del sistema solar.",
+	"keywords": [
+		"react",
+		"vite",
+		"nasa-api",
+		"framer-motion",
+		"styled-components",
+		"space-exploration"
+	],
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/ivandevI9/space-app-v3.git"
@@ -36,5 +50,5 @@
 	"bugs": {
 		"url": "https://github.com/ivandevI9/space-app-v3/issues"
 	},
-	"homepage": "https://github.com/ivandevI9/space-app-v3#readme"
+	"homepage": "https://space-app-v3.pages.dev/"
 }

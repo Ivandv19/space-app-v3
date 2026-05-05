@@ -113,58 +113,68 @@ const BackBtn = styled.button`
 
 /* ─── Componente ────────────────────────────────────────── */
 const Noticia = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { id } = location.state || {};
-  const { noticias } = useGlobalContext();
-  const noticia = noticias.find((n) => n.id === id);
+	const location = useLocation();
+	const navigate = useNavigate();
+	const { id } = location.state || {};
+	const { noticias } = useGlobalContext();
+	const noticia = noticias.find((n) => n.id === id);
 
-  if (!noticia) {
-    return (
-      <PageWrapper>
-        <p>Noticia no encontrada.</p>
-        <BackBtn onClick={() => navigate("/noticias")}>← Volver a Noticias</BackBtn>
-      </PageWrapper>
-    );
-  }
+	if (!noticia) {
+		return (
+			<PageWrapper>
+				<p>Noticia no encontrada.</p>
+				<BackBtn onClick={() => navigate("/noticias")}>
+					← Volver a Noticias
+				</BackBtn>
+			</PageWrapper>
+		);
+	}
 
-  return (
-    <PageWrapper>
-      {/* Imagen principal */}
-      <HeroImage src={noticia.url} alt={noticia.title} />
+	return (
+		<PageWrapper>
+			{/* Imagen principal */}
+			<HeroImage src={noticia.url} alt={noticia.title} />
 
-      {/* Meta: categoría + autor + fecha */}
-      <Meta>
-        <Category>{noticia.categoria}</Category>
-        <span>Por {noticia.author}</span>
-        <span>{new Date(noticia.date).toLocaleDateString("es-MX", { year: "numeric", month: "long", day: "numeric" })}</span>
-        <span>👁 {noticia.views.toLocaleString()} vistas</span>
-      </Meta>
+			{/* Meta: categoría + autor + fecha */}
+			<Meta>
+				<Category>{noticia.categoria}</Category>
+				<span>Por {noticia.author}</span>
+				<span>
+					{new Date(noticia.date).toLocaleDateString("es-MX", {
+						year: "numeric",
+						month: "long",
+						day: "numeric",
+					})}
+				</span>
+				<span>👁 {noticia.views.toLocaleString()} vistas</span>
+			</Meta>
 
-      {/* Título */}
-      <Title>{noticia.title}</Title>
+			{/* Título */}
+			<Title>{noticia.title}</Title>
 
-      {/* Resumen destacado */}
-      <Explanation>{noticia.explanation}</Explanation>
+			{/* Resumen destacado */}
+			<Explanation>{noticia.explanation}</Explanation>
 
-      <Divider />
+			<Divider />
 
-      {/* Contenido completo */}
-      <Content>{noticia.content}</Content>
+			{/* Contenido completo */}
+			<Content>{noticia.content}</Content>
 
-      {/* Tags / Keywords */}
-      <TagsRow>
-        {noticia.keywords.map((kw) => (
-          <Tag key={kw}>#{kw}</Tag>
-        ))}
-      </TagsRow>
+			{/* Tags / Keywords */}
+			<TagsRow>
+				{noticia.keywords.map((kw) => (
+					<Tag key={kw}>#{kw}</Tag>
+				))}
+			</TagsRow>
 
-      <Divider />
+			<Divider />
 
-      {/* Regresar */}
-      <BackBtn onClick={() => navigate("/noticias")}>← Volver a Noticias</BackBtn>
-    </PageWrapper>
-  );
+			{/* Regresar */}
+			<BackBtn onClick={() => navigate("/noticias")}>
+				← Volver a Noticias
+			</BackBtn>
+		</PageWrapper>
+	);
 };
 
 export default Noticia;

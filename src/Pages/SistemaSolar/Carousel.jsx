@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 /* ─── Contenedor Principal ──────────────────────────────── */
@@ -143,72 +143,76 @@ const Dot = styled.button`
 
 /* ─── Componente ────────────────────────────────────────── */
 const Carousel = ({ categoriaSeleccionada, datos }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+	const [currentIndex, setCurrentIndex] = useState(0);
 
-  useEffect(() => {
-    setCurrentIndex(0);
-  }, [categoriaSeleccionada]);
+	useEffect(() => {
+		setCurrentIndex(0);
+	}, []);
 
-  if (!datos || datos.length === 0) return null;
+	if (!datos || datos.length === 0) return null;
 
-  const handlePrev = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? datos.length - 1 : prevIndex - 1,
-    );
-  };
+	const handlePrev = () => {
+		setCurrentIndex((prevIndex) =>
+			prevIndex === 0 ? datos.length - 1 : prevIndex - 1,
+		);
+	};
 
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === datos.length - 1 ? 0 : prevIndex + 1,
-    );
-  };
+	const handleNext = () => {
+		setCurrentIndex((prevIndex) =>
+			prevIndex === datos.length - 1 ? 0 : prevIndex + 1,
+		);
+	};
 
-  const currentItem = datos[currentIndex];
+	const currentItem = datos[currentIndex];
 
-  return (
-    <MainContainer>
-      <CategoryTitle>{categoriaSeleccionada}</CategoryTitle>
+	return (
+		<MainContainer>
+			<CategoryTitle>{categoriaSeleccionada}</CategoryTitle>
 
-      <CarouselWrapper>
-        <NavButton onClick={handlePrev} aria-label="Anterior">◀</NavButton>
+			<CarouselWrapper>
+				<NavButton onClick={handlePrev} aria-label="Anterior">
+					◀
+				</NavButton>
 
-        <CarouselContent>
-          {currentItem ? (
-            <>
-              <ImageContainer>
-                <CarouselImage
-                  key={currentItem.title} // Fuerzo re-render para la animación fadeIn
-                  src={currentItem.url}
-                  alt={currentItem.title}
-                />
-              </ImageContainer>
-              <TextContent>
-                <ItemTitle>{currentItem.title}</ItemTitle>
-                <ItemExplanation>{currentItem.explanation}</ItemExplanation>
-              </TextContent>
-            </>
-          ) : (
-            <TextContent>
-              <p>No hay datos disponibles.</p>
-            </TextContent>
-          )}
-        </CarouselContent>
+				<CarouselContent>
+					{currentItem ? (
+						<>
+							<ImageContainer>
+								<CarouselImage
+									key={currentItem.title} // Fuerzo re-render para la animación fadeIn
+									src={currentItem.url}
+									alt={currentItem.title}
+								/>
+							</ImageContainer>
+							<TextContent>
+								<ItemTitle>{currentItem.title}</ItemTitle>
+								<ItemExplanation>{currentItem.explanation}</ItemExplanation>
+							</TextContent>
+						</>
+					) : (
+						<TextContent>
+							<p>No hay datos disponibles.</p>
+						</TextContent>
+					)}
+				</CarouselContent>
 
-        <NavButton onClick={handleNext} aria-label="Siguiente">▶</NavButton>
-      </CarouselWrapper>
+				<NavButton onClick={handleNext} aria-label="Siguiente">
+					▶
+				</NavButton>
+			</CarouselWrapper>
 
-      <DotsContainer>
-        {datos.map((_, index) => (
-          <Dot
-            key={index}
-            $active={index === currentIndex}
-            onClick={() => setCurrentIndex(index)}
-            aria-label={`Ir a imagen ${index + 1}`}
-          />
-        ))}
-      </DotsContainer>
-    </MainContainer>
-  );
+			<DotsContainer>
+				{datos.map((item, index) => (
+					<Dot
+						key={item.titulo || index}
+						$active={index === currentIndex}
+						onClick={() => setCurrentIndex(index)}
+						aria-label={`Ir a imagen ${index + 1}`}
+					/>
+				))}
+			</DotsContainer>
+		</MainContainer>
+	);
 };
 
 export default Carousel;

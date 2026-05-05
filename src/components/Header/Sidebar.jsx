@@ -1,4 +1,3 @@
-import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { FaHome, FaNewspaper, FaPhotoVideo } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -73,12 +72,13 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 				<NavLink to="/noticias">
 					<FaNewspaper /> Noticias
 				</NavLink>
-				<NavLink to="/sistema-solar">
+				<NavLink to="/sistema-solar" aria-label="Sistema Solar">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="1em"
 						height="1em"
 						viewBox="0 0 24 24"
+						aria-hidden="true"
 					>
 						{/* Ícono SVG personalizado para el enlace al Sistema Solar */}
 						<g

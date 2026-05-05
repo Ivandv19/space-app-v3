@@ -41,12 +41,13 @@ function Navbar() {
 			</NavLink>
 
 			{/* Enlace a la sección del sistema solar con ícono personalizado */}
-			<NavLink to="/sistema-solar">
+			<NavLink to="/sistema-solar" aria-label="Sistema Solar">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="1em"
 					height="1em"
 					viewBox="0 0 24 24"
+					aria-hidden="true"
 				>
 					{/* Gráfico SVG personalizado del sistema solar */}
 					<g

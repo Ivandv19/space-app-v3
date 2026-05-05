@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { IoBookmark, IoClose, IoHeart } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { motion, AnimatePresence } from "framer-motion";
 import { useGlobalContext } from "../../context/GlobalContext";
 import useOrderByLikes from "../../hooks/useOrderByLikes";
 import useRandomLikes from "../../hooks/useRandomLikes";
@@ -215,21 +215,21 @@ const ModalImageWrapper = styled.div`
 
 /* ─── Variantes de animación ────────────────────────────── */
 const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
+	hidden: { opacity: 0 },
+	visible: {
+		opacity: 1,
+		transition: { staggerChildren: 0.1 },
+	},
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+	hidden: { opacity: 0, y: 20 },
+	visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
 /* ─── Componente principal ─────────────────────────────── */
 const Galeria = () => {
-	const navigate = useNavigate();
+	const _navigate = useNavigate();
 	const { imagesGaleria, state, toggleSave, toggleLike } = useGlobalContext();
 	const { savedImages, likedImages } = state;
 	const [selectedImage, setSelectedImage] = useState(null);
@@ -239,7 +239,9 @@ const Galeria = () => {
 
 	// Cerrar modal con Escape
 	useEffect(() => {
-		const onKey = (e) => { if (e.key === "Escape") setSelectedImage(null); };
+		const onKey = (e) => {
+			if (e.key === "Escape") setSelectedImage(null);
+		};
 		window.addEventListener("keydown", onKey);
 		return () => window.removeEventListener("keydown", onKey);
 	}, []);
@@ -257,13 +259,13 @@ const Galeria = () => {
 			{/* ── Modal ── */}
 			<AnimatePresence>
 				{selectedImage && (
-					<ModalBackdrop 
+					<ModalBackdrop
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
 						onClick={() => setSelectedImage(null)}
 					>
-						<ModalBox 
+						<ModalBox
 							initial={{ scale: 0.9, opacity: 0, y: 20 }}
 							animate={{ scale: 1, opacity: 1, y: 0 }}
 							exit={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -289,7 +291,8 @@ const Galeria = () => {
 				<Titulo titulo="Galería Espacial" />
 				<Subtitle>
 					Explora una colección impresionante de imágenes del espacio. Desde
-					nebulosas hasta planetas, cada imagen cuenta una historia del universo.
+					nebulosas hasta planetas, cada imagen cuenta una historia del
+					universo.
 				</Subtitle>
 			</HeaderSection>
 
@@ -298,8 +301,8 @@ const Galeria = () => {
 				<SectionTitle>Galería Principal</SectionTitle>
 				<ScrollRow variants={containerVariants}>
 					{itemsWithLikes.map((image) => (
-						<Card 
-							key={image.date} 
+						<Card
+							key={image.date}
 							variants={itemVariants}
 							onClick={() => setSelectedImage(image)}
 						>
@@ -308,7 +311,13 @@ const Galeria = () => {
 								<CardTitle>{image.title}</CardTitle>
 							</CardOverlay>
 							<ActionBar>
-								<ActionBtn onClick={(e) => { e.stopPropagation(); toggleLike(image); }} title="Me gusta">
+								<ActionBtn
+									onClick={(e) => {
+										e.stopPropagation();
+										toggleLike(image);
+									}}
+									title="Me gusta"
+								>
 									<IoHeart
 										color={
 											likedImages.some((l) => l.date === image.date)
@@ -317,7 +326,13 @@ const Galeria = () => {
 										}
 									/>
 								</ActionBtn>
-								<ActionBtn onClick={(e) => { e.stopPropagation(); toggleSave(image); }} title="Guardar">
+								<ActionBtn
+									onClick={(e) => {
+										e.stopPropagation();
+										toggleSave(image);
+									}}
+									title="Guardar"
+								>
 									<IoBookmark
 										color={
 											savedImages.some((s) => s.date === image.date)
@@ -337,8 +352,8 @@ const Galeria = () => {
 				<SectionTitle>⭐ Con más likes</SectionTitle>
 				<ScrollRow variants={containerVariants}>
 					{topFiveItems.map((image) => (
-						<Card 
-							key={image.date} 
+						<Card
+							key={image.date}
 							variants={itemVariants}
 							onClick={() => setSelectedImage(image)}
 						>
@@ -359,8 +374,8 @@ const Galeria = () => {
 				) : (
 					<ScrollRow variants={containerVariants}>
 						{savedItemsWithLikes.map((image) => (
-							<Card 
-								key={image.date} 
+							<Card
+								key={image.date}
 								variants={itemVariants}
 								onClick={() => setSelectedImage(image)}
 							>

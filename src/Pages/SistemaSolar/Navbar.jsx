@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 const Nav = styled.nav`
@@ -57,9 +56,9 @@ const Navbar = ({
 	return (
 		<Nav>
 			<NavList>
-				{categorias.map((categoria, index) => (
+				{categorias.map((categoria) => (
 					<NavItem
-						key={index}
+						key={categoria}
 						onClick={() => setCategoriaSeleccionada(categoria)}
 						$isSelected={categoria === categoriaSeleccionada}
 					>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BsRocket } from "react-icons/bs";
 import { FaBars } from "react-icons/fa";
 import styled from "styled-components";
@@ -7,8 +7,7 @@ import Sidebar from "./Sidebar";
 
 const HeaderStyled = styled.header`
   width: 100%;
-  height: ${({ $shrink }) =>
-		$shrink ? "55px" : "70px"};
+  height: ${({ $shrink }) => ($shrink ? "55px" : "70px")};
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -22,19 +21,13 @@ const HeaderStyled = styled.header`
 
   /* Media query para pantallas medianas */
   @media (max-width: 1024px) {
-    height: ${({ $shrink }) =>
-		$shrink
-			? "60px"
-			: "80px"};
+    height: ${({ $shrink }) => ($shrink ? "60px" : "80px")};
     padding: 0 15px; /* Disminuye el padding lateral en pantallas medianas */
   }
 
   /* Media query para pantallas pequeñas */
   @media (max-width: 768px) {
-    height: ${({ $shrink }) =>
-		$shrink
-			? "40px"
-			: "50px"};
+    height: ${({ $shrink }) => ($shrink ? "40px" : "50px")};
     padding: 0 20px;
     flex-direction: row-reverse; /* Invierte la dirección de los elementos */
     justify-content: space-between; /* Ajusta el espacio entre elementos */
@@ -63,7 +56,9 @@ const LogoContainer = styled.div`
 const ImgContainer = styled.div`
   svg {
     width: ${({ $shrink }) =>
-		$shrink ? "40px" : "50px"}; /* Ajusta el tamaño del ícono según '$shrink' */
+			$shrink
+				? "40px"
+				: "50px"}; /* Ajusta el tamaño del ícono según '$shrink' */
     height: ${({ $shrink }) => ($shrink ? "40px" : "50px")};
     transition:
       width 0.3s ease,
@@ -74,11 +69,11 @@ const ImgContainer = styled.div`
   @media (max-width: 768px) {
     svg {
       width: ${({ $shrink }) =>
-		$shrink
-			? "30px"
-			: "40px"}; /* Ajusta el tamaño del ícono en pantallas pequeñas */
+				$shrink
+					? "30px"
+					: "40px"}; /* Ajusta el tamaño del ícono en pantallas pequeñas */
       height: ${({ $shrink }) =>
-		$shrink ? "auto" : "auto"}; /* Mantiene proporciones automáticas */
+				$shrink ? "auto" : "auto"}; /* Mantiene proporciones automáticas */
       transition:
         width 0.3s ease,
         height 0.3s ease;

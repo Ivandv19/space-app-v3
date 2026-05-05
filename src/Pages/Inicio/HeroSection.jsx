@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { useState } from "react";
 import { IoIosInformationCircle } from "react-icons/io";
 import styled from "styled-components";
-import { motion } from "framer-motion";
 import { useGlobalContext } from "../../context/GlobalContext";
 
 // Sección principal del héroe con imagen de fondo y texto centrado
@@ -17,7 +17,7 @@ const HeroSectionStyled = styled(motion.section)`
   color: white;
   text-align: center;
   background-image: ${({ $image }) =>
-    $image ? `url(${$image})` : "none"}; // Condicional para la imagen de fondo
+		$image ? `url(${$image})` : "none"}; // Condicional para la imagen de fondo
   background-size: cover;
   background-position: center;
   position: relative;
@@ -159,76 +159,78 @@ const InfoMainSection = styled(motion.section)`
 
 // Variantes para animaciones escalonadas
 const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.3
-    }
-  }
+	hidden: { opacity: 0 },
+	visible: {
+		opacity: 1,
+		transition: {
+			staggerChildren: 0.2,
+			delayChildren: 0.3,
+		},
+	},
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: { duration: 0.8, ease: "easeOut" }
-  }
+	hidden: { opacity: 0, y: 20 },
+	visible: {
+		opacity: 1,
+		y: 0,
+		transition: { duration: 0.8, ease: "easeOut" },
+	},
 };
 
 // Componente HeroSection
 function HeroSection() {
-  // Obtener la imagen diaria del contexto global
-  const { dailyImage } = useGlobalContext();
-  // Estado para controlar la visibilidad del tooltip
-  const [tooltipVisible, setTooltipVisible] = useState(false);
+	// Obtener la imagen diaria del contexto global
+	const { dailyImage } = useGlobalContext();
+	// Estado para controlar la visibilidad del tooltip
+	const [tooltipVisible, setTooltipVisible] = useState(false);
 
-  return (
-    <HeroSectionStyled 
-      $image={dailyImage.url}
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-    >
-      <OverlayStyled /> 
-      
-      <InfoSection
-        variants={{
-          hidden: { opacity: 0, x: -20 },
-          visible: { opacity: 1, x: 0, transition: { delay: 1, duration: 0.5 } }
-        }}
-        onMouseEnter={() => setTooltipVisible(true)} 
-        onMouseLeave={() => setTooltipVisible(false)} 
-      >
-        <InfoIcon $isActive={tooltipVisible} size={24} />
-        <TitleImage>
-          {dailyImage.title}
-        </TitleImage>
-        <Tooltip $visible={tooltipVisible}>
-          <p>{dailyImage.explanation}</p>
-        </Tooltip>
-      </InfoSection>
+	return (
+		<HeroSectionStyled
+			$image={dailyImage.url}
+			initial="hidden"
+			animate="visible"
+			variants={containerVariants}
+		>
+			<OverlayStyled />
 
-      <InfoMainSection variants={containerVariants}>
-        <HeroTitle variants={itemVariants}>Explora el Universo</HeroTitle>
-        <HeroSubtitle variants={itemVariants}>
-          Descubre los misterios del espacio con nosotros. Sumérgete en un viaje
-          cósmico donde cada estrella, planeta y galaxia nos revela secretos
-          fascinantes del universo.
-        </HeroSubtitle>
-        <CTAButton 
-          href="#caracteristicas"
-          variants={itemVariants}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          Comienza Ahora
-        </CTAButton>
-      </InfoMainSection>
-    </HeroSectionStyled>
-  );
+			<InfoSection
+				variants={{
+					hidden: { opacity: 0, x: -20 },
+					visible: {
+						opacity: 1,
+						x: 0,
+						transition: { delay: 1, duration: 0.5 },
+					},
+				}}
+				onMouseEnter={() => setTooltipVisible(true)}
+				onMouseLeave={() => setTooltipVisible(false)}
+			>
+				<InfoIcon $isActive={tooltipVisible} size={24} />
+				<TitleImage>{dailyImage.title}</TitleImage>
+				<Tooltip $visible={tooltipVisible}>
+					<p>{dailyImage.explanation}</p>
+				</Tooltip>
+			</InfoSection>
+
+			<InfoMainSection variants={containerVariants}>
+				<HeroTitle variants={itemVariants}>Explora el Universo</HeroTitle>
+				<HeroSubtitle variants={itemVariants}>
+					Descubre los misterios del espacio con nosotros. Sumérgete en un viaje
+					cósmico donde cada estrella, planeta y galaxia nos revela secretos
+					fascinantes del universo.
+				</HeroSubtitle>
+				<CTAButton
+					href="#caracteristicas"
+					variants={itemVariants}
+					whileHover={{ scale: 1.05 }}
+					whileTap={{ scale: 0.95 }}
+				>
+					Comienza Ahora
+				</CTAButton>
+			</InfoMainSection>
+		</HeroSectionStyled>
+	);
 }
 
 export default HeroSection;

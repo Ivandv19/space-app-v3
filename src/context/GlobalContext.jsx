@@ -149,10 +149,10 @@ export const GlobalProvider = ({ children }) => {
 	}, []);
 
 	//Datos locales de Noticias
-	const [noticias, setNoticias] = useState(noticiasData);
+	const [noticias, _setNoticias] = useState(noticiasData);
 
 	//Datos locales de Sistema Solar
-	const [sistemaSolar, setSistemaSolar] = useState(sistemaSolarData);
+	const [sistemaSolar, _setSistemaSolar] = useState(sistemaSolarData);
 
 	return (
 		<GlobalContext.Provider

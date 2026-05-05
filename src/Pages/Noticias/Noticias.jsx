@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { motion, AnimatePresence } from "framer-motion";
 import { useGlobalContext } from "../../context/GlobalContext";
 import Titulo from "../Galeria/Titulo";
 
@@ -195,20 +195,20 @@ const generarSlug = (title) =>
 
 /* ─── Variantes de animación ────────────────────────────── */
 const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
+	hidden: { opacity: 0 },
+	visible: {
+		opacity: 1,
+		transition: { staggerChildren: 0.1 },
+	},
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { duration: 0.5, ease: "easeOut" } 
-  }
+	hidden: { opacity: 0, y: 20 },
+	visible: {
+		opacity: 1,
+		y: 0,
+		transition: { duration: 0.5, ease: "easeOut" },
+	},
 };
 
 /* ─── Componente ────────────────────────────────────────── */
@@ -221,7 +221,7 @@ const Noticias = () => {
 	const [orderBy, setOrderBy] = useState("");
 	const [orderDirection, setOrderDirection] = useState("reciente");
 	const [showViewsSlider, setShowViewsSlider] = useState(false);
-	const [viewsLimit, setViewsLimit] = useState(0);
+	const [viewsLimit, _setViewsLimit] = useState(0);
 
 	const categories = [...new Set(noticias.map((n) => n.categoria))];
 	const authors = [...new Set(noticias.map((n) => n.author))];
@@ -229,8 +229,12 @@ const Noticias = () => {
 
 	const filtered = noticias
 		.filter((n) => {
-			const matchTitle = n.title.toLowerCase().includes(searchTerm.toLowerCase());
-			const matchCat = selectedCategory ? n.categoria === selectedCategory : true;
+			const matchTitle = n.title
+				.toLowerCase()
+				.includes(searchTerm.toLowerCase());
+			const matchCat = selectedCategory
+				? n.categoria === selectedCategory
+				: true;
 			const matchAuthor = selectedAuthor ? n.author === selectedAuthor : true;
 			const matchTag = selectedTag ? n.keywords.includes(selectedTag) : true;
 			const matchViews = n.views >= viewsLimit;
@@ -279,13 +283,17 @@ const Noticias = () => {
 				<Select onChange={(e) => setSelectedCategory(e.target.value)}>
 					<option value="">Todas las categorías</option>
 					{categories.map((c) => (
-						<option key={c} value={c}>{c}</option>
+						<option key={c} value={c}>
+							{c}
+						</option>
 					))}
 				</Select>
 				<Select onChange={(e) => setSelectedAuthor(e.target.value)}>
 					<option value="">Todos los autores</option>
 					{authors.map((a) => (
-						<option key={a} value={a}>{a}</option>
+						<option key={a} value={a}>
+							{a}
+						</option>
 					))}
 				</Select>
 				<Select onChange={handleOrderByChange}>
@@ -333,7 +341,7 @@ const Noticias = () => {
 			{/* Grid */}
 			<AnimatePresence mode="popLayout">
 				{filtered.length === 0 ? (
-					<EmptyState 
+					<EmptyState
 						key="empty"
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
@@ -342,18 +350,14 @@ const Noticias = () => {
 						No se encontraron noticias con esos filtros.
 					</EmptyState>
 				) : (
-					<NoticiasGrid 
+					<NoticiasGrid
 						key="grid"
 						initial="hidden"
 						animate="visible"
 						variants={containerVariants}
 					>
 						{filtered.map((noticia) => (
-							<Card 
-								key={noticia.id} 
-								variants={itemVariants}
-								layout
-							>
+							<Card key={noticia.id} variants={itemVariants} layout>
 								<CardImage src={noticia.url} alt={noticia.title} />
 								<CardBody>
 									<CardTitle>{noticia.title}</CardTitle>

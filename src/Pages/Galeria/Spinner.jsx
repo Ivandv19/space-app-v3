@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 // Contenedor principal del spinner, ubicado en la segunda columna y fila de una cuadrícula

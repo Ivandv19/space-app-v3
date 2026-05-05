@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IoBookmark, IoClose, IoHeart } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -226,7 +226,7 @@ const ModalImageWrapper = styled.div`
 
 /* ─── Componente principal ─────────────────────────────── */
 const Galeria = () => {
-	const navigate = useNavigate();
+	const _navigate = useNavigate();
 	const { imagesGaleria, state, toggleSave, toggleLike } = useGlobalContext();
 	const { savedImages, likedImages } = state;
 	const [selectedImage, setSelectedImage] = useState(null);
@@ -236,7 +236,9 @@ const Galeria = () => {
 
 	// Cerrar modal con Escape
 	useEffect(() => {
-		const onKey = (e) => { if (e.key === "Escape") setSelectedImage(null); };
+		const onKey = (e) => {
+			if (e.key === "Escape") setSelectedImage(null);
+		};
 		window.addEventListener("keydown", onKey);
 		return () => window.removeEventListener("keydown", onKey);
 	}, []);
@@ -269,7 +271,8 @@ const Galeria = () => {
 				<Titulo titulo="Galería Espacial" />
 				<Subtitle>
 					Explora una colección impresionante de imágenes del espacio. Desde
-					nebulosas hasta planetas, cada imagen cuenta una historia del universo.
+					nebulosas hasta planetas, cada imagen cuenta una historia del
+					universo.
 				</Subtitle>
 			</HeaderSection>
 
@@ -284,7 +287,13 @@ const Galeria = () => {
 								<CardTitle>{image.title}</CardTitle>
 							</CardOverlay>
 							<ActionBar>
-								<ActionBtn onClick={(e) => { e.stopPropagation(); toggleLike(image); }} title="Me gusta">
+								<ActionBtn
+									onClick={(e) => {
+										e.stopPropagation();
+										toggleLike(image);
+									}}
+									title="Me gusta"
+								>
 									<IoHeart
 										color={
 											likedImages.some((l) => l.date === image.date)
@@ -293,7 +302,13 @@ const Galeria = () => {
 										}
 									/>
 								</ActionBtn>
-								<ActionBtn onClick={(e) => { e.stopPropagation(); toggleSave(image); }} title="Guardar">
+								<ActionBtn
+									onClick={(e) => {
+										e.stopPropagation();
+										toggleSave(image);
+									}}
+									title="Guardar"
+								>
 									<IoBookmark
 										color={
 											savedImages.some((s) => s.date === image.date)

@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 // Estilo para el título de la página, se adapta según el tamaño de la pantalla

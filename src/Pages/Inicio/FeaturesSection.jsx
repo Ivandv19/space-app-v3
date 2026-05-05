@@ -1,6 +1,7 @@
 // src/components/FeaturesSection.js
-import styled from "styled-components";
+
 import { motion } from "framer-motion";
+import styled from "styled-components";
 import { useGlobalContext } from "../../context/GlobalContext";
 import Titulo from "../Galeria/Titulo";
 import FeatureCard from "./FeatureCard";
@@ -30,12 +31,12 @@ const FeaturesContainer = styled(motion.div)`
 
 // Variantes para las tarjetas
 const cardVariants = {
-  hidden: { opacity: 0, scale: 0.95 },
-  visible: { 
-    opacity: 1, 
-    scale: 1,
-    transition: { duration: 0.6, ease: "easeOut" }
-  }
+	hidden: { opacity: 0, scale: 0.95 },
+	visible: {
+		opacity: 1,
+		scale: 1,
+		transition: { duration: 0.6, ease: "easeOut" },
+	},
 };
 
 function FeaturesSection() {
@@ -45,7 +46,7 @@ function FeaturesSection() {
 	const planetas = sistemaSolar?.planetas || [];
 
 	return (
-		<Section 
+		<Section
 			id="caracteristicas"
 			initial="hidden"
 			whileInView="visible"
@@ -54,16 +55,22 @@ function FeaturesSection() {
 				hidden: { opacity: 0 },
 				visible: {
 					opacity: 1,
-					transition: { staggerChildren: 0.3 }
-				}
+					transition: { staggerChildren: 0.3 },
+				},
 			}}
 		>
-			<motion.div variants={cardVariants} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+			<motion.div
+				variants={cardVariants}
+				style={{ width: "100%", display: "flex", justifyContent: "center" }}
+			>
 				<Titulo titulo="Explora el Universo" />
 			</motion.div>
-			
+
 			<FeaturesContainer>
-				<motion.div variants={cardVariants} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+				<motion.div
+					variants={cardVariants}
+					style={{ width: "100%", display: "flex", justifyContent: "center" }}
+				>
 					<FeatureCard
 						titulo={"Galería Espacial"}
 						descripcion={
@@ -72,7 +79,10 @@ function FeaturesSection() {
 						images={imagesGaleria}
 					/>
 				</motion.div>
-				<motion.div variants={cardVariants} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+				<motion.div
+					variants={cardVariants}
+					style={{ width: "100%", display: "flex", justifyContent: "center" }}
+				>
 					<FeatureCard
 						titulo={"Noticias"}
 						descripcion={
@@ -81,7 +91,10 @@ function FeaturesSection() {
 						images={noticias}
 					/>
 				</motion.div>
-				<motion.div variants={cardVariants} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+				<motion.div
+					variants={cardVariants}
+					style={{ width: "100%", display: "flex", justifyContent: "center" }}
+				>
 					<FeatureCard
 						titulo={"Sistema Solar"}
 						descripcion={

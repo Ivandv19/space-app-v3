@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { motion, AnimatePresence } from "framer-motion";
 import { useGlobalContext } from "../../context/GlobalContext";
 import Descripcion from "../Galeria/Descripcion";
-import Spinner from "../Galeria/Spinner";
 import Titulo from "../Galeria/Titulo";
 import Carousel from "./Carousel";
 import Navbar from "./Navbar";
@@ -35,24 +34,24 @@ const ContentWrapper = styled(motion.div)`
 
 // Variantes de animación
 const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15 }
-  }
+	hidden: { opacity: 0 },
+	visible: {
+		opacity: 1,
+		transition: { staggerChildren: 0.15 },
+	},
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { duration: 0.6, ease: "easeOut" } 
-  }
+	hidden: { opacity: 0, y: 20 },
+	visible: {
+		opacity: 1,
+		y: 0,
+		transition: { duration: 0.6, ease: "easeOut" },
+	},
 };
 
 const SistemaSolar = () => {
-	const navigate = useNavigate(); // Inicializa el hook de navegación
+	const _navigate = useNavigate(); // Inicializa el hook de navegación
 	const { sistemaSolar } = useGlobalContext();
 	const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
 
@@ -63,24 +62,31 @@ const SistemaSolar = () => {
 	}, [sistemaSolar]);
 
 	return (
-		<Container
-			initial="hidden"
-			animate="visible"
-			variants={containerVariants}
-		>
+		<Container initial="hidden" animate="visible" variants={containerVariants}>
 			{!categoriaSeleccionada ? (
-				<motion.p variants={itemVariants}>No hay categorías disponibles.</motion.p>
+				<motion.p variants={itemVariants}>
+					No hay categorías disponibles.
+				</motion.p>
 			) : (
 				<>
-					<motion.div variants={itemVariants} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+					<motion.div
+						variants={itemVariants}
+						style={{ width: "100%", display: "flex", justifyContent: "center" }}
+					>
 						<Titulo titulo="Sistema solar" />
 					</motion.div>
-					
-					<motion.div variants={itemVariants} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+
+					<motion.div
+						variants={itemVariants}
+						style={{ width: "100%", display: "flex", justifyContent: "center" }}
+					>
 						<Descripcion descripcion="Explora el Sistema Solar a través de diversas categorías, donde puedes ver información sobre planetas, lunas y más. Navega fácilmente entre los elementos utilizando la barra de navegación y el carrusel interactivo." />
 					</motion.div>
 
-					<motion.div variants={itemVariants} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+					<motion.div
+						variants={itemVariants}
+						style={{ width: "100%", display: "flex", justifyContent: "center" }}
+					>
 						<Navbar
 							categorias={Object.keys(sistemaSolar)}
 							categoriaSeleccionada={categoriaSeleccionada}
