@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Button from "../../components/Button/Button";
 import { useGlobalContext } from "../../context/GlobalContext";
 
 /* ─── Layout ────────────────────────────────────────────── */
@@ -17,7 +18,7 @@ const HeroImage = styled.img`
   width: 100%;
   max-height: 420px;
   object-fit: cover;
-  border-radius: 14px;
+  border-radius: 16px;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
 `;
 
@@ -35,12 +36,11 @@ const Category = styled.span`
   background: #1a1a2e;
   color: #fff;
   padding: 3px 10px;
-  border-radius: 20px;
+  border-radius: 12px;
   font-size: 0.75rem;
   font-weight: 600;
 `;
 
-/* ─── Título ────────────────────────────────────────────── */
 const Title = styled.h1`
   font-size: 2rem;
   font-weight: 800;
@@ -81,7 +81,7 @@ const TagsRow = styled.div`
 const Tag = styled.span`
   background: #f0f0f5;
   color: #555;
-  border-radius: 20px;
+  border-radius: 12px;
   padding: 4px 12px;
   font-size: 0.78rem;
 `;
@@ -91,24 +91,6 @@ const Divider = styled.hr`
   border: none;
   border-top: 1px solid #eee;
   margin: 0;
-`;
-
-/* ─── Back button ───────────────────────────────────────── */
-const BackBtn = styled.button`
-  align-self: flex-start;
-  padding: 10px 20px;
-  background: #1a1a2e;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.25s;
-
-  &:hover {
-    background: #2d2d5e;
-  }
 `;
 
 /* ─── Componente ────────────────────────────────────────── */
@@ -123,9 +105,9 @@ const Noticia = () => {
 		return (
 			<PageWrapper>
 				<p>Noticia no encontrada.</p>
-				<BackBtn onClick={() => navigate("/noticias")}>
+				<Button $variant="filled" onClick={() => navigate("/noticias")}>
 					← Volver a Noticias
-				</BackBtn>
+				</Button>
 			</PageWrapper>
 		);
 	}
@@ -170,9 +152,9 @@ const Noticia = () => {
 			<Divider />
 
 			{/* Regresar */}
-			<BackBtn onClick={() => navigate("/noticias")}>
+			<Button $variant="filled" onClick={() => navigate("/noticias")}>
 				← Volver a Noticias
-			</BackBtn>
+			</Button>
 		</PageWrapper>
 	);
 };

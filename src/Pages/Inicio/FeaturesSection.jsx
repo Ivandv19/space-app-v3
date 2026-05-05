@@ -1,109 +1,94 @@
-// src/components/FeaturesSection.js
-
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import { useGlobalContext } from "../../context/GlobalContext";
-import Titulo from "../Galeria/Titulo";
 import FeatureCard from "./FeatureCard";
 
-// Sección principal con alineación centrada y separación
 const Section = styled(motion.section)`
   width: 100%;
-  height: 100%;
-  padding: 150px 0; // Espaciado vertical
-  display: flex;
-  flex-direction: column; // Dirección de los elementos en columna
-  align-items: center; // Centrado horizontal
-  justify-content: center; // Centrado vertical
-  gap: 50px; // Espacio entre elementos
+  padding: 80px 20px;
+
+  @media (max-width: 768px) {
+    padding: 40px 10px;
+  }
 `;
 
-// Contenedor de características con alineación y separación central
-const FeaturesContainer = styled(motion.div)`
+const Grid = styled(motion.div)`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const FullWidthCard = styled(motion.div)`
+  grid-column: 1 / -1;
+  max-width: 1200px;
+  margin: 0 auto;
   width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center; // Centrado horizontal
-  flex-direction: column; // Elementos en columna
-  align-items: center; // Centrado vertical
-  gap: 50px; // Espacio entre elementos
+  margin-top: 20px;
+
+  @media (max-width: 768px) {
+    margin-top: 0;
+  }
 `;
 
-// Variantes para las tarjetas
-const cardVariants = {
-	hidden: { opacity: 0, scale: 0.95 },
+const sectionVariants = {
+	hidden: { opacity: 0 },
 	visible: {
 		opacity: 1,
-		scale: 1,
-		transition: { duration: 0.6, ease: "easeOut" },
+		transition: { staggerChildren: 0.2 },
 	},
 };
 
 function FeaturesSection() {
 	const { noticias, imagesGaleria, sistemaSolar } = useGlobalContext();
-
-	// Asegúrate de que los datos sean definidos antes de usarlos
 	const planetas = sistemaSolar?.planetas || [];
+
+	const features = [
+		{
+			titulo: "Galería Espacial",
+			descripcion:
+				"Descubre la belleza del universo a través de una colección curada de imágenes impresionantes, desde nebulosas brillantes hasta galaxias lejanas.",
+			image: imagesGaleria?.[0]?.url,
+			to: "/galería-espacial",
+		},
+		{
+			titulo: "Noticias",
+			descripcion:
+				"Mantente al día con los últimos descubrimientos espaciales, avances científicos y misiones de exploración.",
+			image: noticias?.[0]?.url,
+			to: "/noticias",
+		},
+		{
+			titulo: "Sistema Solar",
+			descripcion:
+				"Explora los últimos descubrimientos y avances en nuestro vecindario cósmico. Aprende sobre los planetas, lunas y otros cuerpos celestes.",
+			image: planetas?.[0]?.url,
+			to: "/sistema-solar",
+		},
+	];
 
 	return (
 		<Section
 			id="caracteristicas"
+			variants={sectionVariants}
 			initial="hidden"
 			whileInView="visible"
-			viewport={{ once: true, amount: 0.2 }}
-			variants={{
-				hidden: { opacity: 0 },
-				visible: {
-					opacity: 1,
-					transition: { staggerChildren: 0.3 },
-				},
-			}}
+			viewport={{ once: true, amount: 0.1 }}
 		>
-			<motion.div
-				variants={cardVariants}
-				style={{ width: "100%", display: "flex", justifyContent: "center" }}
-			>
-				<Titulo titulo="Explora el Universo" />
-			</motion.div>
+			<Grid>
+				{features.slice(0, 2).map((feature) => (
+					<FeatureCard key={feature.titulo} {...feature} />
+				))}
+			</Grid>
 
-			<FeaturesContainer>
-				<motion.div
-					variants={cardVariants}
-					style={{ width: "100%", display: "flex", justifyContent: "center" }}
-				>
-					<FeatureCard
-						titulo={"Galería Espacial"}
-						descripcion={
-							"Descubre la belleza del universo a través de una colección curada de imágenes impresionantes, desde nebulosas brillantes hasta galaxias lejanas."
-						}
-						images={imagesGaleria}
-					/>
-				</motion.div>
-				<motion.div
-					variants={cardVariants}
-					style={{ width: "100%", display: "flex", justifyContent: "center" }}
-				>
-					<FeatureCard
-						titulo={"Noticias"}
-						descripcion={
-							"Mantente al día con los últimos descubrimientos espaciales, avances científicos y misiones de exploración que están ampliando nuestros horizontes cósmicos."
-						}
-						images={noticias}
-					/>
-				</motion.div>
-				<motion.div
-					variants={cardVariants}
-					style={{ width: "100%", display: "flex", justifyContent: "center" }}
-				>
-					<FeatureCard
-						titulo={"Sistema Solar"}
-						descripcion={
-							"Explora los últimos descubrimientos y avances en nuestro vecindario cósmico. Aprende sobre los planetas, lunas, y otros cuerpos celestes que conforman el sistema solar, junto con las misiones espaciales que los estudian."
-						}
-						images={planetas}
-					/>
-				</motion.div>
-			</FeaturesContainer>
+			<FullWidthCard>
+				<FeatureCard {...features[2]} />
+			</FullWidthCard>
 		</Section>
 	);
 }

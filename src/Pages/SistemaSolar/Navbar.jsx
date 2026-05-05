@@ -8,7 +8,7 @@ const Nav = styled.nav`
   /* scrollbar sutil */
   &::-webkit-scrollbar { height: 6px; }
   &::-webkit-scrollbar-track { background: transparent; }
-  &::-webkit-scrollbar-thumb { background: #d0d0d0; border-radius: 10px; }
+  &::-webkit-scrollbar-thumb { background: #d0d0d0; border-radius: 8px; }
 `;
 
 const NavList = styled.ul`

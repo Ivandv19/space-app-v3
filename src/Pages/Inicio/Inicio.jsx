@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import CTABanner from "../../components/CTABanner/CTABanner";
+import FeaturedContent from "../../components/FeaturedContent/FeaturedContent";
 import FeaturesSection from "./FeaturesSection";
 import HeroSection from "./HeroSection";
 
@@ -22,6 +24,8 @@ function Inicio() {
 		>
 			<HeroSection />
 			<FeaturesSection />
+			<FeaturedContent />
+			<CTABanner />
 		</MainContainer>
 	);
 }

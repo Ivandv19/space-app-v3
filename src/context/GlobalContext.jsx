@@ -27,45 +27,37 @@ const reducer = (state, action) => {
 		case actionTypes.TOGGLE_LIKE: {
 			const { image } = action.payload;
 
-			// Manejo del array de likedImages
-			let newLikedImages = [...state.likedImages]; // Crea una copia del array de imágenes "liked"
+			let newLikedImages = [...state.likedImages];
 
-			// Determina si agregar o eliminar la imagen del array
 			if (newLikedImages.some((likedImage) => likedImage.date === image.date)) {
-				// Elimina la imagen si ya está "liked"
 				newLikedImages = newLikedImages.filter(
 					(likedImage) => likedImage.date !== image.date,
 				);
-				image.likes -= 1; // Decrementa el número de likes
 			} else {
-				// Agrega la imagen si no está "liked"
 				newLikedImages.push(image);
-				image.likes += 1; // Incrementa el número de likes
 			}
 
 			return {
 				...state,
-				likedImages: newLikedImages, // Actualiza el estado de imágenes "liked"
+				likedImages: newLikedImages,
 			};
 		}
 
 		case actionTypes.TOGGLE_SAVE: {
-			// Manejo de la acción para alternar "guardar"
-			const { image } = action.payload; // Recibe el objeto de imagen
-			let newSavedImages = [...state.savedImages]; // Crea una copia del array de imágenes guardadas
+			const { image } = action.payload;
+			let newSavedImages = [...state.savedImages];
 
-			// Determina si agregar o eliminar la imagen del array
 			if (newSavedImages.some((savedImage) => savedImage.date === image.date)) {
 				newSavedImages = newSavedImages.filter(
 					(savedImage) => savedImage.date !== image.date,
-				); // Elimina si ya está guardada
+				);
 			} else {
-				newSavedImages.push(image); // Agrega si no está guardada
+				newSavedImages.push(image);
 			}
 
 			return {
 				...state,
-				savedImages: newSavedImages, // Actualiza el estado de imágenes guardadas
+				savedImages: newSavedImages,
 			};
 		}
 
@@ -74,40 +66,33 @@ const reducer = (state, action) => {
 	}
 };
 
-const GlobalContext = createContext();
+const GlobalContext = createContext(null);
 
 export const GlobalProvider = ({ children }) => {
-	// Usa useReducer para manejar el estado global
 	const [state, dispatch] = useReducer(reducer, initialState);
 
-	// Función para alternar el estado de "like" de una imagen
 	const toggleLike = (image) => {
 		dispatch({
-			type: actionTypes.TOGGLE_LIKE, // Tipo de acción
-			payload: {
-				image, // Pasa el objeto de la imagen
-			},
+			type: actionTypes.TOGGLE_LIKE,
+			payload: { image },
 		});
 	};
 
-	// Función para alternar el estado de "guardar" de una imagen
 	const toggleSave = (image) => {
-		// Despacha la acción para alternar el estado de guardado
 		dispatch({
-			type: actionTypes.TOGGLE_SAVE, // Tipo de acción
-			payload: {
-				image, // Pasa el objeto de la imagen
-			},
+			type: actionTypes.TOGGLE_SAVE,
+			payload: { image },
 		});
 	};
 
-	//Llamada a api DailyImage
-	const [dailyImage, setDailyImage] = useState([]);
+	const [dailyImage, setDailyImage] = useState(null);
+	const [dailyLoading, setDailyLoading] = useState(true);
+	const [dailyError, setDailyError] = useState(null);
 
 	useEffect(() => {
-		// Definir la función asincrónica dentro del useEffect
 		const obtenerImagenDiaria = async () => {
 			try {
+				setDailyLoading(true);
 				const response = await fetch(
 					`https://api.nasa.gov/planetary/apod?api_key=${import.meta.env.VITE_NASA_API_KEY}`,
 				);
@@ -118,19 +103,25 @@ export const GlobalProvider = ({ children }) => {
 				}
 				const data = await response.json();
 				setDailyImage(data);
+				setDailyError(null);
 			} catch (error) {
 				console.log("Error al obtener los datos:", error);
+				setDailyError(error.message);
+			} finally {
+				setDailyLoading(false);
 			}
 		};
-		obtenerImagenDiaria(); // Llamamos a la función asincrónica
+		obtenerImagenDiaria();
 	}, []);
 
-	//Llamada a api Galeria de la NASA
 	const [imagesGaleria, setImagesGaleria] = useState([]);
+	const [galeriaLoading, setGaleriaLoading] = useState(true);
+	const [galeriaError, setGaleriaError] = useState(null);
 
 	useEffect(() => {
 		const obtenerImagenesDeLaNasa = async () => {
 			try {
+				setGaleriaLoading(true);
 				const response = await fetch(
 					`https://api.nasa.gov/planetary/apod?api_key=${import.meta.env.VITE_NASA_API_KEY}&count=15`,
 				);
@@ -141,24 +132,29 @@ export const GlobalProvider = ({ children }) => {
 				}
 				const data = await response.json();
 				setImagesGaleria(data);
+				setGaleriaError(null);
 			} catch (error) {
 				console.log("error al obtener los datos:", error);
+				setGaleriaError(error.message);
+			} finally {
+				setGaleriaLoading(false);
 			}
 		};
 		obtenerImagenesDeLaNasa();
 	}, []);
 
-	//Datos locales de Noticias
-	const [noticias, _setNoticias] = useState(noticiasData);
-
-	//Datos locales de Sistema Solar
-	const [sistemaSolar, _setSistemaSolar] = useState(sistemaSolarData);
+	const noticias = noticiasData;
+	const sistemaSolar = sistemaSolarData;
 
 	return (
 		<GlobalContext.Provider
 			value={{
 				dailyImage,
+				dailyLoading,
+				dailyError,
 				imagesGaleria,
+				galeriaLoading,
+				galeriaError,
 				noticias,
 				sistemaSolar,
 				state,

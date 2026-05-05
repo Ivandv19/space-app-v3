@@ -127,6 +127,27 @@ export default MiPagina;
 | `useOrderByLikes` | Ordenar imágenes por likes |
 | `useRandomLikes` | Asignar likes aleatorios iniciales |
 
+## Design System
+
+| Rol | Color | Uso |
+|-----|-------|-----|
+| Fondo principal | `#0d0d1a` | Header, Hero, Stats, Features, CTA, Footer |
+| Fondo secundario | `#1a1a2e` | FeaturedContent, cards |
+| Superficie | `rgba(255,255,255,0.05)` | Cards, contenedores |
+| **Acento** | **`#7c6af7`** | CTAs, números, hover, links activos |
+| Acento hover | `#8b7bf9` | Hover de botones |
+| Texto primario | `#ffffff` | Títulos, nav |
+| Texto secundario | `#a0a0b8` | Subtítulos, descripciones |
+
+### Typography
+
+| Rol | Font | Weight |
+|-----|------|--------|
+| Títulos (h1-h4) | Outfit | Bold (700) |
+| Body, nav, botones | Outfit | Regular (400) |
+
+Tokens centralizados en `src/styles/tokens.js`
+
 ## Known Conventions
 
 - `console.log()` para debugging (no console.error/console.warn)

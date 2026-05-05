@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { BsRocket } from "react-icons/bs";
 import { FaBars } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
@@ -9,82 +10,86 @@ const HeaderStyled = styled.header`
   width: 100%;
   height: ${({ $shrink }) => ($shrink ? "55px" : "70px")};
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   padding: 0 20px;
-  background-color: #f8f9fa;
+  background-color: ${({ $shrink, $isHome }) =>
+		$shrink || !$isHome ? "#0d0d1a" : "rgba(13, 13, 26, 0.65)"};
+  backdrop-filter: ${({ $shrink, $isHome }) =>
+		$shrink || !$isHome ? "none" : "blur(12px)"};
+  -webkit-backdrop-filter: ${({ $shrink, $isHome }) =>
+		$shrink || !$isHome ? "none" : "blur(12px)"};
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: fixed;
   top: 0;
   z-index: 1000;
-  transition: height 0.3s ease; /* Transición suave en el cambio de altura */
+  transition: height 0.3s ease, background-color 0.3s ease;
 
-  /* Media query para pantallas medianas */
   @media (max-width: 1024px) {
     height: ${({ $shrink }) => ($shrink ? "60px" : "80px")};
-    padding: 0 15px; /* Disminuye el padding lateral en pantallas medianas */
   }
 
-  /* Media query para pantallas pequeñas */
   @media (max-width: 768px) {
     height: ${({ $shrink }) => ($shrink ? "40px" : "50px")};
-    padding: 0 20px;
-    flex-direction: row-reverse; /* Invierte la dirección de los elementos */
-    justify-content: space-between; /* Ajusta el espacio entre elementos */
+    padding: 0 16px;
+    flex-direction: row-reverse;
+    justify-content: space-between;
   }
 `;
 
-const Logo = styled.h1`
-  font-size: 24px;
-  margin: 0;
+const InnerContainer = styled.div`
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-  /* Ajusta el tamaño de fuente en pantallas pequeñas */
   @media (max-width: 768px) {
-    font-size: 6vw;
+    flex-direction: row-reverse;
   }
 `;
 
 const LogoContainer = styled.div`
-  width: auto;
-  height: auto;
   display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
+`;
+
+const Logo = styled.h1`
+  font-size: 20px;
+  margin: 0;
+  color: #ffffff;
+
+  @media (max-width: 768px) {
+    font-size: 5vw;
+  }
 `;
 
 const ImgContainer = styled.div`
+  display: flex;
+  align-items: center;
+
   svg {
-    width: ${({ $shrink }) =>
-			$shrink
-				? "40px"
-				: "50px"}; /* Ajusta el tamaño del ícono según '$shrink' */
-    height: ${({ $shrink }) => ($shrink ? "40px" : "50px")};
-    transition:
-      width 0.3s ease,
-      height 0.3s ease; /* Transición suave en el cambio de tamaño */
+    width: ${({ $shrink }) => ($shrink ? "28px" : "32px")};
+    height: ${({ $shrink }) => ($shrink ? "28px" : "32px")};
+    color: #7c6af7;
+    transition: width 0.3s ease, height 0.3s ease;
   }
 
-  /* Media query para pantallas pequeñas */
   @media (max-width: 768px) {
     svg {
-      width: ${({ $shrink }) =>
-				$shrink
-					? "30px"
-					: "40px"}; /* Ajusta el tamaño del ícono en pantallas pequeñas */
-      height: ${({ $shrink }) =>
-				$shrink ? "auto" : "auto"}; /* Mantiene proporciones automáticas */
-      transition:
-        width 0.3s ease,
-        height 0.3s ease;
+      width: ${({ $shrink }) => ($shrink ? "24px" : "28px")};
+      height: ${({ $shrink }) => ($shrink ? "24px" : "28px")};
     }
   }
 `;
 
 function Header() {
-	const [shrink, setShrink] = useState(false); // Estado para cambiar el tamaño del header al hacer scroll
-	const [isOpen, setIsOpen] = useState(false); // Estado para controlar la visibilidad de la barra lateral
-	const [isMobile, setIsMobile] = useState(false); // Estado para detectar si el dispositivo es móvil
+	const [shrink, setShrink] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
+	const [isMobile, setIsMobile] = useState(false);
+	const location = useLocation();
+	const isHome = location.pathname === "/";
 
 	useEffect(() => {
 		// Función para cambiar el estado `shrink` cuando el usuario hace scroll
@@ -116,28 +121,28 @@ function Header() {
 	};
 
 	return (
-		<HeaderStyled $shrink={shrink}>
-			<LogoContainer>
-				<ImgContainer $shrink={shrink}>
-					<BsRocket /> {/* Ícono de cohete para el logo */}
-				</ImgContainer>
-				<Logo>Space App</Logo> {/* Nombre de la aplicación */}
-			</LogoContainer>
+		<HeaderStyled $shrink={shrink} $isHome={isHome}>
+			<InnerContainer>
+				<LogoContainer>
+					<ImgContainer $shrink={shrink}>
+						<BsRocket />
+					</ImgContainer>
+					<Logo>Space App</Logo>
+				</LogoContainer>
 
-			{/* Ícono de menú hamburguesa para abrir la barra lateral en móvil */}
-			{isMobile && (
-				<FaBars
-					onClick={toggleSidebar}
-					style={{ cursor: "pointer", fontSize: "24px" }}
-				/>
-			)}
+				{isMobile && (
+					<FaBars
+						onClick={toggleSidebar}
+						style={{ cursor: "pointer", fontSize: "24px", color: "#ffffff" }}
+					/>
+				)}
 
-			{/* Renderiza la barra lateral en móvil y la barra de navegación normal en escritorio */}
-			{isMobile ? (
-				<Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
-			) : (
-				<Navbar />
-			)}
+				{isMobile ? (
+					<Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
+				) : (
+					<Navbar />
+				)}
+			</InnerContainer>
 		</HeaderStyled>
 	);
 }

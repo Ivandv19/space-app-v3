@@ -1,5 +1,4 @@
 import { createRoot } from "react-dom/client";
-import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop/ScrolltoTop";
 import { GlobalProvider } from "./context/GlobalContext";

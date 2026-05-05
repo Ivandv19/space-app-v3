@@ -1,99 +1,116 @@
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Carousel from "./Carousel";
+import Button from "../../components/Button/Button";
 
-// Estilo para la tarjeta principal, con diseño flexible y caja con sombra
-const Card = styled.div`
-  background-color: white;
-  width: 70%;
-  height: auto;
-  justify-content: space-evenly;
-  align-items: center;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // Sombra sutil para darle profundidad
-  text-align: center;
+const Card = styled(motion.div)`
+  position: relative;
+  width: 100%;
+  height: 300px;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    height: auto;
+    min-height: 220px;
+  }
+`;
+
+const BackgroundImage = styled.div`
+  position: absolute;
+  inset: 0;
+  background-image: url(${(props) => props.$image});
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.4s ease;
+
+  ${Card}:hover & {
+    transform: scale(1.05);
+  }
+`;
+
+const Overlay = styled.div`
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  transition: background 0.3s ease;
+
+  ${Card}:hover & {
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.9) 0%,
+      rgba(0, 0, 0, 0.5) 50%,
+      rgba(0, 0, 0, 0.2) 100%
+    );
+  }
+`;
+
+const Content = styled.div`
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  padding: 20px 20px;
-
-  // Media query para pantallas más pequeñas (max-width: 1024px)
-  @media (max-width: 1024px) {
-    display: flex;
-    flex-direction: column;
-    height: auto;
-  }
-
-  // Media query para pantallas móviles (max-width: 768px)
-  @media (max-width: 768px) {
-    width: 100%;
-    padding: 20px 10px;
-  }
-`;
-
-// Estilo para el título de la característica, con tamaño ajustable
-const FeatureTitle = styled.h3`
-  font-size: 1.8rem;
-  margin-bottom: 20px;
-  margin-top: 20px;
-  color: #282c34;
-
-  // Media query para pantallas móviles (max-width: 768px)
-  @media (max-width: 768px) {
-    font-size: 5vw; // Ajusta el tamaño de la fuente en función del ancho de la pantalla
-  }
-`;
-
-// Estilo para la descripción de la característica
-const FeatureDescription = styled.p`
-  margin: 20px 20px;
-  font-size: 1.2rem;
-  color: #555;
-
-  // Media query para pantallas móviles (max-width: 768px)
-  @media (max-width: 768px) {
-    font-size: 3.5vw; // Ajusta el tamaño de la fuente en función del ancho de la pantalla
-  }
-`;
-
-// Estilo para el enlace "Mostrar más", con diseño interactivo
-const ShowMoreLink = styled(Link)`
-  display: inline-block;
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #1a1a2e;
+  justify-content: flex-end;
+  height: 100%;
+  padding: 24px;
   color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-  max-width: 200px;
+`;
 
-  &:hover {
-    background-color: #2d2d5e;
-  }
+const Title = styled.h3`
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 
-  // Media query para pantallas móviles (max-width: 768px)
   @media (max-width: 768px) {
-    font-size: 4vw; // Ajusta el tamaño de la fuente en función del ancho de la pantalla
+    font-size: 1.3rem;
   }
 `;
 
-// Componente FeatureCard que recibe título, descripción e imágenes como props
-function FeatureCard({ titulo, descripcion, images }) {
+const Description = styled.p`
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  opacity: 0.9;
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+  }
+`;
+
+const ButtonWrapper = styled.div`
+  margin-top: 16px;
+  align-self: flex-start;
+`;
+
+function FeatureCard({ titulo, descripcion, image, to }) {
 	return (
-		<Card>
-			{/* Mostrar el título de la característica */}
-			<FeatureTitle>{titulo}</FeatureTitle>
-			{/* Mostrar la descripción de la característica */}
-			<FeatureDescription>{descripcion}</FeatureDescription>
-			{/* Renderizar el carrusel con un máximo de 3 imágenes */}
-			<Carousel images={images.slice(0, 3)} />
-			{/* Enlace para mostrar más contenido relacionado */}
-			<ShowMoreLink to={`/${titulo.toLowerCase().replace(/\s+/g, "-")}`}>
-				Mostrar más
-			</ShowMoreLink>
+		<Card
+			initial={{ opacity: 0, y: 30 }}
+			whileInView={{ opacity: 1, y: 0 }}
+			viewport={{ once: true, amount: 0.3 }}
+			transition={{ duration: 0.6, ease: "easeOut" }}
+		>
+			<BackgroundImage $image={image} />
+			<Overlay />
+			<Content>
+				<Title>{titulo}</Title>
+				<Description>{descripcion}</Description>
+				<ButtonWrapper>
+					<Button as={Link} to={to} $size="sm">
+						Mostrar más
+					</Button>
+				</ButtonWrapper>
+			</Content>
 		</Card>
 	);
 }
 
-// Exportar el componente FeatureCard
 export default FeatureCard;

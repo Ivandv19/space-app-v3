@@ -2,9 +2,13 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { IoIosInformationCircle } from "react-icons/io";
 import styled from "styled-components";
+import Button from "../../components/Button/Button";
+import StatsBar from "../../components/StatsBar/StatsBar";
 import { useGlobalContext } from "../../context/GlobalContext";
 
-// Sección principal del héroe con imagen de fondo y texto centrado
+const gradientBg =
+	"linear-gradient(135deg, #0d0d1a 0%, #1a1a3e 50%, #0d0d1a 100%)";
+
 const HeroSectionStyled = styled(motion.section)`
   width: 100%;
   height: 100vh;
@@ -16,16 +20,23 @@ const HeroSectionStyled = styled(motion.section)`
   padding: 20px 20px 60px 20px;
   color: white;
   text-align: center;
-  background-image: ${({ $image }) =>
-		$image ? `url(${$image})` : "none"}; // Condicional para la imagen de fondo
+  background-image: ${gradientBg};
   background-size: cover;
   background-position: center;
   position: relative;
+  overflow: hidden;
 
   @media (max-width: 768px) {
-    // Cambia a móviles
-    justify-content: flex-start; // Alinea el contenido hacia la parte superior en móviles
+    justify-content: flex-start;
   }
+`;
+
+const BgImage = styled(motion.div)`
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-image: url(${({ $image }) => $image});
 `;
 
 // Overlay oscuro para mejorar la visibilidad del texto sobre la imagen
@@ -35,18 +46,17 @@ const OverlayStyled = styled.div`
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.589);
+  background-color: ${({ $loading }) =>
+		$loading ? "rgba(0, 0, 0, 0.3)" : "rgba(0, 0, 0, 0.589)"};
   z-index: 1;
 `;
 
 // Título principal del héroe
 const HeroTitle = styled(motion.h1)`
   font-size: 3rem;
-  margin-bottom: 20px;
-  z-index: 1; // Asegura que esté por encima del overlay
+  z-index: 2;
 
   @media (max-width: 768px) {
-    // Cambia a móviles
     font-size: 8vw;
   }
 `;
@@ -54,91 +64,81 @@ const HeroTitle = styled(motion.h1)`
 // Subtítulo del héroe
 const HeroSubtitle = styled(motion.p)`
   font-size: 1.2rem;
-  margin-bottom: 30px;
   padding: 0 50px;
-  z-index: 2; // Asegura que el subtítulo esté por encima del overlay
+  z-index: 2;
   @media (max-width: 768px) {
     padding: 0;
     font-size: 4vw;
   }
 `;
 
-// Botón de llamada a la acción
-const CTAButton = styled(motion.a)`
-  display: inline-block;
-  padding: 10px 20px;
-  font-size: 1rem;
-  background-color: #0a6ad8;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  text-decoration: none;
+const ButtonsRow = styled(motion.div)`
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  justify-content: center;
   z-index: 2;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-
-  @media (max-width: 768px) {
-    // Cambia a móviles
-    font-size: 3vw;
-  }
 `;
 
-// Sección de información con posición absoluta para superponerse sobre el héroe
+const HeroStatsContainer = styled(motion.div)`
+  width: 100%;
+  max-width: 1200px;
+  background: rgba(13, 13, 26, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 2;
+`;
+
 const InfoSection = styled(motion.section)`
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 5px;
   position: absolute;
-  top: 120px;
+  bottom: 20px;
   left: 10px;
-  z-index: 1;
+  z-index: 2;
+  cursor: pointer;
 
   @media (max-width: 768px) {
-    top: auto;
-    left: 5px;
     bottom: 10px;
+    left: 5px;
   }
 `;
 
-// Imagen o texto para el título en la sección de información
 const TitleImage = styled.p`
   font-size: 15px;
 
   @media (max-width: 768px) {
-    // Cambia a móviles
     font-size: 3vw;
   }
 `;
 
-// Tooltip con información adicional, visible cuando se activa
 const Tooltip = styled.div`
   position: absolute;
   background: rgba(0, 0, 0, 0.8);
-  border-radius: 5px;
-  top: 30px;
-  left: 10px;
+  border-radius: 8px;
+  bottom: 30px;
+  left: 0;
   opacity: ${({ $visible }) => ($visible ? 1 : 0)};
   transition: opacity 0.2s ease;
   pointer-events: none;
   width: 50vw;
   height: auto;
   font-size: 13px;
+  z-index: 3;
 
   @media (max-width: 768px) {
-    top: auto;
-    bottom: 20px;
+    bottom: 28px;
+    left: 0;
     width: 90vw;
-    z-index: 1001;
+    z-index: 3;
     font-size: 2.5vw;
   }
 `;
 
-// Icono de información que cambia de color según estado activo
 const InfoIcon = styled(IoIosInformationCircle)`
   color: ${({ $isActive }) => ($isActive ? "black" : "white")};
   transition: color 0.2s ease;
@@ -148,12 +148,16 @@ const InfoIcon = styled(IoIosInformationCircle)`
 
 // Sección principal de la información con padding dinámico para pantallas móviles
 const InfoMainSection = styled(motion.section)`
-  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  z-index: 2;
   width: 100%;
   height: auto;
 
   @media (max-width: 768px) {
-    padding: 20vh 1vw 10vh 1vw; // Padding relativo al tamaño de la pantalla
+    padding: 20vh 1vw 10vh 1vw;
   }
 `;
 
@@ -180,19 +184,31 @@ const itemVariants = {
 
 // Componente HeroSection
 function HeroSection() {
-	// Obtener la imagen diaria del contexto global
 	const { dailyImage } = useGlobalContext();
-	// Estado para controlar la visibilidad del tooltip
 	const [tooltipVisible, setTooltipVisible] = useState(false);
+
+	const toggleTooltip = () => setTooltipVisible((prev) => !prev);
+
+	const scrollToCaracteristicas = () => {
+		document.getElementById("caracteristicas")?.scrollIntoView({
+			behavior: "smooth",
+		});
+	};
 
 	return (
 		<HeroSectionStyled
-			$image={dailyImage.url}
 			initial="hidden"
 			animate="visible"
 			variants={containerVariants}
 		>
-			<OverlayStyled />
+			<BgImage
+				$image={dailyImage?.url}
+				initial={{ opacity: 0 }}
+				animate={{ opacity: dailyImage?.url ? 1 : 0 }}
+				transition={{ duration: 1.2, ease: "easeOut" }}
+			/>
+
+			<OverlayStyled $loading={!dailyImage?.url} />
 
 			<InfoSection
 				variants={{
@@ -203,31 +219,42 @@ function HeroSection() {
 						transition: { delay: 1, duration: 0.5 },
 					},
 				}}
+				onClick={toggleTooltip}
 				onMouseEnter={() => setTooltipVisible(true)}
 				onMouseLeave={() => setTooltipVisible(false)}
 			>
-				<InfoIcon $isActive={tooltipVisible} size={24} />
-				<TitleImage>{dailyImage.title}</TitleImage>
-				<Tooltip $visible={tooltipVisible}>
-					<p>{dailyImage.explanation}</p>
-				</Tooltip>
+				{dailyImage?.title ? (
+					<>
+						<InfoIcon $isActive={tooltipVisible} size={24} />
+						<TitleImage>{dailyImage.title}</TitleImage>
+						<Tooltip $visible={tooltipVisible}>
+							<p>{dailyImage.explanation}</p>
+						</Tooltip>
+					</>
+				) : (
+					<TitleImage>Cargando imagen del día...</TitleImage>
+				)}
 			</InfoSection>
 
 			<InfoMainSection variants={containerVariants}>
 				<HeroTitle variants={itemVariants}>Explora el Universo</HeroTitle>
 				<HeroSubtitle variants={itemVariants}>
-					Descubre los misterios del espacio con nosotros. Sumérgete en un viaje
-					cósmico donde cada estrella, planeta y galaxia nos revela secretos
-					fascinantes del universo.
+					Explora el universo desde aquí: imágenes astronómicas diarias, las
+					últimas noticias y un viaje por cada planeta.
 				</HeroSubtitle>
-				<CTAButton
-					href="#caracteristicas"
-					variants={itemVariants}
-					whileHover={{ scale: 1.05 }}
-					whileTap={{ scale: 0.95 }}
-				>
-					Comienza Ahora
-				</CTAButton>
+				<HeroStatsContainer variants={itemVariants}>
+					<StatsBar $glass />
+				</HeroStatsContainer>
+				<ButtonsRow variants={itemVariants}>
+					<Button
+						$variant="filled"
+						whileHover={{ scale: 1.05 }}
+						whileTap={{ scale: 0.95 }}
+						onClick={scrollToCaracteristicas}
+					>
+						Explorar
+					</Button>
+				</ButtonsRow>
 			</InfoMainSection>
 		</HeroSectionStyled>
 	);

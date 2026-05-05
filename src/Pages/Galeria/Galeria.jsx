@@ -31,6 +31,7 @@ const Subtitle = styled.p`
   font-size: 1rem;
   color: #666;
   max-width: 640px;
+  line-height: 1.6;
 `;
 
 /* ─── Sección con título + fila horizontal ─────────────── */
@@ -57,8 +58,8 @@ const ScrollRow = styled(motion.div)`
   padding-bottom: 12px;
 
   &::-webkit-scrollbar { height: 6px; }
-  &::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
-  &::-webkit-scrollbar-thumb { background: #c0c0c0; border-radius: 10px; }
+  &::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 8px; }
+  &::-webkit-scrollbar-thumb { background: #c0c0c0; border-radius: 8px; }
 `;
 
 /* ─── Tarjeta de imagen ────────────────────────────────── */
@@ -66,11 +67,11 @@ const Card = styled(motion.div)`
   position: relative;
   flex: 0 0 260px;
   height: 200px;
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
   cursor: pointer;
   border: 1px solid #e0e0e0;
-
+ 
   &:hover img {
     transform: scale(1.06);
   }
@@ -349,7 +350,7 @@ const Galeria = () => {
 
 			{/* ── Top Likes ── */}
 			<Section variants={itemVariants}>
-				<SectionTitle>⭐ Con más likes</SectionTitle>
+				<SectionTitle>Con más likes</SectionTitle>
 				<ScrollRow variants={containerVariants}>
 					{topFiveItems.map((image) => (
 						<Card
@@ -368,7 +369,7 @@ const Galeria = () => {
 
 			{/* ── Guardadas ── */}
 			<Section variants={itemVariants}>
-				<SectionTitle>🔖 Guardadas</SectionTitle>
+				<SectionTitle>Guardadas</SectionTitle>
 				{savedItemsWithLikes.length === 0 ? (
 					<EmptyState>Aún no has guardado ninguna imagen.</EmptyState>
 				) : (
